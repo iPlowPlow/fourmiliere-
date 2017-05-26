@@ -1,0 +1,81 @@
+﻿<Window x:Class="fourmilliereALIHM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:fourmilliereALIHM"
+        mc:Ignorable="d"
+        Title="{Binding TitreApplication}" Height="350" Width="525">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FourmisList}" SelectedItem="{Binding FourmisSelect}" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="aviatrix.jpg" Width="30" Grid.Column="0"></Image>
+                        <TextBlock Text="{Binding Nom}" Grid.Column="1"></TextBlock>
+                        <TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding FourmisList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_2"  >
+            <Button.Content>
+                <Image Source="aviatrix.jpg">
+                </Image>
+            </Button.Content>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="0" Content="Ajouter Fourmis" Click="Button_Click_1"></Button>
+
+        <Button Grid.Row="3" Grid.Column="0"  Click="Button_Click" >
+            <Button.Content>
+                <TextBlock Text="{Binding FourmisSelect, StringFormat='Supprimer{0}'}"/>
+            </Button.Content>
+        </Button>
+        <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="true">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding FourmisSelect.Nom}"/>
+            <TextBlock Grid.Row="1" Text="{Binding FourmisSelect.ListEtape.Count}"/>
+            <TextBlock Grid.Row="2" Text="{Binding FourmisSelect.ListEtape}"/>
+
+        </Grid>
+        <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="true">
+
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Name="btnSuivant"  Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
+            <Button Name="btnAvance"  Grid.Column="1" Content="avance batard" Click="btnAvance_Click" Margin="0.4,0,0.2,0.4"/>
+            <Button Name="btnStop"   Grid.Column="3" Content="Stop batard" Click="btnStop_Click">
+
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
