@@ -5,64 +5,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using LibAbstraite.Fabrique;
+using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionObjets;
+using LibAbstraite.GestionPersonnage;
 namespace LibMetier
 {
-    public class FabriqueFourmiliere : FabriqueFourmiliereAbstraite
+    public class FabriqueFourmiliere : FabriqueAbstraite
     {
 
-        public String Titre { get; set; }
+        public override String Titre { get; }
 
 
-        public AccesAbstrait CreerAcces(ZoneAbstraite zDebut, ZoneAbstraite zFin)
+        public override AccesAbstrait CreerAcces(ZoneAbstrait zDebut, ZoneAbstrait zFin)
         {
-            return new Chemin(zDebut, zFin);
+            return new Chemin(zFin, zDebut);
         }
 
-        public EnvironmentAbstrait CreerEnvironment()
+        public EnvironnementAbstrait CreerEnvironment()
         {
             return new Fourmiliere();
         }
 
-        public override ObjectAbstrait CreerOeuf(String nom)
+        public override ObjetAbstrait CreerOeuf(string nom)
         {
             return new Oeuf(nom);
         }
 
-        public override ObjectAbstrait CreerNourriture(String nom)
+        public override ObjetAbstrait CreerNourriture(string nom)
         {
             return new Nourriture(nom);
         }
-        public override ObjectAbstrait CreerPheromone(String nom)
+        public override ObjetAbstrait CreerPheromone(string nom)
         {
             return new Pheromone(nom);
         }
 
-        public override PersonnageAbstrait CreerReine(String nom)
+        public override PersonnageAbstrait CreerReine(string nom)
         {
             return new Reine(nom);
         }
 
-        public override PersonnageAbstrait CreerOuvriere(String nom)
+        public override PersonnageAbstrait CreerOuvriere(string nom)
         {
             return new Ouvriere(nom);
         }
 
-        public override PersonnageAbstrait CreerGuerriere(String nom)
+        public override PersonnageAbstrait CreerGuerriere(string nom)
         {
             return new Guerriere(nom);
         }
 
-        public override PersonnageAbstrait CreerTermite(String nom)
+        public override PersonnageAbstrait CreerTermite(string nom)
         {
             return new Termite(nom);
         }
 
-        public ZoneAbstraite CreerZone(String nom)
+        public ZoneAbstrait CreerZone(String nom)
         {
             return new BoutDeTerrain(nom);
         }
 
+        public override EnvironnementAbstrait CreerEnvironnement()
+        {
+            throw new NotImplementedException();
+        }
 
+        public override ZoneAbstrait CrerZone(string nom)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

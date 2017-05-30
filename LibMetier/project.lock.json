@@ -18467,22 +18467,19 @@
     ".NETPlatform,Version=v5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Loïc\\.nuget\\packages\\": {}
+    "C:\\Users\\oxeyo\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "D:\\fourmiliere\\fourmiliere-\\LibMetier\\LibMetier.csproj",
+      "projectUniqueName": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\LibMetier.csproj",
       "projectName": "LibMetier",
-      "projectPath": "D:\\fourmiliere\\fourmiliere-\\LibMetier\\LibMetier.csproj",
-      "projectJsonPath": "D:\\fourmiliere\\fourmiliere-\\LibMetier\\project.json",
+      "projectPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\LibMetier.csproj",
+      "projectJsonPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
       "Microsoft.NETCore": "5.0.0",
-      "Microsoft.NETCore.Portable.Compatibility": {
-        "target": "Package",
-        "version": "[1.0.0, )"
-      }
+      "Microsoft.NETCore.Portable.Compatibility": "1.0.0"
     },
     "frameworks": {
       "dotnet5.0": {

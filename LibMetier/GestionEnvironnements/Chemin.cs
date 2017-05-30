@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using LibAbstraite.GestionEnvironnement;
 namespace LibMetier.GestionEnvironnements
 {
     class Chemin : AccesAbstrait
     {
-        public ZoneAbstraite zDebut;
-        public ZoneAbstraite zFin;
-        public Chemin(ZoneAbstraite zDebut, ZoneAbstraite zFin)
+ 
+        public Chemin(ZoneAbstrait zFin, ZoneAbstrait zDebut)
         {
-            this.zDebut = zDebut;
-            this.zFin = zFin;
+       
+            this.Debut = zDebut;
+            this.Fin = zFin;
         }
 
     }

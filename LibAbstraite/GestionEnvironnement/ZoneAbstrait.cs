@@ -22,10 +22,7 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void AjouteTermite(PersonnageAbstrait acces);
         public abstract void RetireTermite(PersonnageAbstrait acces);
         public abstract void RetireFourmis(PersonnageAbstrait acces);
-        public ZoneAbstrait( string Nom)
-        {
-            this.Nom = Nom;
-        }
+      
 
     }
 }
