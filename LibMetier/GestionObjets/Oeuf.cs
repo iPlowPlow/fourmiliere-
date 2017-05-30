@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using LibAbstraite.GestionObjets;
 namespace LibMetier.GestionObjets
 {
-    class Oeuf : ObjetAbstract
+    class Oeuf : ObjetAbstrait
     {
-        String nom { get; set; }
-        public Oeuf(String nom)
+        
+        public Oeuf(string nom)
         {
-            this.nom = nom;
+            this.Nom = nom;
         }
 
     }

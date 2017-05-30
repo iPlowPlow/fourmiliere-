@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibAbstraite.GestionObjets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LibMetier.GestionObjets
 {
-    class Nourriture : ObjetAbstract
+    class Nourriture : ObjetAbstrait
     {
-        string nom { get; set; }
+      
 
-        public Nourriture(String nom)
+        public Nourriture(string nom)
         {
-            this.nom = nom;
+            this.Nom = nom;
         }
 
     }
