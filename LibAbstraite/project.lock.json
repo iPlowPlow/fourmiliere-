@@ -18467,22 +18467,19 @@
     ".NETPlatform,Version=v5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\oxeyo\\.nuget\\packages\\": {}
+    "C:\\Users\\plochoua\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibAbstraite\\LibAbstraite.csproj",
+      "projectUniqueName": "P:\\fourmiliere-\\LibAbstraite\\LibAbstraite.csproj",
       "projectName": "LibAbstraite",
-      "projectPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibAbstraite\\LibAbstraite.csproj",
-      "projectJsonPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibAbstraite\\project.json",
+      "projectPath": "P:\\fourmiliere-\\LibAbstraite\\LibAbstraite.csproj",
+      "projectJsonPath": "P:\\fourmiliere-\\LibAbstraite\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
       "Microsoft.NETCore": "5.0.0",
-      "Microsoft.NETCore.Portable.Compatibility": {
-        "target": "Package",
-        "version": "[1.0.0, )"
-      }
+      "Microsoft.NETCore.Portable.Compatibility": "1.0.0"
     },
     "frameworks": {
       "dotnet5.0": {
