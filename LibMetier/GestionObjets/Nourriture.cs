@@ -8,7 +8,7 @@ namespace LibMetier.GestionObjets
 {
     class Nourriture : ObjetAbstract
     {
-        String nom { get; set; }
+        string nom { get; set; }
 
         public Nourriture(String nom)
         {
