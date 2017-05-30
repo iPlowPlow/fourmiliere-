@@ -12,7 +12,7 @@ namespace LibAbstraite.Fabrique
     public abstract class FabriqueAbstraite
     {
         public abstract string Titre { get; }
-        public abstract EnvironnementAbstrait CreerEnvironnement();
+        public abstract EnvironnementAbstrait CreerEnvironnement(int dimensionX, int dimensionY);
         public abstract ZoneAbstrait CrerZone(string nom);
         public abstract AccesAbstrait CreerAcces(ZoneAbstrait zDebut, ZoneAbstrait zFin);
         public abstract PersonnageAbstrait CreerGuerriere(string nom);

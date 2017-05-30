@@ -22,9 +22,9 @@ namespace LibMetier
             return new Chemin(zFin, zDebut);
         }
 
-        public EnvironnementAbstrait CreerEnvironment()
+        public EnvironnementAbstrait CreerEnvironment(int _dimensionX, int _dimensionY)
         {
-            return new Fourmiliere();
+            return new Fourmiliere(_dimensionX, _dimensionY);
         }
 
         public override ObjetAbstrait CreerOeuf(string nom)
@@ -64,11 +64,6 @@ namespace LibMetier
         public ZoneAbstrait CreerZone(String nom)
         {
             return new BoutDeTerrain(nom);
-        }
-
-        public override EnvironnementAbstrait CreerEnvironnement()
-        {
-            throw new NotImplementedException();
         }
 
         public override ZoneAbstrait CrerZone(string nom)
