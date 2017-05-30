@@ -191,8 +191,15 @@ $RECYCLE.BIN/
 # VS 2015+
 *.vc.vc.opendb
 *.vc.db
+<<<<<<< HEAD
 obj/
 Debug/
+=======
+
+obj/
+Debug/
+
+>>>>>>> 11c5663e629072973ae89d55dd8c3bd1b7653526
 # Rider
 .idea/
 
@@ -203,3 +210,7 @@ Debug/
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+<<<<<<< HEAD
+=======
+
+>>>>>>> 11c5663e629072973ae89d55dd8c3bd1b7653526
