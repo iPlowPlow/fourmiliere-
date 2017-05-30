@@ -38,18 +38,14 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Class1.cs" />
-    <Compile Include="Fabrique\FabriqueAbstraite.cs" />
-    <Compile Include="GestionEnvironnement\EnvironnementAbstrait.cs" />
-=======
+
     <Compile Include="Fabrique\FabriqueAbstraite.cs" />
     <Compile Include="GestionEnvironnement\AccesAbstrait.cs" />
     <Compile Include="GestionEnvironnement\EnvironnementAbstrait.cs" />
     <Compile Include="GestionEnvironnement\ZoneAbstrait.cs" />
     <Compile Include="GestionObjets\ObjetAbstrait.cs" />
     <Compile Include="GestionPersonnage\PersonnageAbstrait.cs" />
->>>>>>> develop
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
