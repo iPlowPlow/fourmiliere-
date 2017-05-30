@@ -144,7 +144,7 @@ UpgradeLog*.htm
 *.txt~
 *.swp
 *.swo
- 
+
 # svn
 .svn
 
@@ -191,7 +191,8 @@ $RECYCLE.BIN/
 # VS 2015+
 *.vc.vc.opendb
 *.vc.db
-
+obj/
+Debug/
 # Rider
 .idea/
 
