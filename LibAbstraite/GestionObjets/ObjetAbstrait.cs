@@ -17,9 +17,6 @@ namespace LibAbstraite.GestionObjets
             get;
             set;
        }
-        public ObjetAbstrait(string Nom)
-        {
-            this.Nom = Nom;
-        }
+       
     }
 }
