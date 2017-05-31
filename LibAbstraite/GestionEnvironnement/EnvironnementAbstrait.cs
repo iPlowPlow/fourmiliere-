@@ -11,6 +11,8 @@ namespace LibAbstraite.GestionEnvironnement
 {
     public abstract class EnvironnementAbstrait
     {
+        public int DimensionX { get; set; }
+        public int DimensionY { get; set; }
         public List<AccesAbstrait> AccesAbstraitList { get; set; }
         public List<ObjetAbstrait> ObjetAbstraitList { get; set; }
         public List<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
@@ -26,6 +28,7 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void ChargerPersonnage(FabriqueAbstraite fab);
         public abstract void ChargerObjet(FabriqueAbstraite fab);
         public abstract void DeplacerPersonnage(PersonnageAbstrait unPersonnage,ZoneAbstrait zdebut, ZoneAbstrait zfin);
+        public abstract void Repositioner();
         public abstract string Simuler();
         public abstract string Statistiques();
 
