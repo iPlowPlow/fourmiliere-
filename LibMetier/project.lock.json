@@ -18467,14 +18467,14 @@
     ".NETPlatform,Version=v5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\oxeyo\\.nuget\\packages\\": {}
+    "C:\\Users\\plochoua\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\LibMetier.csproj",
+      "projectUniqueName": "P:\\fourmiliere-\\LibMetier\\LibMetier.csproj",
       "projectName": "LibMetier",
-      "projectPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\LibMetier.csproj",
-      "projectJsonPath": "D:\\DossierPierre\\coursesgi\\fourmilliereALIHM\\LibMetier\\project.json",
+      "projectPath": "P:\\fourmiliere-\\LibMetier\\LibMetier.csproj",
+      "projectJsonPath": "P:\\fourmiliere-\\LibMetier\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
