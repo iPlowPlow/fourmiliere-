@@ -54,15 +54,28 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
+            foreach (Pheromone unePheromone in App.fourmilliereVM.PheromoneList)
+            {
+                byte opacity = Convert.ToByte(unePheromone.dureevie*10);
+                Color color = Color.FromArgb(opacity, 0, 0, 255);
+                Rectangle pheromoneBox = new Rectangle();
+                pheromoneBox.Fill = new SolidColorBrush(color);
+                Plateau.Children.Add(pheromoneBox);
+                Grid.SetColumn(pheromoneBox, unePheromone.position.X);
+                Grid.SetRow(pheromoneBox, unePheromone.position.Y);
+            }
             foreach (Fourmis unefourmi in App.fourmilliereVM.FourmisList)
             {
                 Image img = new Image();
-                Uri uri = new Uri("Roi.png", UriKind.Relative);
+                Uri uri = new Uri("Images/fourmi_ouvriere.png", UriKind.Relative);
                 img.Source = new BitmapImage(uri);
                 
                 Plateau.Children.Add(img);
                 Grid.SetColumn(img, unefourmi.X);
                 Grid.SetRow(img, unefourmi.Y);
+                //Coordonnees coordonnees = new Coordonnees(unefourmi.X, unefourmi.Y);
+                //Pheromone unPheromone = new Pheromone("pheromone de fourmi", coordonnees);
+                //App.fourmilliereVM.PheromoneList.Add(unPheromone);
             }
         }
 
@@ -147,11 +160,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                         {
-                             X = (int)c.Attribute("x"),
-                             Y =(int)c.Attribute("y")
-                         }).First(),
+                         position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -162,11 +172,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Oeuf()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                         {
-                             X = (int)c.Attribute("x"),
-                             Y = (int)c.Attribute("y")
-                         }).First(),
+                         position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -177,11 +184,8 @@ namespace fourmilliereALIHM
                       .Select(t => new Reine()
                       {
                           Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
                     
                 }
@@ -192,11 +196,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Guerriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -207,11 +208,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Ouvriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }

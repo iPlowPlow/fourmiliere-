@@ -8,8 +8,9 @@ namespace LibAbstraite.GestionEnvironnement
 {
     public abstract class AccesAbstrait
     {
-        public ZoneAbstrait Debut { get; set; }
-        public ZoneAbstrait Fin { get; set; }
+
+        public List<ZoneAbstrait> zonesaccessibles;
+
       
     }
 }

@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
-
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionEnvironnements;
+using LibMetier.GestionObjets;
+
 namespace fourmilliereALIHM
 {
-    public class FourmilliereModel : ViewModelBase
+    public class FourmilliereModel : ViewModelBase 
     {
         private Boolean encours;
         private string titre;
@@ -25,7 +26,8 @@ namespace fourmilliereALIHM
                 OnPropertyChanged("TitreApplication");
             } }
         public ObservableCollection<Fourmis> FourmisList { get; set; }
-        
+        public ObservableCollection<Pheromone> PheromoneList { get; set; }
+
         public Fourmis FourmisSelect { get { return fourmisse; } set {
                 fourmisse = value;
                 OnPropertyChanged("FourmisSelect");
@@ -36,9 +38,9 @@ namespace fourmilliereALIHM
             DimensionX = 20;
             DimensionY = 30;
             vitesse = 500;
-            fourmilliere = new Fourmiliere();
+            fourmilliere = new Fourmiliere(DimensionX, DimensionY);
             FourmisList = new ObservableCollection<Fourmis>();
-           
+            PheromoneList = new ObservableCollection<Pheromone>();
         }
 
         public void AjouteOuvriere(List<Ouvriere> f)
@@ -62,8 +64,22 @@ namespace fourmilliereALIHM
         }
         public void TourSuivant()
         {
-            foreach( Fourmis uneFourmi in FourmisList)
+            foreach (Pheromone unePheromone in PheromoneList.ToList())
             {
+                if (unePheromone.dureevie < 1)
+                {
+                    PheromoneList.Remove(unePheromone);
+                }
+            }
+            foreach (Pheromone unePheromone in PheromoneList)
+            {
+                unePheromone.TourPasse();
+            }
+            foreach (Fourmis uneFourmi in FourmisList)
+            {
+                Coordonnees coordonnees = new Coordonnees(uneFourmi.X, uneFourmi.Y);
+                Pheromone unPheromone = new Pheromone("pheromone de fourmi", coordonnees);
+                App.fourmilliereVM.PheromoneList.Add(unPheromone);
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }
         }

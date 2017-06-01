@@ -11,9 +11,11 @@ namespace LibAbstraite.GestionPersonnage
 
     public abstract class PersonnageAbstrait
     {
+        public AccesAbstrait choixZoneSuivante { get; set; }
+        public int pointsdevie { get; set; }
         static Random Hazard = new Random();
         public string Nom { get; set; }
-        public abstract ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList);
+        public abstract ZoneAbstrait ChoixZoneSuivante();
         public CoordonneesAbstrait position
         {
             get; set;

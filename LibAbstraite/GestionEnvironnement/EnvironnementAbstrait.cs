@@ -21,11 +21,12 @@ namespace LibAbstraite.GestionEnvironnement
 
         public List<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
         public List<ZoneAbstrait> ZoneAbstraitList { get; set; }
-        public abstract void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray);
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
+        public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
         public abstract void AjouteFourmis(PersonnageAbstrait unPersonnage);
+        public abstract void AjouteCombattante(PersonnageAbstrait unPersonnage);
         public abstract void AjouteTermite(PersonnageAbstrait unPersonnage);
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);
