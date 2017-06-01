@@ -12,14 +12,14 @@ namespace LibMetier.GestionEnvironnements
     class BoutDeTerrain : ZoneAbstrait
     {
     
-        public  BoutDeTerrain(string nom)
+        public BoutDeTerrain(string nom)
         {
             this.Nom = nom;
         }
 
         public override void AjouteAcces(AccesAbstrait acces)
         {
-            throw new NotImplementedException();
+            AccesList.Add(acces);
         }
 
         public override void AjouteOeuf(ObjetAbstrait acces)

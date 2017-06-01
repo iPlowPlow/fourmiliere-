@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fourmilliereALIHM
+namespace LibAbstraite
 {
     public class AproposViewModel : ViewModelBase
     {

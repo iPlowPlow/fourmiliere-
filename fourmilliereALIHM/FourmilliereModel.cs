@@ -6,54 +6,96 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
-namespace fourmilliereALIHM
+using LibAbstraite.GestionPersonnage;
+using LibAbstraite.Fabrique;
+using LibMetier;
+
+namespace LibAbstraite
 {
     public class FourmilliereModel : ViewModelBase
     {
         private Boolean encours;
         private string titre;
-        private Fourmis fourmisse;
+        private PersonnageAbstrait unPerso;
+        public int tourActuel = 0;
         public int DimensionX;
         public int DimensionY;
         public int vitesse;
-        public string TitreApplication { get { return titre;} set {
+        public string TitreApplication {
+            get { return titre;}
+            set {
                 titre = value;
                 OnPropertyChanged("TitreApplication");
-            } }
-        public ObservableCollection<Fourmis> FourmisList { get; set; }
-        public Fourmis FourmisSelect { get { return fourmisse; } set {
-                fourmisse = value;
-                OnPropertyChanged("FourmisSelect");
-            } }
+            }
+        }
+        public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
+        public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
+
+        public FabriqueAbstraite Fabrique;
+
+        public PersonnageAbstrait PersoSelect {
+            get { return unPerso; }
+            set {
+                unPerso = value;
+                OnPropertyChanged("PersoSelect");
+            }
+        }
+
         public  FourmilliereModel()
         {
             TitreApplication = "Application FourmilliereAL";
             DimensionX = 20;
             DimensionY = 30;
             vitesse = 500;
-            FourmisList = new ObservableCollection<Fourmis>();
-            FourmisList.Add(new Fourmis("Alain"));
-            FourmisList.Add(new Fourmis("Cecile"));
-            FourmisList.Add(new Fourmis("Pierre"));
-            FourmisList.Add(new Fourmis("Denis"));
+            Fabrique = new FabriqueFourmiliere();
+            PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
+            PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Alain"));
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
+            PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
         }
 
         
-        public void AjouterFourmis()
+        public void AjouterGuerriere()
         {
-            FourmisList.Add(new Fourmis("Fourmis N°"+ FourmisList.Count));
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
         }
-        public void SupprimerFourmis()
+
+        public void AjouterReine()
         {
-            FourmisList.Remove(FourmisSelect);
+            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
         }
+
+        public void AjouterOuvriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
+        }
+
+        public void AjouterTermite()
+        {
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Termite " + PersonnagesList.Count));
+        }
+        /*Suppression via L'IHM*/
+        public void SupprimerPersonnage()
+        {
+            PersonnagesList.Remove(unPerso);
+        }
+
         public void TourSuivant()
         {
-            foreach( Fourmis uneFourmi in FourmisList)
+            tourActuel++;
+            for (int i = PersonnagesList.Count -1; i>=0; i--)
             {
-                uneFourmi.Avance1Tour(DimensionX, DimensionY);
-            }
+                PersonnagesList[i].Avance1Tour(DimensionX, DimensionY, tourActuel);
+                if (PersonnagesList[i].PV <= 0)
+                {
+                    PersonnagesMortList.Add(PersonnagesList[i]);
+                    PersonnagesList.Remove(PersonnagesList[i]);
+                }
+               
+            }   
         }
+
         public void Avance()
         {
             encours = true;

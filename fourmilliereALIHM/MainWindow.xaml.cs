@@ -16,7 +16,9 @@ using System.Threading;
 using System.Timers;
 using System.Diagnostics;
 using System.Windows.Threading;
-namespace fourmilliereALIHM
+using LibAbstraite.GestionPersonnage;
+
+namespace LibAbstraite
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -44,15 +46,15 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
-            foreach (Fourmis unefourmi in App.fourmilliereVM.FourmisList)
+            foreach (PersonnageAbstrait unPerso in App.fourmilliereVM.PersonnagesList)
             {
                 Image img = new Image();
                 Uri uri = new Uri("Roi.png", UriKind.Relative);
                 img.Source = new BitmapImage(uri);
                 
                 Plateau.Children.Add(img);
-                Grid.SetColumn(img, unefourmi.X);
-                Grid.SetRow(img, unefourmi.Y);
+                Grid.SetColumn(img, unPerso.X);
+                Grid.SetRow(img, unPerso.Y);
             }
         }
 
@@ -63,14 +65,29 @@ namespace fourmilliereALIHM
             apx.Show();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_Add_Guerriere(object sender, RoutedEventArgs e)
         {
-            App.fourmilliereVM.AjouterFourmis();
+            App.fourmilliereVM.AjouterGuerriere();
+        }
+
+        private void Button_Click_Add_Ouvriere(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterOuvriere();
+        }
+
+        private void Button_Click_Add_Reine(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterReine();
+        }
+
+        private void Button_Click_Add_Termite(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterTermite();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            App.fourmilliereVM.SupprimerFourmis();
+            App.fourmilliereVM.SupprimerPersonnage();
         }
 
         private void btnSuivant_Click(object sender, RoutedEventArgs e)

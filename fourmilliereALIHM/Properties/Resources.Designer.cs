@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace fourmilliereALIHM.Properties
+namespace LibAbstraite.Properties
 {
 
 

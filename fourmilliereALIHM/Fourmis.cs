@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace fourmilliereALIHM
+namespace LibAbstraite
 {
     public class Fourmis
     {
-        static Random Hazard = new Random();
+        /*static Random Hazard = new Random();
         public int X { get; set; }
         public int Y { get; set; }
         public string Nom { get; set; }
@@ -37,6 +37,6 @@ namespace fourmilliereALIHM
             int newY = Y + Hazard.Next(3) - 1;
             if ((newX >= 0) && (newX < dimX)) X = newX;
             if ((newY >= 0) && (newY < dimX)) Y = newY;
-        }
+        }*/
     }
 }

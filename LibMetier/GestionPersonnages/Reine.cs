@@ -5,18 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
+using System.Collections.ObjectModel;
+using LibAbstraite;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Reine : PersonnageAbstrait 
+    public class Reine : PersonnageAbstrait 
     {
-        String nom { get; set; }
+
         public Reine(String nom)
         {
-            this.nom = nom;
+            PV = 100;
+            X = 10;
+            Y = 10;
+            ListEtape = new ObservableCollection<Etape>();
+            this.Nom = nom;
+        }
+
+        public override string ToString()
+        {
+            return "Ma Reine" + this.Nom;
         }
 
         public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void AnalyseSituation()
         {
             throw new NotImplementedException();
         }

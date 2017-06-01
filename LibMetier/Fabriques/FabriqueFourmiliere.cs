@@ -16,13 +16,12 @@ namespace LibMetier
 
         public override String Titre { get; }
 
-
         public override AccesAbstrait CreerAcces(ZoneAbstrait zDebut, ZoneAbstrait zFin)
         {
             return new Chemin(zFin, zDebut);
         }
 
-        public EnvironnementAbstrait CreerEnvironment(int _dimensionX, int _dimensionY)
+        public override EnvironnementAbstrait CreerEnvironnement(int _dimensionX, int _dimensionY)
         {
             return new Fourmiliere(_dimensionX, _dimensionY);
         }
@@ -70,5 +69,6 @@ namespace LibMetier
         {
             throw new NotImplementedException();
         }
+
     }
 }

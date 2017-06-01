@@ -58,7 +58,6 @@
     <Compile Include="AProposWindows.xaml.cs">
       <DependentUpon>AProposWindows.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelBase.cs" />
     <Page Include="AProposWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -71,7 +70,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Etape.cs" />
     <Compile Include="FourmilliereModel.cs" />
     <Compile Include="Fourmis.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -110,6 +108,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Roi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibAbstraite\LibAbstraite.csproj">
+      <Project>{6AEE2E0B-195D-46DF-91E3-040B0FBD2FA6}</Project>
+      <Name>LibAbstraite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMetier\LibMetier.csproj">
+      <Project>{F9589684-0E85-400A-9546-10F1C7390416}</Project>
+      <Name>LibMetier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
