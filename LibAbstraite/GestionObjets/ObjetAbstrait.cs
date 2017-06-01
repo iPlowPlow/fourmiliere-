@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
+using System.Xml.Serialization;
 
 namespace LibAbstraite.GestionObjets
 {

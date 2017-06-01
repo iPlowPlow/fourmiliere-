@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibAbstraite">
+      <HintPath>..\LibMetier\bin\Debug\LibAbstraite.dll</HintPath>
+    </Reference>
+    <Reference Include="LibMetier">
+      <HintPath>..\LibMetier\bin\Debug\LibMetier.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -112,6 +119,7 @@
     <Resource Include="Roi.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <ProjectReference Include="..\LibMetier\LibMetier.csproj">
       <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
       <Name>LibMetier</Name>
