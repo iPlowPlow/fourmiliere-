@@ -22,9 +22,9 @@ namespace LibMetier
             return new Chemin(zFin, zDebut);
         }
 
-        public EnvironnementAbstrait CreerEnvironment(int _dimensionX, int _dimensionY)
+        public override EnvironnementAbstrait CreerEnvironnement(int dimensionX, int dimensionY)
         {
-            return new Fourmiliere(_dimensionX, _dimensionY);
+            return new Fourmiliere(dimensionX, dimensionY);
         }
 
         public override ObjetAbstrait CreerOeuf(string nom)
@@ -70,5 +70,7 @@ namespace LibMetier
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

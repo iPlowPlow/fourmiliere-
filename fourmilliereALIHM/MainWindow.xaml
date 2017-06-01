@@ -73,6 +73,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Name="btnSuivant"  Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
+            <Button Name="btnCharge"  Grid.Column="2"  Content="Charger" Click="btnCharge_Click"></Button>
             <Button Name="btnAvance"  Grid.Column="1" Content="avance batard" Click="btnAvance_Click" Margin="0.4,0,0.2,0.4"/>
             <Button Name="btnStop"   Grid.Column="3" Content="Stop batard" Click="btnStop_Click">
 

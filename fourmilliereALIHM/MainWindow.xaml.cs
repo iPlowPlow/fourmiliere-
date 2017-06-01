@@ -16,6 +16,15 @@ using System.Threading;
 using System.Timers;
 using System.Diagnostics;
 using System.Windows.Threading;
+using Microsoft.Win32;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using LibMetier.GestionEnvironnements;
+using LibMetier.GestionObjets;
+using LibMetier.GestionPersonnages;
+using System.Xml.Linq;
+
 namespace fourmilliereALIHM
 {
     /// <summary>
@@ -24,6 +33,7 @@ namespace fourmilliereALIHM
     public partial class MainWindow : Window
     {
         DispatcherTimer dt = new DispatcherTimer();
+        const Int32 BufferSize = 128;
         Stopwatch stopwatch = new Stopwatch();
         public MainWindow()
         {
@@ -96,6 +106,120 @@ namespace fourmilliereALIHM
                 stopwatch.Stop();
             }
             Dessine();
+        }
+        private void btnCharge_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder output = new StringBuilder();
+            string xmlString = null;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+          
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string file = openFileDialog.FileName;
+                
+              
+
+                var myStream = new StreamReader(file, Encoding.UTF8, true, BufferSize);
+              
+                string line;
+                    using (myStream)
+                    {
+                   
+                    // Insert code to read the stream here.
+                        while ((line=myStream.ReadLine() )!=null)
+                        {
+                            xmlString += line;
+                        }
+                      
+                    }
+
+                List<Nourriture> listn = new List<Nourriture>();
+                List<Oeuf> listoe = new List<Oeuf>();
+                List<Guerriere> listg = new List<Guerriere>();
+                List<Ouvriere> listo = new List<Ouvriere>();
+                Reine reine;
+                XElement x = XElement.Load(new StringReader(xmlString));
+                if (x != null && x.Element("nourritures") != null)
+                {
+                    listn = x.Element("nourritures")
+                     .Elements("nourriture")
+                     .Select(t => new Nourriture()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                         {
+                             X = (int)c.Attribute("x"),
+                             Y =(int)c.Attribute("y")
+                         }).First(),
+                     })
+                     .ToList();
+                }
+                if (x != null && x.Element("oeufs") != null)
+                {
+                    listoe = x.Element("oeufs")
+                     .Elements("oeuf")
+                     .Select(t => new Oeuf()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                         {
+                             X = (int)c.Attribute("x"),
+                             Y = (int)c.Attribute("y")
+                         }).First(),
+                     })
+                     .ToList();
+                }
+                if (x != null && x.Element("reines") != null)
+                {
+                     reine = x.Element("reines")
+                      .Elements("reine")
+                      .Select(t => new Reine()
+                      {
+                          Nom = (string)t.Attribute("nom"),
+                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                          {
+                              X = (int)c.Attribute("x"),
+                              Y = (int)c.Attribute("y")
+                          }).First()
+                      }).First();
+                    
+                }
+                if (x != null && x.Element("Guerrieres") != null)
+                {
+                    listg = x.Element("Guerrieres")
+                     .Elements("Guerriere")
+                     .Select(t => new Guerriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                          {
+                              X = (int)c.Attribute("x"),
+                              Y = (int)c.Attribute("y")
+                          }).First()
+                     })
+                     .ToList();
+                }
+                if (x != null && x.Element("Ouvrieres") != null)
+                {
+                    listo = x.Element("Ouvrieres")
+                     .Elements("Ouvriere")
+                     .Select(t => new Ouvriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                          {
+                              X = (int)c.Attribute("x"),
+                              Y = (int)c.Attribute("y")
+                          }).First()
+                     })
+                     .ToList();
+                }
+
+                App.fourmilliereVM.AjouteOuvriere(listo);
+
+
+            }
         }
         public void initPlateau()
         {

@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace LibMetier.GestionObjets
 {
-    class Nourriture : ObjetAbstrait
+   public class Nourriture : ObjetAbstrait
     {
-      
 
+        public Nourriture()
+        {
+         
+        }
         public Nourriture(string nom)
         {
             this.Nom = nom;

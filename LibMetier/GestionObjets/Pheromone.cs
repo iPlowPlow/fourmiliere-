@@ -9,11 +9,11 @@ namespace LibMetier.GestionObjets
 {
     class Pheromone : ObjetAbstrait
     {
-        String nom { get; set; }
+      
 
         public Pheromone(string nom)
         {
-            this.nom = nom;
+            this.Nom = nom;
         }
 
     }

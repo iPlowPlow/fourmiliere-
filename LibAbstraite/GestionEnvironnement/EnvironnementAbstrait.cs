@@ -6,15 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
+using System.Xml.Serialization;
 
 namespace LibAbstraite.GestionEnvironnement
 {
+
     public abstract class EnvironnementAbstrait
     {
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
         public List<AccesAbstrait> AccesAbstraitList { get; set; }
+      
         public List<ObjetAbstrait> ObjetAbstraitList { get; set; }
+
         public List<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
         public List<ZoneAbstrait> ZoneAbstraitList { get; set; }
         public abstract void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray);
@@ -31,6 +35,7 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void Repositioner();
         public abstract string Simuler();
         public abstract string Statistiques();
+   
 
     }
 }
