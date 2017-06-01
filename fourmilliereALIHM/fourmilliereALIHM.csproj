@@ -120,6 +120,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <ProjectReference Include="..\LibMetier\LibMetier.csproj">
+      <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
+      <Name>LibMetier</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_ouvriere.png" />
+    <Resource Include="Images\nourriture.png" />
+    <Resource Include="Images\oeuf.png" />
+    <Resource Include="Images\termite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_combattante.png" />
+    <Resource Include="Images\reine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

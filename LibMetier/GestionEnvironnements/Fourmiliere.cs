@@ -15,17 +15,12 @@ namespace LibMetier.GestionEnvironnements
     [XmlRoot("fourmilliere"), Serializable]
     public class Fourmiliere : EnvironnementAbstrait
     {
-
-
         public Fourmiliere()
         {
-            
-        }
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
-       
         }
       
         public override void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray)

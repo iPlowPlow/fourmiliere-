@@ -14,7 +14,6 @@ namespace LibAbstraite.GestionPersonnage
         static Random Hazard = new Random();
         public string Nom { get; set; }
         public abstract ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList);
-       
         public CoordonneesAbstrait position
         {
             get; set;

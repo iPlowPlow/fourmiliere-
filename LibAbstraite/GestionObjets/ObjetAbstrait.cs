@@ -15,7 +15,6 @@ namespace LibAbstraite.GestionObjets
             get;
             set;
         }
-      
         public CoordonneesAbstrait position {
             get; set;
         }

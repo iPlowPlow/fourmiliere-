@@ -11,7 +11,6 @@ namespace LibAbstraite.GestionEnvironnement
     {
   
         public int X { get; set; }
-
         public int Y { get; set; }
 
         public abstract String toString();
