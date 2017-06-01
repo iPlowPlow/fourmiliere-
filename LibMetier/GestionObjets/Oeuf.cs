@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 using LibAbstraite.GestionObjets;
 namespace LibMetier.GestionObjets
 {
-    class Oeuf : ObjetAbstrait
+  public  class Oeuf : ObjetAbstrait
     {
-        
+
+        public Oeuf()
+        {
+          
+        }
         public Oeuf(string nom)
         {
             this.Nom = nom;

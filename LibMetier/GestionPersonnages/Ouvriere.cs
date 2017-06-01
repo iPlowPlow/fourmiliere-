@@ -5,15 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
 using LibAbstraite.GestionEnvironnement;
+using System.Xml.Serialization;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Ouvriere : PersonnageAbstrait
+    
+  public class Ouvriere : PersonnageAbstrait
     {
-        String nom { get; set; }
-        public Ouvriere(String _nom)
+
+        public Ouvriere()
         {
-            this.nom = _nom;
+         
+        }
+        public Ouvriere(string nom)
+        {
+            this.Nom = nom;
         }
         public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
         {

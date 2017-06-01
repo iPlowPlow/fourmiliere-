@@ -8,7 +8,7 @@ using LibAbstraite.GestionEnvironnement;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Termite : PersonnageAbstrait
+  public  class Termite : PersonnageAbstrait
     {
         String nom { get; set; }
         public Termite(String _nom)

@@ -8,12 +8,17 @@ using LibAbstraite.GestionEnvironnement;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Reine : PersonnageAbstrait 
+  public  class Reine : PersonnageAbstrait 
     {
-        String nom { get; set; }
-        public Reine(String nom)
+        public Reine()
         {
-            this.nom = nom;
+           
+        }
+
+
+        public Reine(string nom)
+        {
+            this.Nom = nom;
         }
 
         public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)

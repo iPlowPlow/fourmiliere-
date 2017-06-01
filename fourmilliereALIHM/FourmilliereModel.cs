@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
+using LibAbstraite.GestionPersonnage;
+using LibMetier.GestionPersonnages;
 namespace fourmilliereALIHM
 {
     public class FourmilliereModel : ViewModelBase
@@ -21,6 +23,7 @@ namespace fourmilliereALIHM
                 OnPropertyChanged("TitreApplication");
             } }
         public ObservableCollection<Fourmis> FourmisList { get; set; }
+        public ObservableCollection<PersonnageAbstrait> OuvriereList { get; set; }
         public Fourmis FourmisSelect { get { return fourmisse; } set {
                 fourmisse = value;
                 OnPropertyChanged("FourmisSelect");
@@ -32,13 +35,20 @@ namespace fourmilliereALIHM
             DimensionY = 30;
             vitesse = 500;
             FourmisList = new ObservableCollection<Fourmis>();
-            FourmisList.Add(new Fourmis("Alain"));
-            FourmisList.Add(new Fourmis("Cecile"));
-            FourmisList.Add(new Fourmis("Pierre"));
-            FourmisList.Add(new Fourmis("Denis"));
+            OuvriereList = new ObservableCollection<PersonnageAbstrait>();
         }
 
-        
+        public void AjouteOuvriere(List<Ouvriere> f)
+        {
+           foreach(var fourmis in f)
+            {
+                    OuvriereList.Add(fourmis);
+            }
+        }
+        public void AjouterFourmis(Fourmis f)
+        {
+            FourmisList.Add(f);
+        }
         public void AjouterFourmis()
         {
             FourmisList.Add(new Fourmis("Fourmis N°"+ FourmisList.Count));

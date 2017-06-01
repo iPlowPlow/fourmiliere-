@@ -7,7 +7,7 @@ using LibAbstraite.GestionEnvironnement;
 
 namespace LibMetier.GestionEnvironnements
 {
-    class Coordonnees : CoordonneesAbstrait
+    public class Coordonnees : CoordonneesAbstrait
     {
         public override String toString()
         {
