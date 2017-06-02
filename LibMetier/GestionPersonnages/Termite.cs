@@ -7,6 +7,7 @@ using LibAbstraite.GestionPersonnage;
 using LibAbstraite.GestionEnvironnement;
 using System.Collections.ObjectModel;
 using LibAbstraite;
+using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -16,8 +17,9 @@ namespace LibMetier.GestionPersonnages
         public Termite(String nom)
         {
             PV = 75;
-            X = 10;
-            Y = 10;
+            position = new Coordonnees();
+            position.X = 10;
+            position.Y = 10;
             ListEtape = new ObservableCollection<Etape>();
             this.Nom = nom;
         }

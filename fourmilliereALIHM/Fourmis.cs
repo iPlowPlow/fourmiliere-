@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace LibAbstraite
+namespace fourmilliereALIHM
 {
     public class Fourmis
     {

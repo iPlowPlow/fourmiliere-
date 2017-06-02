@@ -77,8 +77,11 @@ namespace LibMetier.GestionEnvironnements
         {
             foreach(var boutDeTerrain in ZoneAbstraitList)
             {
-                boutDeTerrain.PersonnageList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.OuvriereList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.GuerrierList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.ReineList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.TermiteList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                //boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
             }
         }
 

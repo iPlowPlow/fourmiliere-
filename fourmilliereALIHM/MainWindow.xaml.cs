@@ -18,7 +18,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using LibAbstraite.GestionPersonnage;
 
-namespace LibAbstraite
+namespace fourmilliereALIHM
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -53,8 +53,8 @@ namespace LibAbstraite
                 img.Source = new BitmapImage(uri);
                 
                 Plateau.Children.Add(img);
-                Grid.SetColumn(img, unPerso.X);
-                Grid.SetRow(img, unPerso.Y);
+                Grid.SetColumn(img, unPerso.position.X);
+                Grid.SetRow(img, unPerso.position.Y);
             }
         }
 

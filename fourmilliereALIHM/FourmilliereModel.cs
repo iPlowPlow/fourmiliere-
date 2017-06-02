@@ -9,8 +9,9 @@ using System.ComponentModel;
 using LibAbstraite.GestionPersonnage;
 using LibAbstraite.Fabrique;
 using LibMetier;
+using LibAbstraite;
 
-namespace LibAbstraite
+namespace fourmilliereALIHM
 {
     public class FourmilliereModel : ViewModelBase
     {
