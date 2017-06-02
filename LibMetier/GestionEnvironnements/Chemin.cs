@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
 namespace LibMetier.GestionEnvironnements
 {
-    class Chemin : AccesAbstrait
+    public class Chemin : AccesAbstrait
     {
  
         public Chemin(ZoneAbstrait zFin, ZoneAbstrait zDebut)

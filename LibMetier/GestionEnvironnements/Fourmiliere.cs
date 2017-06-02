@@ -7,15 +7,33 @@ using System.Threading.Tasks;
 using LibAbstraite.Fabrique;
 using LibAbstraite.GestionObjets;
 using LibAbstraite.GestionPersonnage;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace LibMetier.GestionEnvironnements
 {
-    class Fourmiliere : EnvironnementAbstrait
+    public class Fourmiliere : EnvironnementAbstrait
     {
+
+      
+
+
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
+            TitreApplication = "Application FourmilliereAL";
+            vitesse = 500;
+
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
+
+            
+            Fabrique = new FabriqueFourmiliere();
+            PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
+            PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Alain"));
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
+            PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
+
         }
 
         public override void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray)
@@ -23,19 +41,16 @@ namespace LibMetier.GestionEnvironnements
             throw new NotImplementedException();
         }
 
-        public override void AjouteFourmis(PersonnageAbstrait unPersonnage)
-        {
-            this.PersonnageAbstraitList.Add(unPersonnage);
-        }
+       
 
         public override void AjouteNourriture(ObjetAbstrait unObject)
         {
-            this.ObjetAbstraitList.Add(unObject);
+            this.ObjetList.Add(unObject);
         }
 
         public override void AjouteOeuf(ObjetAbstrait unObject)
         {
-            this.ObjetAbstraitList.Add(unObject);
+            this.ObjetList.Add(unObject);
         }
 
         public override void AjoutePheromone(ObjetAbstrait unObject)
@@ -43,14 +58,9 @@ namespace LibMetier.GestionEnvironnements
             throw new NotImplementedException();
         }
 
-        public override void AjouteTermite(PersonnageAbstrait unPersonnage)
-        {
-            this.PersonnageAbstraitList.Add(unPersonnage);
-        }
-
         public override void AjouteZone(params ZoneAbstrait[] zoneArray)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void ChargerEnv(FabriqueAbstraite fab)
@@ -75,13 +85,13 @@ namespace LibMetier.GestionEnvironnements
 
         public override void Repositioner()
         {
-            foreach(var boutDeTerrain in ZoneAbstraitList)
+            foreach(var boutDeTerrain in ZoneList)
             {
-                boutDeTerrain.OuvriereList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.GuerrierList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.ReineList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.TermiteList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                //boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.OuvriereList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.GuerrierList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.ReineList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.TermiteList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                //boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
             }
         }
 
@@ -94,5 +104,45 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+
+        public void SupprimerPersonnage()
+        {
+            PersonnagesList.Remove(PersoSelect);
+        }
+
+        public void TourSuivant()
+        {
+            tourActuel++;
+            for (int i = PersonnagesList.Count - 1; i >= 0; i--)
+            {
+                PersonnagesList[i].Avance1Tour(DimensionX, DimensionY, tourActuel);
+                if (PersonnagesList[i].PV <= 0)
+                {
+                    PersonnagesMortList.Add(PersonnagesList[i]);
+                    PersonnagesList.Remove(PersonnagesList[i]);
+                }
+
+            }
+        }
+
+        public void Avance()
+        {
+            encours = true;
+            while (encours == true)
+            {
+                Thread.Sleep(vitesse);
+                TourSuivant();
+
+            }
+        }
+        public void Stop()
+        {
+            encours = false;
+        }
+
+
+
+
+
     }
 }

@@ -13,9 +13,7 @@ namespace LibAbstraite.GestionPersonnage
     {
         static Random Hazard = new Random();
         public string Nom { get; set; }
-
         public int pv {get; set;}
-
         public int PV
         {
             get { return pv; }
@@ -25,6 +23,7 @@ namespace LibAbstraite.GestionPersonnage
                 OnPropertyChanged("PV");
             }
         }
+        public ZoneAbstrait zone;
 
         public abstract ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList);
         public CoordonneesAbstrait position

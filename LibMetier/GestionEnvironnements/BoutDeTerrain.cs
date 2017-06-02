@@ -9,7 +9,7 @@ using LibAbstraite.GestionPersonnage;
 
 namespace LibMetier.GestionEnvironnements
 {
-    class BoutDeTerrain : ZoneAbstrait
+    public class BoutDeTerrain : ZoneAbstrait
     {
 
         public BoutDeTerrain(string nom)

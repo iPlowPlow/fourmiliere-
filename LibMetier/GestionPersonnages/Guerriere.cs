@@ -11,7 +11,7 @@ using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Guerriere : PersonnageAbstrait
+    public class Guerriere : PersonnageAbstrait
     {
 
         public Guerriere(string nom)
@@ -35,7 +35,12 @@ namespace LibMetier.GestionPersonnages
         }
         public override void AnalyseSituation()
         {
-            throw new NotImplementedException();
+            /*Si termite sur sa case l'attaquer*/
+            if (zone.TermiteList.Count > 0)
+            {
+
+            }
+            
         }
 
     }
