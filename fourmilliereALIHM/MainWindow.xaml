@@ -19,7 +19,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FourmisList}" SelectedItem="{Binding FourmisSelect}" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding fourmilliere.PersonnageAbstraitList}" SelectedItem="{Binding FourmisSelect}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -30,13 +30,13 @@
                         </Grid.ColumnDefinitions>
                         <Image Source="aviatrix.jpg" Width="30" Grid.Column="0"></Image>
                         <TextBlock Text="{Binding Nom}" Grid.Column="1"></TextBlock>
-                        <TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>
+                      <!--  <TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>-->
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding FourmisList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding fourmilliere.PersonnageAbstraitList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_2"  >
             <Button.Content>
                 <Image Source="aviatrix.jpg">
@@ -71,11 +71,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Name="btnSuivant"  Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
             <Button Name="btnCharge"  Grid.Column="2"  Content="Charger" Click="btnCharge_Click"></Button>
+            <Button Name="btnSave"  Grid.Column="3"  Content="Sauvegarder" Click="btnSave_Click"></Button>
             <Button Name="btnAvance"  Grid.Column="1" Content="avance batard" Click="btnAvance_Click" Margin="0.4,0,0.2,0.4"/>
-            <Button Name="btnStop"   Grid.Column="3" Content="Stop batard" Click="btnStop_Click">
+            <Button Name="btnStop"   Grid.Column="4" Content="Stop batard" Click="btnStop_Click">
 
             </Button>
         </Grid>

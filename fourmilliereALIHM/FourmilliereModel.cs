@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
-
+using LibAbstraite.GestionPersonnage;
+using LibAbstraite.GestionObjets;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionEnvironnements;
+using LibMetier.GestionObjets;
 namespace fourmilliereALIHM
 {
     public class FourmilliereModel : ViewModelBase
@@ -17,7 +19,7 @@ namespace fourmilliereALIHM
         private string titre;
         private Fourmis fourmisse;
         public int DimensionX;
-        public Fourmiliere fourmilliere;
+        public Fourmiliere fourmilliere { get; set; }
         public int DimensionY;
         public int vitesse;
         public string TitreApplication { get { return titre;} set {
@@ -33,20 +35,58 @@ namespace fourmilliereALIHM
         public  FourmilliereModel()
         {
             TitreApplication = "Application FourmilliereAL";
-            DimensionX = 20;
-            DimensionY = 30;
+            DimensionX = 60;
+            DimensionY = 60;
             vitesse = 500;
             fourmilliere = new Fourmiliere();
+            fourmilliere.PersonnageAbstraitList = new ObservableCollection<PersonnageAbstrait>();
+
+            fourmilliere.ObjetAbstraitList = new List<ObjetAbstrait>();
             FourmisList = new ObservableCollection<Fourmis>();
+            FourmisList.Add(new Fourmis("bob"));
            
         }
-
+        public void AjouteOeuf(List<Oeuf> o)
+        {
+            foreach (var oeuf in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(oeuf);
+            }
+        }
+        public void AjouteNourriture(List<Nourriture> o)
+        {
+            foreach (var n in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(n);
+            }
+        }
+        public void AjoutePheromone(List<Pheromone> o)
+        {
+            foreach (var n in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(n);
+            }
+        }
         public void AjouteOuvriere(List<Ouvriere> f)
         {
            foreach(var fourmis in f)
             {
                     fourmilliere.PersonnageAbstraitList.Add(fourmis);
             }
+        }
+        public void AjouteGuerriere(List<Guerriere> f)
+        {
+            foreach (var fourmis in f)
+            {
+                fourmilliere.PersonnageAbstraitList.Add(fourmis);
+            }
+        }
+        public void AjouteReine(Reine f)
+        {
+
+
+            fourmilliere.PersonnageAbstraitList.Add(f);
+            
         }
         public void AjouterFourmis(Fourmis f)
         {
@@ -62,7 +102,7 @@ namespace fourmilliereALIHM
         }
         public void TourSuivant()
         {
-            foreach( Fourmis uneFourmi in FourmisList)
+            foreach( PersonnageAbstrait uneFourmi in fourmilliere.PersonnageAbstraitList)
             {
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }

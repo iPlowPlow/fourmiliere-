@@ -33,7 +33,7 @@ namespace LibMetier.GestionEnvironnements
             throw new NotImplementedException();
         }
 
-        public void AjoutePheromone(ObjetAbstrait pheromone)
+        public override void AjoutePheromone(ObjetAbstrait pheromone)
         {
             ObjetList.Add(pheromone);
         }
@@ -62,5 +62,7 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

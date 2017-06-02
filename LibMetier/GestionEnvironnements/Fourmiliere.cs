@@ -17,6 +17,7 @@ namespace LibMetier.GestionEnvironnements
     {
         public Fourmiliere()
         {
+        }
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
             this.DimensionX = _dimensionX;

@@ -9,7 +9,7 @@ using LibAbstraite.GestionEnvironnement;
 namespace LibMetier.GestionPersonnages
 {
   public  class Termite : PersonnageAbstrait
-    class Termite : PersonnageAbstrait
+    
     {
         String nom { get; set; }
         public Termite(String _nom)
@@ -19,6 +19,18 @@ namespace LibMetier.GestionPersonnages
         public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
         {
             throw new NotImplementedException();
+        }
+        public override void Avance1Tour(int dimX, int dimY)
+        {
+            AvanceAuHazard(dimX, dimY);
+            //ListEtape.Add(new Etape());
+        }
+        public override void AvanceAuHazard(int dimX, int dimY)
+        {
+            int newX = position.X + Hazard.Next(3) - 1;
+            int newY = position.Y + Hazard.Next(3) - 1;
+            if ((newX >= 0) && (newX < dimX)) position.X = newX;
+            if ((newY >= 0) && (newY < dimX)) position.Y = newY;
         }
     }
 }

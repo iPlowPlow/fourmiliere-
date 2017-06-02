@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace LibMetier.GestionObjets
 {
-    class Pheromone : ObjetAbstrait
+   public class Pheromone : ObjetAbstrait
     {
-      
 
+        public Pheromone()
+        {
+       
+        }
         public Pheromone(string nom)
         {
             this.Nom = nom;

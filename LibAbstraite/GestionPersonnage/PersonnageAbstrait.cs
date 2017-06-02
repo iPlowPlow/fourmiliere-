@@ -11,13 +11,16 @@ namespace LibAbstraite.GestionPersonnage
 
     public abstract class PersonnageAbstrait
     {
-        static Random Hazard = new Random();
+        public static Random Hazard = new Random();
         public string Nom { get; set; }
         public abstract ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList);
         public CoordonneesAbstrait position
         {
             get; set;
         }
+        public abstract void Avance1Tour(int dimX, int dimY);
 
+        public abstract void AvanceAuHazard(int dimX, int dimY);
+      
     }
 }
