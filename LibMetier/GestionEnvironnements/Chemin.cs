@@ -9,9 +9,11 @@ namespace LibMetier.GestionEnvironnements
     class Chemin : AccesAbstrait
     {
  
-        public Chemin(List<ZoneAbstrait> zoneaccess)
+        public Chemin(ZoneAbstrait zFin, ZoneAbstrait zDebut)
         {
-            zonesaccessibles = zoneaccess;
+       
+            this.Debut = zDebut;
+            this.Fin = zFin;
         }
 
     }

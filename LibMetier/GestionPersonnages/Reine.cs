@@ -19,10 +19,9 @@ namespace LibMetier.GestionPersonnages
         public Reine(string nom)
         {
             this.Nom = nom;
-            this.pointsdevie = 500;
         }
 
-        public override ZoneAbstrait ChoixZoneSuivante()
+        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
         {
             throw new NotImplementedException();
         }

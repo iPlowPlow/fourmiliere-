@@ -38,9 +38,5 @@ namespace fourmilliereALIHM
             if ((newX >= 0) && (newX < dimX)) X = newX;
             if ((newY >= 0) && (newY < dimX)) Y = newY;
         }
-        public void RameneNourriture()
-        {
-
-        }
     }
 }

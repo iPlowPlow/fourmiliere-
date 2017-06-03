@@ -1,4 +1,4 @@
-using LibAbstraite.GestionEnvironnement;
+﻿using LibAbstraite.GestionEnvironnement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,57 +15,38 @@ namespace LibMetier.GestionEnvironnements
     [XmlRoot("fourmilliere"), Serializable]
     public class Fourmiliere : EnvironnementAbstrait
     {
+        public Fourmiliere()
+        {
+        }
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
         }
-        //après le déplacement du personnage, ajoute les 4 zones adjacentes à la zone du personnage dans les zones accessibles du
-        //personnage
-        public override void AjouteChemin(PersonnageAbstrait unpersonnage)
+      
+        public override void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray)
         {
-            unpersonnage.choixZoneSuivante.zonesaccessibles.Clear();
-            CoordonneesAbstrait positionPersonnage = unpersonnage.position;
-            for (int i = -1; i<=1; i+=2)
-            {
-                for(int j = -1; j <= 1; j += 2)
-                {
-                    try
-                    {
-                        unpersonnage.choixZoneSuivante.zonesaccessibles.Add(ZoneAbstraitList
-                            .Single(z => z.position.X == positionPersonnage.X + i && z.position.Y == positionPersonnage.X + j));
-                    }
-                    catch(Exception e)
-                    {
-
-                    }
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        public override void AjouteFourmis(PersonnageAbstrait uneFourmi)
+        public override void AjouteFourmis(PersonnageAbstrait unPersonnage)
         {
-            this.PersonnageAbstraitList.Add(uneFourmi);
+            this.PersonnageAbstraitList.Add(unPersonnage);
         }
 
-        public override void AjouteCombattante(PersonnageAbstrait uneCombattante)
+        public override void AjouteNourriture(ObjetAbstrait unObject)
         {
-            this.PersonnageAbstraitList.Add(uneCombattante);
+            this.ObjetAbstraitList.Add(unObject);
         }
 
-        public override void AjouteNourriture(ObjetAbstrait nourriture)
+        public override void AjouteOeuf(ObjetAbstrait unObject)
         {
-            this.ObjetAbstraitList.Add(nourriture);
+            this.ObjetAbstraitList.Add(unObject);
         }
 
-        public override void AjouteOeuf(ObjetAbstrait unOeuf)
+        public override void AjoutePheromone(ObjetAbstrait unObject)
         {
-            this.ObjetAbstraitList.Add(unOeuf);
-        }
-
-        public override void AjoutePheromone(ObjetAbstrait unPheromone)
-        {
-            this.ObjetAbstraitList.Add(unPheromone);
+            throw new NotImplementedException();
         }
 
         public override void AjouteTermite(PersonnageAbstrait unPersonnage)
@@ -102,8 +83,6 @@ namespace LibMetier.GestionEnvironnements
         {
             foreach(var boutDeTerrain in ZoneAbstraitList)
             {
-                boutDeTerrain.PersonnageList.Clear();
-                boutDeTerrain.ObjetList.Clear();
                 boutDeTerrain.PersonnageList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
                 boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
             }
