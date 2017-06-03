@@ -11,7 +11,7 @@ namespace LibMetier.GestionEnvironnements
  
         public Chemin(List<ZoneAbstrait> zoneaccess)
         {
-            zonesaccessibles = zoneaccess;
+            Zonesaccessibles = zoneaccess;
         }
 
     }

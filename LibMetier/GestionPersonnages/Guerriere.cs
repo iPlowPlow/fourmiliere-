@@ -18,9 +18,9 @@ namespace LibMetier.GestionPersonnages
         public Guerriere(string nom)
         {
             this.Nom = nom;
-            this.pointsdevie = 50;
+            this.Pointsdevie = 50;
         }
-        public override ZoneAbstrait ChoixZoneSuivante()
+        public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
         }
@@ -31,10 +31,10 @@ namespace LibMetier.GestionPersonnages
         }
         public override void AvanceAuHazard(int dimX, int dimY)
         {
-            int newX = this.position.X + Hazard.Next(3) - 1;
-            int newY = this.position.Y + Hazard.Next(3) - 1;
-            if ((newX >= 0) && (newX < dimX)) this.position.X = newX;
-            if ((newY >= 0) && (newY < dimX)) this.position.Y = newY;
+            int newX = this.Position.X + Hazard.Next(3) - 1;
+            int newY = this.Position.Y + Hazard.Next(3) - 1;
+            if ((newX >= 0) && (newX < dimX)) this.Position.X = newX;
+            if ((newY >= 0) && (newY < dimX)) this.Position.Y = newY;
         }
     }
 }

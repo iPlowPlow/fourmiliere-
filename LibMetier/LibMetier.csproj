@@ -45,6 +45,7 @@
     <Compile Include="GestionEnvironnements\Chemin.cs" />
     <Compile Include="GestionEnvironnements\Coordonnees.cs" />
     <Compile Include="GestionEnvironnements\Fourmiliere.cs" />
+    <Compile Include="GestionObjets\MorceauNourriture.cs" />
     <Compile Include="GestionObjets\Nourriture.cs" />
     <Compile Include="GestionObjets\Oeuf.cs" />
     <Compile Include="GestionObjets\Pheromone.cs" />

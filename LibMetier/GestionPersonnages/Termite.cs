@@ -14,9 +14,9 @@ namespace LibMetier.GestionPersonnages
         public Termite(String _nom)
         {
             this.nom = _nom;
-            this.pointsdevie = 30;
+            this.Pointsdevie = 30;
         }
-        public override ZoneAbstrait ChoixZoneSuivante()
+        public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
         }
@@ -27,10 +27,10 @@ namespace LibMetier.GestionPersonnages
         }
         public override void AvanceAuHazard(int dimX, int dimY)
         {
-            int newX = position.X + Hazard.Next(3) - 1;
-            int newY = position.Y + Hazard.Next(3) - 1;
-            if ((newX >= 0) && (newX < dimX)) position.X = newX;
-            if ((newY >= 0) && (newY < dimX)) position.Y = newY;
+            int newX = Position.X + Hazard.Next(3) - 1;
+            int newY = Position.Y + Hazard.Next(3) - 1;
+            if ((newX >= 0) && (newX < dimX)) Position.X = newX;
+            if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
         }
     }
 }

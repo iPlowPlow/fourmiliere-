@@ -15,6 +15,10 @@ namespace LibMetier.GestionEnvironnements
     [XmlRoot("fourmilliere"), Serializable]
     public class Fourmiliere : EnvironnementAbstrait
     {
+        public Fourmiliere()
+        {
+
+        }
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
             this.DimensionX = _dimensionX;
@@ -24,16 +28,16 @@ namespace LibMetier.GestionEnvironnements
         //personnage
         public override void AjouteChemin(PersonnageAbstrait unpersonnage)
         {
-            unpersonnage.choixZoneSuivante.zonesaccessibles.Clear();
-            CoordonneesAbstrait positionPersonnage = unpersonnage.position;
+            unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Clear();
+            CoordonneesAbstrait positionPersonnage = unpersonnage.Position;
             for (int i = -1; i<=1; i+=2)
             {
                 for(int j = -1; j <= 1; j += 2)
                 {
                     try
                     {
-                        unpersonnage.choixZoneSuivante.zonesaccessibles.Add(ZoneAbstraitList
-                            .Single(z => z.position.X == positionPersonnage.X + i && z.position.Y == positionPersonnage.X + j));
+                        unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Add(ZoneAbstraitList
+                            .Single(z => z.Position.X == positionPersonnage.X + i && z.Position.Y == positionPersonnage.X + j));
                     }
                     catch(Exception e)
                     {
@@ -104,8 +108,8 @@ namespace LibMetier.GestionEnvironnements
             {
                 boutDeTerrain.PersonnageList.Clear();
                 boutDeTerrain.ObjetList.Clear();
-                boutDeTerrain.PersonnageList.AddRange(PersonnageAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+                boutDeTerrain.PersonnageList.AddRange(PersonnageAbstraitList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
+                boutDeTerrain.ObjetList.AddRange(ObjetAbstraitList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
             }
         }
 

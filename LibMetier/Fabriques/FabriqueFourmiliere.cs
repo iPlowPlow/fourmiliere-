@@ -32,13 +32,13 @@ namespace LibMetier
             return new Oeuf(nom);
         }
 
-        public override ObjetAbstrait CreerNourriture(string nom)
+        public override ObjetAbstrait CreerNourriture(string nom, CoordonneesAbstrait position)
         {
-            return new Nourriture(nom);
+            return new Nourriture(nom, position);
         }
-        public override ObjetAbstrait CreerPheromone(string nom, CoordonneesAbstrait coord)
+        public override ObjetAbstrait CreerPheromone(string nom, CoordonneesAbstrait position)
         {
-            return new Pheromone(nom, coord);
+            return new Pheromone(nom, position);
         }
 
         public override PersonnageAbstrait CreerReine(string nom)
@@ -46,9 +46,9 @@ namespace LibMetier
             return new Reine(nom);
         }
 
-        public override PersonnageAbstrait CreerOuvriere(string nom)
+        public override PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position)
         {
-            return new Ouvriere(nom);
+            return new Ouvriere(nom, position);
         }
 
         public override PersonnageAbstrait CreerGuerriere(string nom)

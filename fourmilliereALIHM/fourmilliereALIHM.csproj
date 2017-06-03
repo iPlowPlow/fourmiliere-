@@ -35,12 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibAbstraite">
-      <HintPath>..\LibMetier\bin\Debug\LibAbstraite.dll</HintPath>
-    </Reference>
-    <Reference Include="LibMetier">
-      <HintPath>..\LibMetier\bin\Debug\LibMetier.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -119,7 +113,14 @@
     <Resource Include="Roi.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <ProjectReference Include="..\LibAbstraite\LibAbstraite.csproj">
+      <Project>{6aee2e0b-195d-46df-91e3-040b0fbd2fa6}</Project>
+      <Name>LibAbstraite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMetier\LibMetier.csproj">
+      <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
+      <Name>LibMetier</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LibMetier\LibMetier.csproj">
       <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
       <Name>LibMetier</Name>
@@ -134,6 +135,12 @@
   <ItemGroup>
     <Resource Include="Images\fourmi_combattante.png" />
     <Resource Include="Images\reine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_ouvriere_chargee.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

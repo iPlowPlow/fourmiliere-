@@ -45,7 +45,8 @@ namespace fourmilliereALIHM
             DataContext = App.fourmilliereVM;
             dt.Tick += Redessine_Tick;
             dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
-        
+            initPlateau();
+
         }
         private void Redessine_Tick(object sender, EventArgs e)
         {
@@ -58,60 +59,68 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
+            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.fourmilliere.ObjetAbstraitList)
+            {
+                Image img = new Image();
+                if (unObjet.GetType().Equals(typeof(Oeuf)))
+                {
+                    Uri uri = new Uri("Images/oeuf.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.GetType().Equals(typeof(Nourriture)))
+                {
+                    Uri uri = new Uri("Images/nourriture.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.GetType().Equals(typeof(Pheromone)))
+                {
+                    Pheromone pheromone = (Pheromone)unObjet;
+                    byte opacity = Convert.ToByte(pheromone.Dureevie * (255 / Pheromone.DUREE_VIE_ORIGINALE));
+                    Color color = Color.FromArgb(opacity, 0, 0, 255);
+                    Rectangle pheromoneBox = new Rectangle();
+                    pheromoneBox.Fill = new SolidColorBrush(color);
+                    Plateau.Children.Add(pheromoneBox);
+                    Grid.SetColumn(pheromoneBox, pheromone.Position.X);
+                    Grid.SetRow(pheromoneBox, pheromone.Position.Y);
+                }
+                else
+                {
+                    Plateau.Children.Add(img);
+                    Grid.SetColumn(img, unObjet.Position.X);
+                    Grid.SetRow(img, unObjet.Position.Y);
+                }
+            }
             foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.fourmilliere.PersonnageAbstraitList)
             {
                 Image img = new Image();
-                if (unInsecte.Nom.Contains("guerriere"))
+                if (unInsecte.GetType().Equals(typeof(Guerriere)))
                 {
                     Uri uri = new Uri("Images/fourmi_combattante.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-                if (unInsecte.Nom.Contains("ouvriere"))
+                if (unInsecte.GetType().Equals(typeof(Ouvriere)))
                 {
-                    Uri uri = new Uri("Images/fourmi_ouvriere.png", UriKind.Relative);
+                    string source = "Images/fourmi_ouvriere.png";
+                    if (unInsecte.TransporteNourriture)
+                    {
+                        source = "Images/fourmi_ouvriere_chargee.png";
+                    }
+                    Uri uri = new Uri(source, UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-                if (unInsecte.Nom.Contains("reine"))
+                if (unInsecte.GetType().Equals(typeof(Reine)))
                 {
                     Uri uri = new Uri("Images/reine.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-                if (unInsecte.Nom.Contains("termite"))
+                if (unInsecte.GetType().Equals(typeof(Termite)))
                 {
                     Uri uri = new Uri("Images/termite.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
                 Plateau.Children.Add(img);
-                Grid.SetColumn(img, unefourmi.position.X);
-                Grid.SetRow(img, unefourmi.position.Y);
-            }
-            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.fourmilliere.ObjetAbstraitList)
-            {
-                Image img = new Image();
-                if (unObjet.Nom.Contains("oeuf"))
-                {
-                    Uri uri = new Uri("Images/oeuf.png", UriKind.Relative);
-                    img.Source = new BitmapImage(uri);
-                }
-                if (unObjet.Nom.Contains("nourriture"))
-                {
-                    Uri uri = new Uri("Images/nourriture.png", UriKind.Relative);
-                    img.Source = new BitmapImage(uri);
-                }
-                if (unObjet.Nom.Contains("pheromone"))
-                {
-                    byte opacity = Convert.ToByte(unObjet.dureevie*(255/unObjet.dureevieoriginale);
-                    Color color = Color.FromArgb(opacity, 0, 0, 255);
-                    Rectangle pheromoneBox = new Rectangle();
-                    pheromoneBox.Fill = new SolidColorBrush(color);
-                    Plateau.Children.Add(pheromoneBox);
-                    Grid.SetColumn(pheromoneBox, unePheromone.position.X);
-                    Grid.SetRow(pheromoneBox, unePheromone.position.Y);
-                }else{
-                  Plateau.Children.Add(img);
-                  Grid.SetColumn(img, unefourmi.position.X);
-                  Grid.SetRow(img, unefourmi.position.Y);
-                }
+                Grid.SetColumn(img, unInsecte.Position.X);
+                Grid.SetRow(img, unInsecte.Position.Y);
             }
         }
 
@@ -159,7 +168,7 @@ namespace fourmilliereALIHM
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<PersonnageAbstrait> listp=App.fourmilliereVM.fourmilliere.PersonnageAbstraitList;
-            List<ObjetAbstrait> listo = App.fourmilliereVM.fourmilliere.ObjetAbstraitList;
+            ObservableCollection<ObjetAbstrait> listo = App.fourmilliereVM.fourmilliere.ObjetAbstraitList;
             var doc = new XDocument(
                 new XElement("Simulation",
                     new XElement("fourmilieres",
@@ -175,8 +184,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
                                 )
                              )
                         )
@@ -188,8 +197,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
                                 )
                              )
                         )
@@ -214,8 +223,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
                                 )
                              )
                         )
@@ -227,8 +236,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
                                 )
                              )
                         )
@@ -240,8 +249,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
                                 )
                              )
                         )
@@ -302,7 +311,7 @@ namespace fourmilliereALIHM
                          DimensionX = (int)t.Attribute("x"),
                          DimensionY = (int)t.Attribute("y"),
                          PersonnageAbstraitList = new ObservableCollection<PersonnageAbstrait>(),
-                         ObjetAbstraitList= new List<ObjetAbstrait>(),
+                         ObjetAbstraitList= new ObservableCollection<ObjetAbstrait>(),
                          AccesAbstraitList = new List<AccesAbstrait>(),
                          ZoneAbstraitList= new List<ZoneAbstrait>()
                      }).First();
@@ -316,7 +325,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees")
+                         Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -328,7 +337,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Oeuf()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees")
+                         Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -340,7 +349,7 @@ namespace fourmilliereALIHM
                       .Select(t => new Reine()
                       {
                           Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
                     App.fourmilliereVM.AjouteReine(reine);
@@ -352,7 +361,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Guerriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -364,7 +373,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Ouvriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -376,7 +385,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Pheromone()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                         Position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
                          {
                              X = (int)c.Attribute("x"),
                              Y = (int)c.Attribute("y")

@@ -10,8 +10,9 @@ namespace LibMetier.GestionObjets
 {
     public class Pheromone : ObjetAbstrait
     {
+        public const int DUREE_VIE_ORIGINALE = 25;
         //décrémenté à chaque tour
-        public int dureevie;
+        public int Dureevie { get; set;}
         public Pheromone()
         {
         
@@ -19,13 +20,13 @@ namespace LibMetier.GestionObjets
         public Pheromone(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
-            this.position = position;
-            dureevie = 25;
+            this.Position = position;
+            Dureevie = DUREE_VIE_ORIGINALE;
         }
 
-        public void TourPasse()
+        public override void TourPasse()
         {
-            dureevie --;
+            Dureevie --;
         }
 
     }

@@ -12,7 +12,7 @@ namespace LibAbstraite.GestionEnvironnement
     {
         public  List<AccesAbstrait> AccesAbstraitList { get; set; }
         public string Nom { get; set; }
-        public CoordonneesAbstrait position { get; set; }
+        public CoordonneesAbstrait Position { get; set; }
         public List<ObjetAbstrait> ObjetList { get; set; }
         public List<PersonnageAbstrait> PersonnageList { get; set; }
         public abstract void AjouteAcces(AccesAbstrait acces);

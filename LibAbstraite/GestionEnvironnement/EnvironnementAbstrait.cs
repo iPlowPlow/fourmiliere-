@@ -18,7 +18,7 @@ namespace LibAbstraite.GestionEnvironnement
         public int DimensionY { get; set; }
         public List<AccesAbstrait> AccesAbstraitList { get; set; }
       
-        public List<ObjetAbstrait> ObjetAbstraitList { get; set; }
+        public ObservableCollection<ObjetAbstrait> ObjetAbstraitList { get; set; }
 
         public ObservableCollection<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
         public List<ZoneAbstrait> ZoneAbstraitList { get; set; }
