@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,9 +11,10 @@ using LibAbstraite.GestionObjets;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionObjets;
+
 namespace fourmilliereALIHM
 {
-    public class FourmilliereModel : ViewModelBase
+    public class FourmilliereModel : ViewModelBase 
     {
         private Boolean encours;
         private string titre;
@@ -27,7 +28,8 @@ namespace fourmilliereALIHM
                 OnPropertyChanged("TitreApplication");
             } }
         public ObservableCollection<Fourmis> FourmisList { get; set; }
-        
+        public ObservableCollection<Pheromone> PheromoneList { get; set; }
+
         public Fourmis FourmisSelect { get { return fourmisse; } set {
                 fourmisse = value;
                 OnPropertyChanged("FourmisSelect");
@@ -38,13 +40,12 @@ namespace fourmilliereALIHM
             DimensionX = 60;
             DimensionY = 60;
             vitesse = 500;
-            fourmilliere = new Fourmiliere();
+            fourmilliere = new Fourmiliere(DimensionX, DimensionY);
             fourmilliere.PersonnageAbstraitList = new ObservableCollection<PersonnageAbstrait>();
 
             fourmilliere.ObjetAbstraitList = new List<ObjetAbstrait>();
             FourmisList = new ObservableCollection<Fourmis>();
             FourmisList.Add(new Fourmis("bob"));
-           
         }
         public void AjouteOeuf(List<Oeuf> o)
         {
@@ -102,8 +103,22 @@ namespace fourmilliereALIHM
         }
         public void TourSuivant()
         {
-            foreach( PersonnageAbstrait uneFourmi in fourmilliere.PersonnageAbstraitList)
+            foreach (Pheromone unePheromone in PheromoneList.ToList())
             {
+                if (unePheromone.dureevie < 1)
+                {
+                    PheromoneList.Remove(unePheromone);
+                }
+            }
+            foreach (Pheromone unePheromone in PheromoneList)
+            {
+                unePheromone.TourPasse();
+            }
+            foreach(PersonnageAbstrait uneFourmi in fourmilliere.PersonnageAbstraitList)
+            {
+                Coordonnees coordonnees = new Coordonnees(uneFourmi.X, uneFourmi.Y);
+                Pheromone unPheromone = new Pheromone("pheromone de fourmi", coordonnees);
+                App.fourmilliereVM.PheromoneList.Add(unPheromone);
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }
         }

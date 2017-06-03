@@ -17,9 +17,9 @@ namespace LibMetier
         public override String Titre { get; }
 
 
-        public override AccesAbstrait CreerAcces(ZoneAbstrait zDebut, ZoneAbstrait zFin)
+        public override AccesAbstrait CreerAcces(List<ZoneAbstrait> zoneaccessibles)
         {
-            return new Chemin(zFin, zDebut);
+            return new Chemin(zoneaccessibles);
         }
 
         public override EnvironnementAbstrait CreerEnvironnement(int dimensionX, int dimensionY)
@@ -36,9 +36,9 @@ namespace LibMetier
         {
             return new Nourriture(nom);
         }
-        public override ObjetAbstrait CreerPheromone(string nom)
+        public override ObjetAbstrait CreerPheromone(string nom, CoordonneesAbstrait coord)
         {
-            return new Pheromone(nom);
+            return new Pheromone(nom, coord);
         }
 
         public override PersonnageAbstrait CreerReine(string nom)

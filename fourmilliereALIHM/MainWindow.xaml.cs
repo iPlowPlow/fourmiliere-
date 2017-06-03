@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,53 +58,60 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
-            foreach (PersonnageAbstrait unefourmi in App.fourmilliereVM.fourmilliere.PersonnageAbstraitList)
+            foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.fourmilliere.PersonnageAbstraitList)
             {
                 Image img = new Image();
-                if (unefourmi.Nom.Contains("guerriere"))
+                if (unInsecte.Nom.Contains("guerriere"))
                 {
                     Uri uri = new Uri("Images/fourmi_combattante.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-                if (unefourmi.Nom.Contains("ouvriere"))
+                if (unInsecte.Nom.Contains("ouvriere"))
                 {
                     Uri uri = new Uri("Images/fourmi_ouvriere.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-                if (unefourmi.Nom.Contains("reine"))
+                if (unInsecte.Nom.Contains("reine"))
                 {
                     Uri uri = new Uri("Images/reine.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-              
-                
-                Plateau.Children.Add(img);
-                Grid.SetColumn(img, unefourmi.position.X);
-                Grid.SetRow(img, unefourmi.position.Y);
-            }
-            foreach (ObjetAbstrait unefourmi in App.fourmilliereVM.fourmilliere.ObjetAbstraitList)
-            {
-                Image img = new Image();
-                if (unefourmi.Nom.Contains("oeuf"))
-                {
-                    Uri uri = new Uri("Images/oeuf.png", UriKind.Relative);
-                    img.Source = new BitmapImage(uri);
-                }
-                if (unefourmi.Nom.Contains("nourriture"))
-                {
-                    Uri uri = new Uri("Images/nourriture.png", UriKind.Relative);
-                    img.Source = new BitmapImage(uri);
-                }
-                if (unefourmi.Nom.Contains("pheromone"))
+                if (unInsecte.Nom.Contains("termite"))
                 {
                     Uri uri = new Uri("Images/termite.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                 }
-
-
                 Plateau.Children.Add(img);
                 Grid.SetColumn(img, unefourmi.position.X);
                 Grid.SetRow(img, unefourmi.position.Y);
+            }
+            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.fourmilliere.ObjetAbstraitList)
+            {
+                Image img = new Image();
+                if (unObjet.Nom.Contains("oeuf"))
+                {
+                    Uri uri = new Uri("Images/oeuf.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.Nom.Contains("nourriture"))
+                {
+                    Uri uri = new Uri("Images/nourriture.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.Nom.Contains("pheromone"))
+                {
+                    byte opacity = Convert.ToByte(unObjet.dureevie*(255/unObjet.dureevieoriginale);
+                    Color color = Color.FromArgb(opacity, 0, 0, 255);
+                    Rectangle pheromoneBox = new Rectangle();
+                    pheromoneBox.Fill = new SolidColorBrush(color);
+                    Plateau.Children.Add(pheromoneBox);
+                    Grid.SetColumn(pheromoneBox, unePheromone.position.X);
+                    Grid.SetRow(pheromoneBox, unePheromone.position.Y);
+                }else{
+                  Plateau.Children.Add(img);
+                  Grid.SetColumn(img, unefourmi.position.X);
+                  Grid.SetRow(img, unefourmi.position.Y);
+                }
             }
         }
 
@@ -309,11 +316,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                         {
-                             X = (int)c.Attribute("x"),
-                             Y =(int)c.Attribute("y")
-                         }).First(),
+                         position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -324,11 +328,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Oeuf()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         position = t.Element("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                         {
-                             X = (int)c.Attribute("x"),
-                             Y = (int)c.Attribute("y")
-                         }).First(),
+                         position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -339,11 +340,8 @@ namespace fourmilliereALIHM
                       .Select(t => new Reine()
                       {
                           Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
                     App.fourmilliereVM.AjouteReine(reine);
                 }
@@ -354,11 +352,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Guerriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }
@@ -369,11 +364,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Ouvriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
-                          {
-                              X = (int)c.Attribute("x"),
-                              Y = (int)c.Attribute("y")
-                          }).First()
+                          position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
                 }

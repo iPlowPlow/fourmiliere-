@@ -11,7 +11,7 @@ namespace LibMetier.GestionPersonnages
 {
     
   public class Ouvriere : PersonnageAbstrait
-    {
+   {
 
         public Ouvriere()
         {
@@ -20,8 +20,9 @@ namespace LibMetier.GestionPersonnages
         public Ouvriere(string nom)
         {
             this.Nom = nom;
+            this.pointsdevie = 20;
         }
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
+        public override ZoneAbstrait ChoixZoneSuivante()
         {
             throw new NotImplementedException();
         }

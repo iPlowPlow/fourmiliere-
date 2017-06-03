@@ -10,6 +10,11 @@ namespace LibMetier.GestionEnvironnements
 
     public class Coordonnees : CoordonneesAbstrait
     {
+        public Coordonnees(int positionx, int positiony)
+        {
+            X = positionx;
+            Y = positiony;
+        }
         public override String toString()
         {
             return X.ToString() + "," + Y.ToString(); 
