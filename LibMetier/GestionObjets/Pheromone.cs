@@ -1,4 +1,4 @@
-﻿using LibAbstraite.GestionObjets;
+using LibAbstraite.GestionObjets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,10 @@ namespace LibMetier.GestionObjets
     {
         //décrémenté à chaque tour
         public int dureevie;
-
+        public Pheromone()
+        {
+        
+        }
         public Pheromone(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;

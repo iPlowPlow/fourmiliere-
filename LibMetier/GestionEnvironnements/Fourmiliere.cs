@@ -1,4 +1,4 @@
-﻿using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionEnvironnement;
 using System;
 using System.Collections.Generic;
 using System.Linq;

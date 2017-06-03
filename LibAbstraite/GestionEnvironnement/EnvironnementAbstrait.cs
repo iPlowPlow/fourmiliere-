@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace LibAbstraite.GestionEnvironnement
 {
@@ -19,7 +20,7 @@ namespace LibAbstraite.GestionEnvironnement
       
         public List<ObjetAbstrait> ObjetAbstraitList { get; set; }
 
-        public List<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
+        public ObservableCollection<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
         public List<ZoneAbstrait> ZoneAbstraitList { get; set; }
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
         public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);

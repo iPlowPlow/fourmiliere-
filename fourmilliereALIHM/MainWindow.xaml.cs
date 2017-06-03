@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +20,14 @@ using Microsoft.Win32;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionPersonnage;
+using LibAbstraite.GestionObjets;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionObjets;
 using LibMetier.GestionPersonnages;
 using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace fourmilliereALIHM
 {
@@ -41,7 +45,7 @@ namespace fourmilliereALIHM
             DataContext = App.fourmilliereVM;
             dt.Tick += Redessine_Tick;
             dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
-            Dessine();
+        
         }
         private void Redessine_Tick(object sender, EventArgs e)
         {
@@ -54,28 +58,60 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
-            foreach (Pheromone unePheromone in App.fourmilliereVM.PheromoneList)
-            {
-                byte opacity = Convert.ToByte(unePheromone.dureevie*10);
-                Color color = Color.FromArgb(opacity, 0, 0, 255);
-                Rectangle pheromoneBox = new Rectangle();
-                pheromoneBox.Fill = new SolidColorBrush(color);
-                Plateau.Children.Add(pheromoneBox);
-                Grid.SetColumn(pheromoneBox, unePheromone.position.X);
-                Grid.SetRow(pheromoneBox, unePheromone.position.Y);
-            }
-            foreach (Fourmis unefourmi in App.fourmilliereVM.FourmisList)
+            foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.fourmilliere.PersonnageAbstraitList)
             {
                 Image img = new Image();
-                Uri uri = new Uri("Images/fourmi_ouvriere.png", UriKind.Relative);
-                img.Source = new BitmapImage(uri);
-                
+                if (unInsecte.Nom.Contains("guerriere"))
+                {
+                    Uri uri = new Uri("Images/fourmi_combattante.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unInsecte.Nom.Contains("ouvriere"))
+                {
+                    Uri uri = new Uri("Images/fourmi_ouvriere.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unInsecte.Nom.Contains("reine"))
+                {
+                    Uri uri = new Uri("Images/reine.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unInsecte.Nom.Contains("termite"))
+                {
+                    Uri uri = new Uri("Images/termite.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
                 Plateau.Children.Add(img);
-                Grid.SetColumn(img, unefourmi.X);
-                Grid.SetRow(img, unefourmi.Y);
-                //Coordonnees coordonnees = new Coordonnees(unefourmi.X, unefourmi.Y);
-                //Pheromone unPheromone = new Pheromone("pheromone de fourmi", coordonnees);
-                //App.fourmilliereVM.PheromoneList.Add(unPheromone);
+                Grid.SetColumn(img, unefourmi.position.X);
+                Grid.SetRow(img, unefourmi.position.Y);
+            }
+            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.fourmilliere.ObjetAbstraitList)
+            {
+                Image img = new Image();
+                if (unObjet.Nom.Contains("oeuf"))
+                {
+                    Uri uri = new Uri("Images/oeuf.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.Nom.Contains("nourriture"))
+                {
+                    Uri uri = new Uri("Images/nourriture.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+                }
+                if (unObjet.Nom.Contains("pheromone"))
+                {
+                    byte opacity = Convert.ToByte(unObjet.dureevie*(255/unObjet.dureevieoriginale);
+                    Color color = Color.FromArgb(opacity, 0, 0, 255);
+                    Rectangle pheromoneBox = new Rectangle();
+                    pheromoneBox.Fill = new SolidColorBrush(color);
+                    Plateau.Children.Add(pheromoneBox);
+                    Grid.SetColumn(pheromoneBox, unePheromone.position.X);
+                    Grid.SetRow(pheromoneBox, unePheromone.position.Y);
+                }else{
+                  Plateau.Children.Add(img);
+                  Grid.SetColumn(img, unefourmi.position.X);
+                  Grid.SetRow(img, unefourmi.position.Y);
+                }
             }
         }
 
@@ -120,6 +156,108 @@ namespace fourmilliereALIHM
             }
             Dessine();
         }
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            ObservableCollection<PersonnageAbstrait> listp=App.fourmilliereVM.fourmilliere.PersonnageAbstraitList;
+            List<ObjetAbstrait> listo = App.fourmilliereVM.fourmilliere.ObjetAbstraitList;
+            var doc = new XDocument(
+                new XElement("Simulation",
+                    new XElement("fourmilieres",
+                        new XElement("fourmiliere",
+                        new XAttribute("x", App.fourmilliereVM.fourmilliere.DimensionX),
+                        new XAttribute("y", App.fourmilliereVM.fourmilliere.DimensionY)
+                         )
+                     ),
+                     new XElement("nourritures",
+                        from n in listo
+                        where n.Nom.Contains("nourriture")
+                        select new XElement("nourriture",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     ),
+                      new XElement("oeufs",
+                        from n in listo
+                        where n.Nom.Contains("oeuf")
+                        select new XElement("oeuf",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     ),
+                      /* new XElement("pheromones",
+                        from n in listo
+                        where n.Nom.Contains("pheromone")
+                        select new XElement("pheromone",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     ),*/
+                        new XElement("Ouvrieres",
+                        from n in listp
+                        where n.Nom.Contains("ouvriere")
+                        select new XElement("Ouvriere",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     ),
+                        new XElement("Guerrieres",
+                        from n in listp
+                        where n.Nom.Contains("guerriere")
+                        select new XElement("Guerriere",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     ),
+                        new XElement("reines",
+                        from n in listp
+                        where n.Nom.Contains("reine")
+                        select new XElement("reine",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.position.X),
+                                    new XAttribute("y", n.position.Y)
+                                )
+                             )
+                        )
+                     )
+
+
+                )
+            );
+            doc.Save("save.xml");
+      
+
+
+
+
+        }
+
         private void btnCharge_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder output = new StringBuilder();
@@ -149,10 +287,28 @@ namespace fourmilliereALIHM
 
                 List<Nourriture> listn = new List<Nourriture>();
                 List<Oeuf> listoe = new List<Oeuf>();
+                List<Pheromone> listp = new List<Pheromone>();
                 List<Guerriere> listg = new List<Guerriere>();
                 List<Ouvriere> listo = new List<Ouvriere>();
                 Reine reine;
                 XElement x = XElement.Load(new StringReader(xmlString));
+                Fourmiliere fo;
+                if (x != null && x.Element("fourmilieres") != null)
+                {
+                   fo= x.Element("fourmilieres")
+                     .Elements("fourmiliere")
+                     .Select(t => new Fourmiliere()
+                     {
+                         DimensionX = (int)t.Attribute("x"),
+                         DimensionY = (int)t.Attribute("y"),
+                         PersonnageAbstraitList = new ObservableCollection<PersonnageAbstrait>(),
+                         ObjetAbstraitList= new List<ObjetAbstrait>(),
+                         AccesAbstraitList = new List<AccesAbstrait>(),
+                         ZoneAbstraitList= new List<ZoneAbstrait>()
+                     }).First();
+                    App.fourmilliereVM.fourmilliere.DimensionX = fo.DimensionX;
+                    App.fourmilliereVM.fourmilliere.DimensionY = fo.DimensionY;
+                }
                 if (x != null && x.Element("nourritures") != null)
                 {
                     listn = x.Element("nourritures")
@@ -187,7 +343,7 @@ namespace fourmilliereALIHM
                           position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
-                    
+                    App.fourmilliereVM.AjouteReine(reine);
                 }
                 if (x != null && x.Element("Guerrieres") != null)
                 {
@@ -213,10 +369,31 @@ namespace fourmilliereALIHM
                      })
                      .ToList();
                 }
-
+                if (x != null && x.Element("Pheromones") != null)
+                {
+                    listp = x.Element("Pheromones")
+                     .Elements("Pheromone")
+                     .Select(t => new Pheromone()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
+                         {
+                             X = (int)c.Attribute("x"),
+                             Y = (int)c.Attribute("y")
+                         }).First()
+                     })
+                     .ToList();
+                }
+       
                 App.fourmilliereVM.AjouteOuvriere(listo);
-
-
+                
+                App.fourmilliereVM.AjouteGuerriere(listg);
+                App.fourmilliereVM.AjouteOeuf(listoe);
+                App.fourmilliereVM.AjoutePheromone(listp);
+                App.fourmilliereVM.AjouteNourriture(listn);
+                
+                Dessine();
+       
             }
         }
         public void initPlateau()
@@ -224,12 +401,12 @@ namespace fourmilliereALIHM
             Plateau.ColumnDefinitions.Clear();
             Plateau.RowDefinitions.Clear();
             Plateau.Children.Clear();
-            for (int i = 0; i < App.fourmilliereVM.DimensionX; i++)
+            for (int i = 0; i < App.fourmilliereVM.fourmilliere.DimensionX; i++)
             {
                 Plateau.RowDefinitions.Add(new RowDefinition());
 
             }
-            for (int i = 0; i < App.fourmilliereVM.DimensionY; i++)
+            for (int i = 0; i < App.fourmilliereVM.fourmilliere.DimensionY; i++)
             {
 
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
