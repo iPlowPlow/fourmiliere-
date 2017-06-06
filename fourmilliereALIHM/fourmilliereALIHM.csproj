@@ -59,7 +59,6 @@
     <Compile Include="AProposWindows.xaml.cs">
       <DependentUpon>AProposWindows.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelBase.cs" />
     <Page Include="AProposWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -72,7 +71,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Etape.cs" />
     <Compile Include="FourmilliereModel.cs" />
     <Compile Include="Fourmis.cs" />
     <Compile Include="MainWindow.xaml.cs">

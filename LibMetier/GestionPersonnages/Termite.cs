@@ -5,16 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
 using LibAbstraite.GestionEnvironnement;
+using System.Collections.ObjectModel;
+using LibAbstraite;
+using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
-    public  class Termite : PersonnageAbstrait
+    public class Termite : PersonnageAbstrait
     {
-        String nom { get; set; }
-        public Termite(String _nom)
+
+        public Termite(String nom, CoordonneesAbstrait position)
         {
             this.nom = _nom;
-            this.Pointsdevie = 30;
+            this.Pointsdevie = 75;
+            this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -31,6 +36,16 @@ namespace LibMetier.GestionPersonnages
             int newY = Position.Y + Hazard.Next(3) - 1;
             if ((newX >= 0) && (newX < dimX)) Position.X = newX;
             if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
+        }
+
+        public override string ToString()
+        {
+            return "Ma Termite" + this.Nom;
+        }
+
+        public override void AnalyseSituation()
+        {
+            throw new NotImplementedException();
         }
     }
 }

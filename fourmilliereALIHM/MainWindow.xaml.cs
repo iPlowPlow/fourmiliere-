@@ -131,14 +131,29 @@ namespace fourmilliereALIHM
             apx.Show();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_Add_Guerriere(object sender, RoutedEventArgs e)
         {
-            App.fourmilliereVM.AjouterFourmis();
+            App.fourmilliereVM.AjouterGuerriere();
+        }
+
+        private void Button_Click_Add_Ouvriere(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterOuvriere();
+        }
+
+        private void Button_Click_Add_Reine(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterReine();
+        }
+
+        private void Button_Click_Add_Termite(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterTermite();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            App.fourmilliereVM.SupprimerFourmis();
+            App.fourmilliereVM.SupprimerPersonnage();
         }
 
         private void btnSuivant_Click(object sender, RoutedEventArgs e)

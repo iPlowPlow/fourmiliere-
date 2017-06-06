@@ -5,7 +5,7 @@ namespace fourmilliereALIHM
 {
     public class Fourmis
     {
-        static Random Hazard = new Random();
+        /*static Random Hazard = new Random();
         public int X { get; set; }
         public int Y { get; set; }
         public string Nom { get; set; }

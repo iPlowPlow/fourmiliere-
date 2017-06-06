@@ -7,6 +7,9 @@ using LibAbstraite.GestionPersonnage;
 using LibAbstraite.GestionEnvironnement;
 using LibMetier.GestionObjets;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
+using LibAbstraite;
+using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -23,6 +26,7 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.Pointsdevie = 20;
             this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -45,6 +49,15 @@ namespace LibMetier.GestionPersonnages
             MorceauNourriture morceauRendu = Morceau;
             Morceau = null;
             return morceauRendu;
+        }
+        public override string ToString()
+        {
+            return "Mon Ouvriere" + this.Nom;
+        }
+
+        public override void AnalyseSituation()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
+using System.Collections.ObjectModel;
+using LibAbstraite;
+using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -15,11 +18,16 @@ namespace LibMetier.GestionPersonnages
            
         }
 
+        public override string ToString()
+        {
+            return "Ma Reine" + this.Nom;
+        }
 
-        public Reine(string nom)
+        public Reine(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
             this.Pointsdevie = 500;
+            this.Position = position;
         }
 
         public override ZoneAbstrait ChoisirZoneSuivante()
@@ -37,6 +45,11 @@ namespace LibMetier.GestionPersonnages
             int newY = this.Position.Y + Hazard.Next(3) - 1;
             if ((newX >= 0) && (newX < dimX)) this.Position.X = newX;
             if ((newY >= 0) && (newY < dimX)) this.Position.Y = newY;
+        }
+
+        public override void AnalyseSituation()
+        {
+            throw new NotImplementedException();
         }
     }
 }

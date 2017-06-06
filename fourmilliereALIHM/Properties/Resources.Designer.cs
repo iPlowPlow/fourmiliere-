@@ -8,10 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace fourmilliereALIHM.Properties {
-    using System;
+//namespace fourmilliereALIHM.Properties {
+    //using System;
     
-    
+namespace LibAbstraite.Properties
+{
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-namespace fourmilliereALIHM
+namespace LibAbstraite
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

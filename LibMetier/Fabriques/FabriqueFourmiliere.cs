@@ -16,7 +16,6 @@ namespace LibMetier
 
         public override String Titre { get; }
 
-
         public override AccesAbstrait CreerAcces(List<ZoneAbstrait> zoneaccessibles)
         {
             return new Chemin(zoneaccessibles);
@@ -70,7 +69,5 @@ namespace LibMetier
         {
             throw new NotImplementedException();
         }
-
-       
     }
 }
