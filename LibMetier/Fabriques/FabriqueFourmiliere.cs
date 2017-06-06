@@ -16,14 +16,14 @@ namespace LibMetier
 
         public override String Titre { get; }
 
-        public override AccesAbstrait CreerAcces(ZoneAbstrait zDebut, ZoneAbstrait zFin)
+        public override AccesAbstrait CreerAcces(List<ZoneAbstrait> zoneaccessibles)
         {
-            return new Chemin(zFin, zDebut);
+            return new Chemin(zoneaccessibles);
         }
 
-        public override EnvironnementAbstrait CreerEnvironnement(int _dimensionX, int _dimensionY)
+        public override EnvironnementAbstrait CreerEnvironnement(int dimensionX, int dimensionY)
         {
-            return new Fourmiliere(_dimensionX, _dimensionY);
+            return new Fourmiliere(dimensionX, dimensionY);
         }
 
         public override ObjetAbstrait CreerOeuf(string nom)
@@ -31,33 +31,33 @@ namespace LibMetier
             return new Oeuf(nom);
         }
 
-        public override ObjetAbstrait CreerNourriture(string nom)
+        public override ObjetAbstrait CreerNourriture(string nom, CoordonneesAbstrait position)
         {
-            return new Nourriture(nom);
+            return new Nourriture(nom, position);
         }
-        public override ObjetAbstrait CreerPheromone(string nom)
+        public override ObjetAbstrait CreerPheromone(string nom, CoordonneesAbstrait position)
         {
-            return new Pheromone(nom);
+            return new Pheromone(nom, position);
         }
 
         public override PersonnageAbstrait CreerReine(string nom)
         {
-            return new Reine(nom);
+            return new Reine(nom, new Coordonnees(10, 10));
         }
 
         public override PersonnageAbstrait CreerOuvriere(string nom)
         {
-            return new Ouvriere(nom);
+            return new Ouvriere(nom, new Coordonnees(10, 10));
         }
 
         public override PersonnageAbstrait CreerGuerriere(string nom)
         {
-            return new Guerriere(nom);
+            return new Guerriere(nom, new Coordonnees(10, 10));
         }
 
         public override PersonnageAbstrait CreerTermite(string nom)
         {
-            return new Termite(nom);
+            return new Termite(nom, new Coordonnees(0, 10));
         }
 
         public ZoneAbstrait CreerZone(String nom)
@@ -69,6 +69,5 @@ namespace LibMetier
         {
             throw new NotImplementedException();
         }
-
     }
 }

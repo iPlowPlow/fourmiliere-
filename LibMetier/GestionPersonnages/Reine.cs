@@ -11,25 +11,24 @@ using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
-    public class Reine : PersonnageAbstrait 
+  public  class Reine : PersonnageAbstrait 
     {
-
-        public Reine(String nom)
+        public Reine()
         {
-            PV = 100;
-            position = new Coordonnees();
-            position.X = 10;
-            position.Y = 10;
-            ListEtape = new ObservableCollection<Etape>();
+           
+        }
+
+        public Reine(string nom, CoordonneesAbstrait position)
+        {
             this.Nom = nom;
+            this.PV = 500;
+            this.Position = position;
         }
 
-        public override string ToString()
-        {
-            return "Ma Reine" + this.Nom;
-        }
 
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
+
+
+        public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
         }
@@ -37,6 +36,12 @@ namespace LibMetier.GestionPersonnages
         public override void AnalyseSituation()
         {
             throw new NotImplementedException();
+        }
+
+
+        public override string ToString()
+        {
+            return "Ma Reine" + this.Nom;
         }
     }
 }

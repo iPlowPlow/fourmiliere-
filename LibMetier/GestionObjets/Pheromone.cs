@@ -1,19 +1,32 @@
-﻿using LibAbstraite.GestionObjets;
+using LibAbstraite.GestionObjets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAbstraite.GestionEnvironnement;
 
 namespace LibMetier.GestionObjets
 {
-    class Pheromone : ObjetAbstrait
+    public class Pheromone : ObjetAbstrait
     {
-        String nom { get; set; }
-
-        public Pheromone(string nom)
+        public const int DUREE_VIE_ORIGINALE = 25;
+        //décrémenté à chaque tour
+        public int Dureevie { get; set;}
+        public Pheromone()
         {
-            this.nom = nom;
+        
+        }
+        public Pheromone(string nom, CoordonneesAbstrait position)
+        {
+            this.Nom = nom;
+            this.Position = position;
+            Dureevie = DUREE_VIE_ORIGINALE;
+        }
+
+        public override void TourPasse()
+        {
+            Dureevie --;
         }
 
     }

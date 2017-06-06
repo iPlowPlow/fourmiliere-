@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace LibAbstraite.GestionEnvironnement
 {
     public abstract class EnvironnementAbstrait : ViewModelBase
-    {
 
+    {
+        public static Random Hazard = new Random();
         public Boolean encours;
         private string titre;
         public int tourActuel = 0;
@@ -41,12 +43,12 @@ namespace LibAbstraite.GestionEnvironnement
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
         public List<AccesAbstrait> AccesList { get; set; }
-        public List<ObjetAbstrait> ObjetList { get; set; }
+        public ObservableCollection<ObjetAbstrait> ObjetList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
         public List<ZoneAbstrait> ZoneList { get; set; }
-        public abstract void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray);
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
+        public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
         public void AjouterGuerriere()
@@ -63,7 +65,7 @@ namespace LibAbstraite.GestionEnvironnement
         }
         public void AjouterTermite()
         {
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Termite " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
         }
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);
@@ -73,6 +75,9 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void Repositioner();
         public abstract string Simuler();
         public abstract string Statistiques();
+        public abstract void TourSuivant();
+        public abstract void Avance();
+        public abstract void Stop();
 
     }
 }

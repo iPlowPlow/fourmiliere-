@@ -1,4 +1,4 @@
-﻿using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionEnvironnement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +8,21 @@ using LibAbstraite.Fabrique;
 using LibAbstraite.GestionObjets;
 using LibAbstraite.GestionPersonnage;
 using System.Collections.ObjectModel;
+
+using System.Xml.Serialization;
 using System.Threading;
+using LibMetier.GestionPersonnages;
+using LibMetier.GestionObjets;
 
 namespace LibMetier.GestionEnvironnements
 {
+
     public class Fourmiliere : EnvironnementAbstrait
     {
+        public Fourmiliere()
+        {
 
-      
-
+        }
 
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
@@ -34,28 +40,46 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
             PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
 
+            ObjetList = new ObservableCollection<ObjetAbstrait>();
+
+        }
+        //après le déplacement du personnage, ajoute les 4 zones adjacentes à la zone du personnage dans les zones accessibles du
+        //personnage
+        public override void AjouteChemin(PersonnageAbstrait unpersonnage)
+        {
+            unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Clear();
+            CoordonneesAbstrait positionPersonnage = unpersonnage.Position;
+            for (int i = -1; i<=1; i+=2)
+            {
+                for(int j = -1; j <= 1; j += 2)
+                {
+                    try
+                    {
+                        unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Add(ZoneList
+                            .Single(z => z.Position.X == positionPersonnage.X + i && z.Position.Y == positionPersonnage.X + j));
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+            }
         }
 
-        public override void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray)
+
+        public void AjouteNourriture()
         {
-            throw new NotImplementedException();
+            ObjetList.Add(new Nourriture(String.Concat("Nourriture N {0}", ObjetList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
         }
 
-       
-
-        public override void AjouteNourriture(ObjetAbstrait unObject)
+        public override void AjouteOeuf(ObjetAbstrait unOeuf)
         {
-            this.ObjetList.Add(unObject);
+            this.ObjetList.Add(unOeuf);
         }
 
-        public override void AjouteOeuf(ObjetAbstrait unObject)
+        public override void AjoutePheromone(ObjetAbstrait unPheromone)
         {
-            this.ObjetList.Add(unObject);
-        }
-
-        public override void AjoutePheromone(ObjetAbstrait unObject)
-        {
-            throw new NotImplementedException();
+            this.ObjetList.Add(unPheromone);
         }
 
         public override void AjouteZone(params ZoneAbstrait[] zoneArray)
@@ -87,11 +111,12 @@ namespace LibMetier.GestionEnvironnements
         {
             foreach(var boutDeTerrain in ZoneList)
             {
-                boutDeTerrain.OuvriereList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.GuerrierList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.ReineList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                boutDeTerrain.TermiteList.AddRange(PersonnagesList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
-                //boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.position.toString().Equals(boutDeTerrain.position.toString())));
+
+                boutDeTerrain.PersonnageList.Clear();
+                boutDeTerrain.ObjetList.Clear();
+                boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
+                boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
+
             }
         }
 
@@ -110,22 +135,52 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Remove(PersoSelect);
         }
 
-        public void TourSuivant()
+        public void AjouterReine(Reine reine)
         {
-            tourActuel++;
-            for (int i = PersonnagesList.Count - 1; i >= 0; i--)
-            {
-                PersonnagesList[i].Avance1Tour(DimensionX, DimensionY, tourActuel);
-                if (PersonnagesList[i].PV <= 0)
-                {
-                    PersonnagesMortList.Add(PersonnagesList[i]);
-                    PersonnagesList.Remove(PersonnagesList[i]);
-                }
-
-            }
+            throw new NotImplementedException();
         }
 
-        public void Avance()
+        public override void TourSuivant()
+        {
+            foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
+            {
+                if (unePheromone.Dureevie < 1)
+                {
+                    ObjetList.Remove(unePheromone);
+                }
+            }
+            foreach (ObjetAbstrait unObjet in ObjetList)
+            {
+                unObjet.TourPasse();
+            }
+            foreach (PersonnageAbstrait unInsecte in PersonnagesList.ToList())
+            {
+                if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
+                {
+                    Coordonnees coordonnees = new Coordonnees(unInsecte.Position.X, unInsecte.Position.Y);
+                    Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
+                    ObjetList.Add(unPheromone);
+                }
+                unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
+                if (unInsecte.PV <= 0)
+                {
+                    PersonnagesMortList.Add(unInsecte);
+                    PersonnagesList.Remove(unInsecte);
+                }
+                //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
+                unInsecte.TransporteNourriture = true;
+            }
+            if (Hazard.Next(1, 11) == 1)
+            {
+                AjouteNourriture();
+            }
+            tourActuel++;
+        }
+
+
+
+
+        public override void Avance()
         {
             encours = true;
             while (encours == true)
@@ -135,14 +190,14 @@ namespace LibMetier.GestionEnvironnements
 
             }
         }
-        public void Stop()
+        public override void Stop()
         {
             encours = false;
         }
 
-
-
-
-
+        public override void AjouteNourriture(ObjetAbstrait unObject)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,25 +14,20 @@ namespace LibMetier.GestionPersonnages
     public class Termite : PersonnageAbstrait
     {
 
-        public Termite(String nom)
+        public Termite(String nom, CoordonneesAbstrait position)
         {
-            PV = 75;
-            position = new Coordonnees();
-            position.X = 10;
-            position.Y = 10;
-            ListEtape = new ObservableCollection<Etape>();
             this.Nom = nom;
+            this.PV = 75;
+            this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
         }
-
+        public override ZoneAbstrait ChoisirZoneSuivante()
+        {
+            throw new NotImplementedException();
+        }
         public override string ToString()
         {
             return "Ma Termite" + this.Nom;
-        }
-
-
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
-        {
-            throw new NotImplementedException();
         }
 
         public override void AnalyseSituation()

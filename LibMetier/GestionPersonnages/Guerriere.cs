@@ -14,14 +14,20 @@ namespace LibMetier.GestionPersonnages
     public class Guerriere : PersonnageAbstrait
     {
 
-        public Guerriere(string nom)
+        public Guerriere()
         {
-            PV = 75;
-            position = new Coordonnees();
-            position.X = 10;
-            position.Y = 10;
-            ListEtape = new ObservableCollection<Etape>();
+         
+        }
+        public Guerriere(string nom, CoordonneesAbstrait position)
+        {
             this.Nom = nom;
+            this.PV = 75;
+            this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
+        }
+        public override ZoneAbstrait ChoisirZoneSuivante()
+        {
+            throw new NotImplementedException();
         }
 
         public override string ToString()
@@ -29,10 +35,6 @@ namespace LibMetier.GestionPersonnages
             return "Ma Guerriere" + this.Nom;
         }
 
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
-        {
-            throw new NotImplementedException();
-        }
         public override void AnalyseSituation()
         {
             /*Si termite sur sa case l'attaquer*/
