@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,19 +7,25 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using LibAbstraite.GestionPersonnage;
+using LibAbstraite.GestionObjets;
+using LibMetier.GestionPersonnages;
+using LibMetier.GestionEnvironnements;
+using LibMetier.GestionObjets;
 using LibAbstraite.Fabrique;
 using LibMetier;
 using LibAbstraite;
 
 namespace fourmilliereALIHM
 {
-    public class FourmilliereModel : ViewModelBase
+    public class FourmilliereModel : ViewModelBase 
     {
+        public static Random Hazard = new Random();
         private Boolean encours;
         private string titre;
         private PersonnageAbstrait unPerso;
         public int tourActuel = 0;
         public int DimensionX;
+        public Fourmiliere fourmilliere { get; set; }
         public int DimensionY;
         public int vitesse;
         public string TitreApplication {
@@ -27,9 +33,18 @@ namespace fourmilliereALIHM
             set {
                 titre = value;
                 OnPropertyChanged("TitreApplication");
-            }
+            } 
         }
-        public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
+        public ObservableCollection<Fourmis> FourmisList { get; set; }
+        public ObservableCollection<Pheromone> PheromoneList { get; set; }
+
+        public PersonnageAbstrait FourmisSelect { 
+          get { return unPerso; } 
+          set {
+                unPerso = value;
+                OnPropertyChanged("FourmisSelect");
+              }
+        }
         public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
 
         public FabriqueAbstraite Fabrique;
@@ -45,15 +60,64 @@ namespace fourmilliereALIHM
         public  FourmilliereModel()
         {
             TitreApplication = "Application FourmilliereAL";
-            DimensionX = 20;
-            DimensionY = 30;
+            DimensionX = 60;
+            DimensionY = 60;
             vitesse = 500;
+            fourmilliere = new Fourmiliere(DimensionX, DimensionY);
+            fourmilliere.PersonnageAbstraitList = new ObservableCollection<PersonnageAbstrait>();
+            fourmilliere.ObjetAbstraitList = new ObservableCollection<ObjetAbstrait>();
+        }
+        public void AjouteOeuf(List<Oeuf> o)
+        {
+            foreach (var oeuf in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(oeuf);
+            }
+        }
+        public void AjouteNourriture(List<Nourriture> o)
+        {
+            foreach (var n in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(n);
+            }
+        }
+        public void AjouteNourriture()
+        {
+            fourmilliere.ObjetAbstraitList.Add(new Nourriture(String.Concat("Nourriture N {0}", fourmilliere.ObjetAbstraitList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
+        }
+        public void AjoutePheromone(List<Pheromone> o)
+        {
+            foreach (var n in o)
+            {
+                fourmilliere.ObjetAbstraitList.Add(n);
+            }
+        }
+        public void AjouteOuvriere(List<Ouvriere> f)
+        {
+           foreach(var fourmis in f)
+            {
+                fourmilliere.PersonnageAbstraitList.Add(fourmis);
+            }
+        }
+        public void AjouteGuerriere(List<Guerriere> f)
+        {
+            foreach (var fourmis in f)
+            {
+                fourmilliere.PersonnageAbstraitList.Add(fourmis);
+            }
+        }
+        public void AjouteReine(Reine f)
+        {
+            fourmilliere.PersonnageAbstraitList.Add(f);           
+        }
+        public void AjouterFourmis(PersonnageAbstrait f)
+        {
+            fourmilliere.PersonnageAbstraitList.Add(f);
+        }
+        public void AjouterFourmis()
+        {
+            fourmilliere.PersonnageAbstraitList.Add(new Ouvriere("Fourmis N°"+ fourmilliere.PersonnageAbstraitList.Count, new Coordonnees(30, 30)));
             Fabrique = new FabriqueFourmiliere();
-            PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
-            PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Alain"));
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
-            PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
         }
 
         
@@ -79,22 +143,45 @@ namespace fourmilliereALIHM
         /*Suppression via L'IHM*/
         public void SupprimerPersonnage()
         {
-            PersonnagesList.Remove(unPerso);
+            fourmilliere.PersonnageAbstraitList.Remove(FourmisSelect);
+            //PersonnagesList.Remove(unPerso);
         }
 
         public void TourSuivant()
         {
-            tourActuel++;
-            for (int i = PersonnagesList.Count -1; i>=0; i--)
+            foreach (Pheromone unePheromone in fourmilliere.ObjetAbstraitList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
             {
-                PersonnagesList[i].Avance1Tour(DimensionX, DimensionY, tourActuel);
-                if (PersonnagesList[i].PV <= 0)
+                if (unePheromone.Dureevie < 1)
                 {
-                    PersonnagesMortList.Add(PersonnagesList[i]);
-                    PersonnagesList.Remove(PersonnagesList[i]);
+                    fourmilliere.ObjetAbstraitList.Remove(unePheromone);
                 }
-               
-            }   
+            }
+            foreach (ObjetAbstrait unObjet in fourmilliere.ObjetAbstraitList)
+            {
+                unObjet.TourPasse();
+            }
+            foreach(PersonnageAbstrait unInsecte in fourmilliere.PersonnageAbstraitList)
+            {
+                if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
+                {
+                    Coordonnees coordonnees = new Coordonnees(unInsecte.Position.X, unInsecte.Position.Y);
+                    Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
+                    fourmilliere.ObjetAbstraitList.Add(unPheromone);
+                }
+                unInsecte.Avance1Tour(DimensionX, DimensionY);
+                if unInsecte.Pointsdevie <= 0)
+                {
+                    PersonnagesMortList.Add(unInsecte);
+                    PersonnagesList.Remove(unInsecte);
+                }
+                //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
+                //unInsecte.TransporteNourriture = true;
+            }
+            if(Hazard.Next(1,11) == 1)
+            {
+                AjouteNourriture();
+            }
+            tourActuel++;
         }
 
         public void Avance()

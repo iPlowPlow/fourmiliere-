@@ -11,17 +11,11 @@ using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
-    public class Reine : PersonnageAbstrait 
+  public  class Reine : PersonnageAbstrait 
     {
-
-        public Reine(String nom)
+        public Reine()
         {
-            PV = 100;
-            position = new Coordonnees();
-            position.X = 10;
-            position.Y = 10;
-            ListEtape = new ObservableCollection<Etape>();
-            this.Nom = nom;
+           
         }
 
         public override string ToString()
@@ -29,9 +23,28 @@ namespace LibMetier.GestionPersonnages
             return "Ma Reine" + this.Nom;
         }
 
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
+        public Reine(string nom, CoordonneesAbstrait position)
+        {
+            this.Nom = nom;
+            this.Pointsdevie = 500;
+            this.Position = position;
+        }
+
+        public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
+        }
+        public override void Avance1Tour(int dimX, int dimY)
+        {
+            AvanceAuHazard(dimX, dimY);
+            //ListEtape.Add(new Etape());
+        }
+        public override void AvanceAuHazard(int dimX, int dimY)
+        {
+            int newX = this.Position.X + Hazard.Next(3) - 1;
+            int newY = this.Position.Y + Hazard.Next(3) - 1;
+            if ((newX >= 0) && (newX < dimX)) this.Position.X = newX;
+            if ((newY >= 0) && (newY < dimX)) this.Position.Y = newY;
         }
 
         public override void AnalyseSituation()

@@ -1,4 +1,4 @@
-﻿using LibAbstraite.GestionObjets;
+using LibAbstraite.GestionObjets;
 using LibAbstraite.GestionPersonnage;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,9 @@ namespace LibAbstraite.GestionEnvironnement
     {
         public  List<AccesAbstrait> AccesList { get; set; }
         public string Nom { get; set; }
+        public CoordonneesAbstrait Position { get; set; }
+        public List<ObjetAbstrait> ObjetList { get; set; }
+        public List<PersonnageAbstrait> PersonnageList { get; set; }
         public CoordonneesAbstrait position { get; set; }
         public List<PersonnageAbstrait> OuvriereList { get; set; }
         public List<PersonnageAbstrait> GuerrierList { get; set; }

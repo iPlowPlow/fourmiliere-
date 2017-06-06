@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionObjets;
 using LibAbstraite.GestionPersonnage;
+using LibMetier.GestionObjets;
 
 namespace LibMetier.GestionEnvironnements
 {
@@ -56,6 +57,15 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+        public override void AjoutePheromone(ObjetAbstrait pheromone)
+        {
+            ObjetList.Add(pheromone);
+        }
+        public void RetirerPheromone()
+        {
+            List<Pheromone> pheromones = ObjetList.OfType<Pheromone>().ToList();
+            ObjetList.Remove(pheromones[0]);
+        }
 
         public override void RetirerGuerriere(PersonnageAbstrait personnage)
         {
@@ -76,5 +86,7 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

@@ -11,17 +11,35 @@ using LibMetier.GestionEnvironnements;
 
 namespace LibMetier.GestionPersonnages
 {
-    class Guerriere : PersonnageAbstrait
+   public class Guerriere : PersonnageAbstrait
     {
 
-        public Guerriere(string nom)
+        public Guerriere()
         {
-            PV = 75;
-            position = new Coordonnees();
-            position.X = 10;
-            position.Y = 10;
-            ListEtape = new ObservableCollection<Etape>();
+         
+        }
+        public Guerriere(string nom, CoordonneesAbstrait position)
+        {
             this.Nom = nom;
+            this.Pointsdevie = 75;
+            this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
+        }
+        public override ZoneAbstrait ChoisirZoneSuivante()
+        {
+            throw new NotImplementedException();
+        }
+        public override void Avance1Tour(int dimX, int dimY)
+        {
+            AvanceAuHazard(dimX, dimY);
+            //ListEtape.Add(new Etape());
+        }
+        public override void AvanceAuHazard(int dimX, int dimY)
+        {
+            int newX = this.Position.X + Hazard.Next(3) - 1;
+            int newY = this.Position.Y + Hazard.Next(3) - 1;
+            if ((newX >= 0) && (newX < dimX)) this.Position.X = newX;
+            if ((newY >= 0) && (newY < dimX)) this.Position.Y = newY;
         }
 
         public override string ToString()
@@ -29,10 +47,6 @@ namespace LibMetier.GestionPersonnages
             return "Ma Guerriere" + this.Nom;
         }
 
-        public override ZoneAbstrait ChoixZoneSuivante(List<AccesAbstrait> accesList)
-        {
-            throw new NotImplementedException();
-        }
         public override void AnalyseSituation()
         {
             throw new NotImplementedException();

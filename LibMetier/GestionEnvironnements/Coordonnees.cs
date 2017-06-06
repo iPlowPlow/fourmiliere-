@@ -7,8 +7,18 @@ using LibAbstraite.GestionEnvironnement;
 
 namespace LibMetier.GestionEnvironnements
 {
-    class Coordonnees : CoordonneesAbstrait
+
+    public class Coordonnees : CoordonneesAbstrait
     {
+        public Coordonnees()
+        {
+
+        }
+        public Coordonnees(int positionx, int positiony)
+        {
+            X = positionx;
+            Y = positiony;
+        }
         public override String toString()
         {
             return X.ToString() + "," + Y.ToString(); 

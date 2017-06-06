@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -111,13 +112,33 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibAbstraite\LibAbstraite.csproj">
-      <Project>{6AEE2E0B-195D-46DF-91E3-040B0FBD2FA6}</Project>
+      <Project>{6aee2e0b-195d-46df-91e3-040b0fbd2fa6}</Project>
       <Name>LibAbstraite</Name>
     </ProjectReference>
     <ProjectReference Include="..\LibMetier\LibMetier.csproj">
-      <Project>{F9589684-0E85-400A-9546-10F1C7390416}</Project>
+      <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
       <Name>LibMetier</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LibMetier\LibMetier.csproj">
+      <Project>{f9589684-0e85-400a-9546-10f1c7390416}</Project>
+      <Name>LibMetier</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_ouvriere.png" />
+    <Resource Include="Images\nourriture.png" />
+    <Resource Include="Images\oeuf.png" />
+    <Resource Include="Images\termite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_combattante.png" />
+    <Resource Include="Images\reine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fourmi_ouvriere_chargee.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

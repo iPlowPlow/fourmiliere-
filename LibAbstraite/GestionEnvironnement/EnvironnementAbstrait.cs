@@ -6,22 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
+using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace LibAbstraite.GestionEnvironnement
 {
+
     public abstract class EnvironnementAbstrait
     {
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
         public List<AccesAbstrait> AccesAbstraitList { get; set; }
-        public List<ObjetAbstrait> ObjetAbstraitList { get; set; }
-        public List<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
+      
+        public ObservableCollection<ObjetAbstrait> ObjetAbstraitList { get; set; }
+
+        public ObservableCollection<PersonnageAbstrait> PersonnageAbstraitList { get; set; }
         public List<ZoneAbstrait> ZoneAbstraitList { get; set; }
-        public abstract void AjouteChemin(FabriqueAbstraite fan, params AccesAbstrait[] accesArray);
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
+        public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
         public abstract void AjouteFourmis(PersonnageAbstrait unPersonnage);
+        public abstract void AjouteCombattante(PersonnageAbstrait unPersonnage);
         public abstract void AjouteTermite(PersonnageAbstrait unPersonnage);
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);
@@ -31,6 +37,7 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void Repositioner();
         public abstract string Simuler();
         public abstract string Statistiques();
+   
 
     }
 }
