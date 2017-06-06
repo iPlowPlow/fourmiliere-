@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace LibAbstraite.GestionPersonnage
 {
+
     public abstract class PersonnageAbstrait : ViewModelBase
     {
         public bool TransporteNourriture = false;
@@ -38,7 +39,7 @@ namespace LibAbstraite.GestionPersonnage
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
         { 
             AvanceAuHazard(dimX, dimY);
-            ListEtape.Add(new Etape(tourActuel, "position X : " + Position.X +" Position Y : " + Position.Y));
+            ListEtape.Add(new Etape(tourActuel, "Déplacement à la position X : " + Position.X +", Y : " + Position.Y));
             AnalyseSituation();
             if (PV > 0) { PV--; }
             

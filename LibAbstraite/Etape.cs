@@ -8,5 +8,10 @@
             this.lieu = lieu;
             this.tour = tour;
         }
+
+        public Etape(string lieu)
+        {
+            this.lieu = lieu;
+        }
     }
 }

@@ -83,7 +83,22 @@ namespace LibMetier.GestionEnvironnements
             }
         }
 
-
+        public override void AjouterGuerriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
+        }
+        public override void AjouterReine()
+        {
+            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
+        }
+        public override void AjouterOuvriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
+        }
+        public override void AjouterTermite()
+        {
+            PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+        }
         public void AjouteNourriture()
         {
             ObjetList.Add(new Nourriture(String.Concat("Nourriture N {0}", ObjetList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
@@ -132,7 +147,7 @@ namespace LibMetier.GestionEnvironnements
 
                 boutDeTerrain.PersonnageList.Clear();
                 boutDeTerrain.ObjetList.Clear();
-                boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())/*&& x.GetType().Equals(typeof(Guerriere)*/));
+                boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())/*&& x.GetType().Equals(typeof(Guerriere))*/));
                 boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
                 foreach(PersonnageAbstrait unPerso in PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())))
                 {

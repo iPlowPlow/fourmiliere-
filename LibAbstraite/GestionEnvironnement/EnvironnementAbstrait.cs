@@ -51,22 +51,10 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
-        public void AjouterGuerriere()
-        {
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
-        }
-        public void AjouterReine()
-        {
-            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
-        }
-        public void AjouterOuvriere()
-        {
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
-        }
-        public void AjouterTermite()
-        {
-            PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
-        }
+        public abstract void AjouterGuerriere();
+        public abstract void AjouterReine();
+        public abstract void AjouterOuvriere();
+        public abstract void AjouterTermite();
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);
         public abstract void ChargerPersonnage(FabriqueAbstraite fab);

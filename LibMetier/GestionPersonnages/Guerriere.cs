@@ -39,13 +39,24 @@ namespace LibMetier.GestionPersonnages
         public override void AnalyseSituation()
         {
 
-            //Console.WriteLine("ma zone : " + zone.Position.X);
-
             /*Si termite sur sa case l'attaquer*/
-           /* if (zone.TermiteList.Count > 0)
+            if (zone.PersonnageList.Count > 0)
             {
+                foreach(PersonnageAbstrait unPerso in zone.PersonnageList)
+                {
+                    
+                    if (unPerso.GetType().Equals(typeof(Ouvriere))){
+                        /*Indiquer chemin nourriture*/
+                    }
+                    else if (unPerso.GetType().Equals(typeof(Termite)))
+                    {
+                        unPerso.PV -= 10;
+                        ListEtape.Add(new Etape("J'attaque une termite ! "));
+                    }
 
-            }*/
+                }
+                
+            }
             
         }
 
