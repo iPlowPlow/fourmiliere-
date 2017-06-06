@@ -41,8 +41,25 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
 
             ObjetList = new ObservableCollection<ObjetAbstrait>();
+            ZoneList = new List<ZoneAbstrait>();
+            InitZone();
 
         }
+
+        public void InitZone()
+        {
+            for (int i = 0; i<DimensionX; i++)
+            {
+                for(int y = 0; y<DimensionY; y++)
+                {
+                    BoutDeTerrain zone = new BoutDeTerrain("terrain" + i);
+                    zone.Position.Y = y;
+                    zone.Position.X = i;
+                    ZoneList.Add(zone);
+                }
+            }
+        }
+
         //après le déplacement du personnage, ajoute les 4 zones adjacentes à la zone du personnage dans les zones accessibles du
         //personnage
         public override void AjouteChemin(PersonnageAbstrait unpersonnage)
@@ -109,13 +126,18 @@ namespace LibMetier.GestionEnvironnements
 
         public override void Repositioner()
         {
+     
             foreach(var boutDeTerrain in ZoneList)
             {
 
                 boutDeTerrain.PersonnageList.Clear();
                 boutDeTerrain.ObjetList.Clear();
-                boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
+                boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())/*&& x.GetType().Equals(typeof(Guerriere)*/));
                 boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
+                foreach(PersonnageAbstrait unPerso in PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())))
+                {
+                    unPerso.zone = boutDeTerrain;
+                }
 
             }
         }
@@ -142,6 +164,7 @@ namespace LibMetier.GestionEnvironnements
 
         public override void TourSuivant()
         {
+            Repositioner();
             foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
             {
                 if (unePheromone.Dureevie < 1)
@@ -168,12 +191,14 @@ namespace LibMetier.GestionEnvironnements
                     PersonnagesList.Remove(unInsecte);
                 }
                 //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
-                unInsecte.TransporteNourriture = true;
+                //unInsecte.TransporteNourriture = true;
             }
             if (Hazard.Next(1, 11) == 1)
             {
                 AjouteNourriture();
             }
+
+            
             tourActuel++;
         }
 

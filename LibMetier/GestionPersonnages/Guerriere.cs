@@ -24,6 +24,7 @@ namespace LibMetier.GestionPersonnages
             this.PV = 75;
             this.Position = position;
             ListEtape = new ObservableCollection<Etape>();
+            zone = new BoutDeTerrain("default");
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -37,11 +38,14 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
+
+            //Console.WriteLine("ma zone : " + zone.Position.X);
+
             /*Si termite sur sa case l'attaquer*/
-            if (zone.TermiteList.Count > 0)
+           /* if (zone.TermiteList.Count > 0)
             {
 
-            }
+            }*/
             
         }
 

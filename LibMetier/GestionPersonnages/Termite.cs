@@ -14,7 +14,7 @@ namespace LibMetier.GestionPersonnages
     public class Termite : PersonnageAbstrait
     {
 
-        public Termite(String nom, CoordonneesAbstrait position)
+        public Termite(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
             this.PV = 75;
@@ -32,7 +32,7 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

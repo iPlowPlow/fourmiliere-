@@ -16,6 +16,9 @@ namespace LibMetier.GestionEnvironnements
         public BoutDeTerrain(string nom)
         {
             this.Nom = nom;
+            this.Position = new Coordonnees();
+            PersonnageList = new List<PersonnageAbstrait>();
+            ObjetList = new List<ObjetAbstrait>();
         }
 
         public override void AjouteAcces(AccesAbstrait acces)

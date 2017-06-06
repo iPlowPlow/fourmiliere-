@@ -45,7 +45,7 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-            throw new NotImplementedException();
+         
         }
     }
 }

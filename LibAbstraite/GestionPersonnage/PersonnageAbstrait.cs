@@ -39,7 +39,7 @@ namespace LibAbstraite.GestionPersonnage
         { 
             AvanceAuHazard(dimX, dimY);
             ListEtape.Add(new Etape(tourActuel, "position X : " + Position.X +" Position Y : " + Position.Y));
-            //AnalyseSituation();
+            AnalyseSituation();
             if (PV > 0) { PV--; }
             
         }
