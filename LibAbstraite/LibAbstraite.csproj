@@ -48,6 +48,7 @@
     <Compile Include="GestionEnvironnement\ZoneAbstrait.cs" />
     <Compile Include="GestionObjets\ObjetAbstrait.cs" />
     <Compile Include="GestionPersonnage\PersonnageAbstrait.cs" />
+    <Compile Include="GestionStrategie\StrategieAbstraite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelBase.cs" />
   </ItemGroup>

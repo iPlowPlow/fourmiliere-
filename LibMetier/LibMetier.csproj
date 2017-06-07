@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Fabriques\FabriqueFourmiliere.cs" />
     <Compile Include="GestionEnvironnements\BoutDeTerrain.cs" />
-    <Compile Include="GestionEnvironnements\Chemin.cs" />
+    <Compile Include="GestionEnvironnements\Acces.cs" />
     <Compile Include="GestionEnvironnements\Coordonnees.cs" />
     <Compile Include="GestionEnvironnements\Fourmiliere.cs" />
     <Compile Include="GestionObjets\MorceauNourriture.cs" />
@@ -53,6 +53,9 @@
     <Compile Include="GestionPersonnages\Ouvriere.cs" />
     <Compile Include="GestionPersonnages\Reine.cs" />
     <Compile Include="GestionPersonnages\Termite.cs" />
+    <Compile Include="GestionStrategie\Desoriente.cs" />
+    <Compile Include="GestionStrategie\Normal.cs" />
+    <Compile Include="GestionStrategie\Fuite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace LibMetier.GestionPersonnages
             this.PV = 75;
             this.Position = position;
             ListEtape = new ObservableCollection<Etape>();
-            zone = new BoutDeTerrain("default");
+            zone = new BoutDeTerrain("default", position);
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {

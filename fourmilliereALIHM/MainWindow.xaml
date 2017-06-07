@@ -119,9 +119,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="true">
+        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+        <Grid Name="Plateau" ShowGridLines="true">
 
         </Grid>
+        </Viewbox>
         <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
