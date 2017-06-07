@@ -41,35 +41,14 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
 
             ObjetList = new ObservableCollection<ObjetAbstrait>();
-
-        }
-        //après le déplacement du personnage, ajoute les 4 zones adjacentes à la zone du personnage dans les zones accessibles du
-        //personnage
-        public override void AjouteChemin(PersonnageAbstrait unpersonnage)
-        {
-            unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Clear();
-            CoordonneesAbstrait positionPersonnage = unpersonnage.Position;
-            for (int i = -1; i<=1; i+=2)
-            {
-                for(int j = -1; j <= 1; j += 2)
-                {
-                    try
-                    {
-                        unpersonnage.ChoixZoneSuivante.Zonesaccessibles.Add(ZoneList
-                            .Single(z => z.Position.X == positionPersonnage.X + i && z.Position.Y == positionPersonnage.X + j));
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-            }
+            ZoneList = new ObservableCollection<ZoneAbstrait>();
+            InitZones();
         }
 
 
         public void AjouteNourriture()
         {
-            ObjetList.Add(new Nourriture(String.Concat("Nourriture N {0}", ObjetList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
+            ObjetList.Add(new Nourriture(String.Format("Nourriture N {0}", ObjetList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
         }
 
         public override void AjouteOeuf(ObjetAbstrait unOeuf)
@@ -91,7 +70,7 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
-
+        
         public override void ChargerObjet(FabriqueAbstraite fab)
         {
             throw new NotImplementedException();
@@ -117,6 +96,19 @@ namespace LibMetier.GestionEnvironnements
                 boutDeTerrain.PersonnageList.AddRange(PersonnagesList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
                 boutDeTerrain.ObjetList.AddRange(ObjetList.Where(x => x.Position.toString().Equals(boutDeTerrain.Position.toString())));
 
+            }
+        }
+
+        public override void FournirAcces()
+        {
+            AccesAbstrait nouvelaccès;
+            List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
+            foreach(var unInsecte in PersonnagesList)
+            {
+                zoneAdjacentes.Clear();
+                zoneAdjacentes.AddRange(ZoneList.Where(x => x.Position.X > (unInsecte.Position.X - 2) && x.Position.X < (unInsecte.Position.X - 2) && x.Position.Y > (unInsecte.Position.Y - 2) && x.Position.Y < (unInsecte.Position.Y - 2)));
+                nouvelaccès = Fabrique.CreerAcces(zoneAdjacentes);
+                unInsecte.ChoixZoneSuivante = nouvelaccès;
             }
         }
 
@@ -177,7 +169,16 @@ namespace LibMetier.GestionEnvironnements
             tourActuel++;
         }
 
-
+        public override void InitZones()
+        {
+            for (int i = 0; i < DimensionX; i++)
+            {
+                for (int j = 0; j < DimensionY; j++)
+                {
+                    ZoneList.Add(Fabrique.CreerZone(String.Format("Zone en X={0}, Y={1}", i, j), Fabrique.CreerPosition(i, j)));
+                }
+            }
+        }
 
 
         public override void Avance()

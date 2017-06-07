@@ -46,9 +46,8 @@ namespace LibAbstraite.GestionEnvironnement
         public ObservableCollection<ObjetAbstrait> ObjetList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
-        public List<ZoneAbstrait> ZoneList { get; set; }
+        public ObservableCollection<ZoneAbstrait> ZoneList { get; set; }
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
-        public abstract void AjouteChemin(PersonnageAbstrait unPersonnage);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
         public void AjouterGuerriere()
@@ -73,9 +72,11 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void ChargerObjet(FabriqueAbstraite fab);
         public abstract void DeplacerPersonnage(PersonnageAbstrait unPersonnage,ZoneAbstrait zdebut, ZoneAbstrait zfin);
         public abstract void Repositioner();
+        public abstract void FournirAcces();
         public abstract string Simuler();
         public abstract string Statistiques();
         public abstract void TourSuivant();
+        public abstract void InitZones();
         public abstract void Avance();
         public abstract void Stop();
 

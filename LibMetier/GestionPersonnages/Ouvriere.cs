@@ -10,12 +10,14 @@ using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
+using LibAbstraite.GestionStrategie;
 
 namespace LibMetier.GestionPersonnages
 {
     
   public class Ouvriere : PersonnageAbstrait
    {
+        
         public MorceauNourriture Morceau { get; set; }
         public Ouvriere()
         {

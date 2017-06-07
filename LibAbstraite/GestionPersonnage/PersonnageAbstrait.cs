@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using LibAbstraite.GestionStrategie;
 
 namespace LibAbstraite.GestionPersonnage
 {
     public abstract class PersonnageAbstrait : ViewModelBase
     {
+        private StrategieAbstraite StategieCourante { get; set; }
         public bool TransporteNourriture = false;
         public static Random Hazard = new Random();
         public AccesAbstrait ChoixZoneSuivante { get; set; }

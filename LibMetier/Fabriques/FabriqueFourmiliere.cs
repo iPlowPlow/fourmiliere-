@@ -18,7 +18,7 @@ namespace LibMetier
 
         public override AccesAbstrait CreerAcces(List<ZoneAbstrait> zoneaccessibles)
         {
-            return new Chemin(zoneaccessibles);
+            return new Acces(zoneaccessibles);
         }
 
         public override EnvironnementAbstrait CreerEnvironnement(int dimensionX, int dimensionY)
@@ -60,14 +60,14 @@ namespace LibMetier
             return new Termite(nom, new Coordonnees(0, 10));
         }
 
-        public ZoneAbstrait CreerZone(String nom)
-        {
-            return new BoutDeTerrain(nom);
-        }
 
-        public override ZoneAbstrait CrerZone(string nom)
+        public override ZoneAbstrait CreerZone(string nom, CoordonneesAbstrait position)
         {
-            throw new NotImplementedException();
+            return new BoutDeTerrain(nom, position);
+        }
+        public override CoordonneesAbstrait CreerPosition(int x, int y)
+        {
+            return new Coordonnees(x, y);
         }
     }
 }

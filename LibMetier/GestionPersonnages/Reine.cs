@@ -23,6 +23,7 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 500;
             this.Position = position;
+            ListEtape = new ObservableCollection<Etape>();
         }
 
 
@@ -35,7 +36,7 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-            throw new NotImplementedException();
+
         }
 
 

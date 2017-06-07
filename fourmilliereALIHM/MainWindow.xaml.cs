@@ -59,6 +59,16 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
+            foreach(ZoneAbstrait zone in App.fourmilliereVM.ZoneList)
+            {
+                Image img = new Image();
+                Uri uri = new Uri("Images/herbe.jpg", UriKind.Relative);
+                img.Source = new BitmapImage(uri);
+                img.Stretch = Stretch.Fill;
+                Plateau.Children.Add(img);
+                Grid.SetColumn(img, zone.Position.Y);
+                Grid.SetRow(img, zone.Position.X);
+            }
             foreach (ObjetAbstrait unObjet in App.fourmilliereVM.ObjetList)
             {
                 Image img = new Image();
@@ -80,14 +90,14 @@ namespace fourmilliereALIHM
                     Rectangle pheromoneBox = new Rectangle();
                     pheromoneBox.Fill = new SolidColorBrush(color);
                     Plateau.Children.Add(pheromoneBox);
-                    Grid.SetColumn(pheromoneBox, pheromone.Position.X);
-                    Grid.SetRow(pheromoneBox, pheromone.Position.Y);
+                    Grid.SetColumn(pheromoneBox, pheromone.Position.Y);
+                    Grid.SetRow(pheromoneBox, pheromone.Position.X);
                 }
                 else
                 {
                     Plateau.Children.Add(img);
-                    Grid.SetColumn(img, unObjet.Position.X);
-                    Grid.SetRow(img, unObjet.Position.Y);
+                    Grid.SetColumn(img, unObjet.Position.Y);
+                    Grid.SetRow(img, unObjet.Position.X);
                 }
             }
             foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.PersonnagesList)
@@ -119,8 +129,8 @@ namespace fourmilliereALIHM
                     img.Source = new BitmapImage(uri);
                 }
                 Plateau.Children.Add(img);
-                Grid.SetColumn(img, unInsecte.Position.X);
-                Grid.SetRow(img, unInsecte.Position.Y);
+                Grid.SetColumn(img, unInsecte.Position.Y);
+                Grid.SetRow(img, unInsecte.Position.X);
             }
         }
 
@@ -328,7 +338,7 @@ namespace fourmilliereALIHM
                          PersonnagesList = new ObservableCollection<PersonnageAbstrait>(),
                          ObjetList= new ObservableCollection<ObjetAbstrait>(),
                          AccesList = new List<AccesAbstrait>(),
-                         ZoneList= new List<ZoneAbstrait>()
+                         ZoneList= new ObservableCollection<ZoneAbstrait>()
                      }).First();
                     App.fourmilliereVM.DimensionX = fo.DimensionX;
                     App.fourmilliereVM.DimensionY = fo.DimensionY;

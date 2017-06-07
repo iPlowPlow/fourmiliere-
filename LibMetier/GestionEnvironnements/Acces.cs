@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
 namespace LibMetier.GestionEnvironnements
 {
-    public class Chemin : AccesAbstrait
+    public class Acces : AccesAbstrait
     {
  
-        public Chemin(List<ZoneAbstrait> zoneaccess)
+        public Acces(List<ZoneAbstrait> zoneaccess)
         {
             Zonesaccessibles = zoneaccess;
         }
