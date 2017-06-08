@@ -9,9 +9,9 @@ using LibAbstraite.GestionPersonnage;
 
 namespace LibMetier.GestionStrategie
 {
-    public class Desoriente : StrategieAbstraite
+    public class Defense : StrategieAbstraite
     {
-        public Desoriente(string nom)
+        public Defense(string nom)
         {
             this.Nom = nom;
         }

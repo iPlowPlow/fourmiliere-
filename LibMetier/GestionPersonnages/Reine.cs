@@ -8,6 +8,7 @@ using LibAbstraite.GestionEnvironnement;
 using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
+using LibMetier.GestionStrategie;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -23,7 +24,10 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 500;
             this.Position = position;
+            this.Maison = position;
             ListEtape = new ObservableCollection<Etape>();
+            zone = new BoutDeTerrain("default", position);
+            StategieCourante = new Normal("Strategie normal");
         }
 
 
@@ -36,7 +40,19 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
+            foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+            {
 
+                if (unPerso.GetType().Equals(typeof(Guerriere)))
+                {
+                    /*Indiquer chemin nourriture*/
+                }
+                else if (unPerso.GetType().Equals(typeof(Termite)))
+                {
+                    ListEtape.Add(new Etape("Une termite m'attaque ! "));
+                }
+
+            }
         }
 
 

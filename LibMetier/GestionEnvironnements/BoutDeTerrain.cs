@@ -34,7 +34,7 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouteNourriture(ObjetAbstrait nourriture)
         {
-            throw new NotImplementedException();
+            ObjetList.Add(nourriture);
         }
 
         public override void AjouteOeuf(ObjetAbstrait oeuf)

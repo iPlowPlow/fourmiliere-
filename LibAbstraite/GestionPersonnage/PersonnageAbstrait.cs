@@ -13,9 +13,9 @@ namespace LibAbstraite.GestionPersonnage
 
     public abstract class PersonnageAbstrait : ViewModelBase
     {
-        private StrategieAbstraite StategieCourante { get; set; }
+        public StrategieAbstraite StategieCourante { get; set; }
         public bool TransporteNourriture = false;
-        public static Random Hazard = new Random();
+        
         public AccesAbstrait ChoixZoneSuivante { get; set; }
         public string Nom { get; set; }
         public int pv {get; set;}
@@ -31,7 +31,8 @@ namespace LibAbstraite.GestionPersonnage
         public ZoneAbstrait zone;
 
         public CoordonneesAbstrait Position { get; set; }
-        
+        public CoordonneesAbstrait Maison { get; set; }
+
         public abstract ZoneAbstrait ChoisirZoneSuivante();
         
         public  ObservableCollection<Etape> ListEtape { get; set; }
@@ -39,20 +40,15 @@ namespace LibAbstraite.GestionPersonnage
         public abstract void AnalyseSituation();
 
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
-        { 
-            AvanceAuHazard(dimX, dimY);
-            ListEtape.Add(new Etape(tourActuel, "Déplacement à la position X : " + Position.X +", Y : " + Position.Y));
+        {
             AnalyseSituation();
+            this.StategieCourante.Deplacement(dimX, dimY, this);
+            ListEtape.Add(new Etape(tourActuel, "Déplacement à la position X : " + Position.X +", Y : " + Position.Y));
+ 
             if (PV > 0) { PV--; }
             
         }
 
-        public void AvanceAuHazard(int dimX, int dimY)
-        {
-            int newX = Position.X + Hazard.Next(3) - 1;
-            int newY = Position.Y + Hazard.Next(3) - 1;
-            if ((newX >= 0) && (newX < dimX)) Position.X = newX;
-            if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
-        }
+       
     }
 }

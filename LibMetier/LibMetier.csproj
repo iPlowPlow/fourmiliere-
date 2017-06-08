@@ -53,6 +53,8 @@
     <Compile Include="GestionPersonnages\Ouvriere.cs" />
     <Compile Include="GestionPersonnages\Reine.cs" />
     <Compile Include="GestionPersonnages\Termite.cs" />
+    <Compile Include="GestionStrategie\Retour.cs" />
+    <Compile Include="GestionStrategie\Defense.cs" />
     <Compile Include="GestionStrategie\Desoriente.cs" />
     <Compile Include="GestionStrategie\Normal.cs" />
     <Compile Include="GestionStrategie\Fuite.cs" />

@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
 using LibAbstraite.GestionStrategie;
+using LibMetier.GestionStrategie;
+using LibAbstraite.GestionObjets;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -26,9 +28,12 @@ namespace LibMetier.GestionPersonnages
         public Ouvriere(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
-            this.PV = 20;
+            this.PV = 100;
             this.Position = position;
+            this.Maison = position;
             ListEtape = new ObservableCollection<Etape>();
+            zone = new BoutDeTerrain("default", position);
+            StategieCourante = new Normal("Normal");
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -47,7 +52,41 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-         
+
+            if (zone.ObjetList.Count > 0)
+            {
+             
+                foreach (Nourriture unObjet in zone.ObjetList.Where(x => GetType().Equals(typeof(Nourriture))))
+                {
+                        this.Morceau = unObjet.Recolter();
+                        ListEtape.Add(new Etape("Je récolte un morceau de nourriture ! "));
+                        this.StategieCourante = new Retour("Retour");
+                        this.TransporteNourriture = true;
+                }
+            }
+
+            if (zone.PersonnageList.Count > 0)
+            {
+                foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+                {
+
+                    if (unPerso.GetType().Equals(typeof(Guerriere)))
+                    {
+                        /*Indiquer chemin nourriture*/
+                    }
+                    else if (unPerso.GetType().Equals(typeof(Termite)))
+                    {
+                        ListEtape.Add(new Etape("Une termite m'attaque ! "));
+                    }
+                    else if (unPerso.GetType().Equals(typeof(Reine)))
+                    {
+                        //this.StategieCourante = new Normal("Normal");
+                    }
+
+                }
+
+            }
+
         }
     }
 }

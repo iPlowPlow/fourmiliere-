@@ -8,6 +8,7 @@ using LibAbstraite.GestionEnvironnement;
 using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
+using LibMetier.GestionStrategie;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -19,7 +20,10 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 75;
             this.Position = position;
+            
             ListEtape = new ObservableCollection<Etape>();
+            zone = new BoutDeTerrain("default", position);
+            StategieCourante = new Normal("Strategie normal");
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -32,7 +36,27 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-            
+            foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+            {
+
+                if (unPerso.GetType().Equals(typeof(Guerriere)))
+                {
+                    unPerso.PV -= 20;
+                    ListEtape.Add(new Etape("J'attaque la Guerriere! "));
+                }
+                else if (unPerso.GetType().Equals(typeof(Reine)))
+                {
+                    unPerso.PV -= 20;
+                    ListEtape.Add(new Etape("J'attaque laReine! "));
+                }
+                else if (unPerso.GetType().Equals(typeof(Ouvriere)))
+                {
+                    unPerso.PV -= 20;
+                    ListEtape.Add(new Etape("J'attaque l'Ouvriere! "));
+                }
+                
+
+            }
         }
     }
 }
