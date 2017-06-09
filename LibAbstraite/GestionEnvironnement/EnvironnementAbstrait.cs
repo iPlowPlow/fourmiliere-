@@ -15,6 +15,7 @@ namespace LibAbstraite.GestionEnvironnement
 
     {
         public static Random Hazard = new Random();
+        public static FabriqueAbstraite Fabrique;
         public Boolean encours;
         private string titre;
         public int tourActuel = 0;
@@ -38,7 +39,6 @@ namespace LibAbstraite.GestionEnvironnement
                 OnPropertyChanged("TitreApplication");
             }
         }
-        public FabriqueAbstraite Fabrique;
 
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
@@ -50,21 +50,18 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
+        public abstract void AjouterReine();
         public void AjouterGuerriere()
         {
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
-        }
-        public void AjouterReine()
-        {
-            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerGuerriere(String.Format("Guerriere N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(10,10)));
         }
         public void AjouterOuvriere()
         {
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerOuvriere(String.Format("Ouvrière N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
         }
         public void AjouterTermite()
         {
-            PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY)));
         }
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);

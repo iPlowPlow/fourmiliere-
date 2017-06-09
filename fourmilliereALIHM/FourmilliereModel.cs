@@ -169,7 +169,7 @@ namespace fourmilliereALIHM
                     fourmilliere.ObjetAbstraitList.Add(unPheromone);
                 }
                 unInsecte.Avance1Tour(DimensionX, DimensionY);
-                if unInsecte.Pointsdevie <= 0)
+                if (unInsecte.Pointsdevie <= 0)
                 {
                     PersonnagesMortList.Add(unInsecte);
                     PersonnagesList.Remove(unInsecte);

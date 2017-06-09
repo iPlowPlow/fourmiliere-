@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibAbstraite.GestionEnvironnement;
 using System.Threading.Tasks;
 using LibAbstraite.GestionObjets;
 
@@ -14,9 +15,10 @@ namespace LibMetier.GestionObjets
         {
 
         }
-        public MorceauNourriture(string nom)
+        public MorceauNourriture(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
+            this.Position = position;
         }
         public override void TourPasse()
         {

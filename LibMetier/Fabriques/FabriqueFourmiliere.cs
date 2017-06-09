@@ -26,9 +26,9 @@ namespace LibMetier
             return new Fourmiliere(dimensionX, dimensionY);
         }
 
-        public override ObjetAbstrait CreerOeuf(string nom)
+        public override ObjetAbstrait CreerOeuf(string nom, CoordonneesAbstrait position)
         {
-            return new Oeuf(nom);
+            return new Oeuf(nom, position);
         }
 
         public override ObjetAbstrait CreerNourriture(string nom, CoordonneesAbstrait position)
@@ -40,24 +40,24 @@ namespace LibMetier
             return new Pheromone(nom, position);
         }
 
-        public override PersonnageAbstrait CreerReine(string nom)
+        public override PersonnageAbstrait CreerReine(string nom, CoordonneesAbstrait position)
         {
-            return new Reine(nom, new Coordonnees(10, 10));
+            return Reine.Instance(nom, position);
         }
 
-        public override PersonnageAbstrait CreerOuvriere(string nom)
+        public override PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position)
         {
-            return new Ouvriere(nom, new Coordonnees(10, 10));
+            return new Ouvriere(nom, position);
         }
 
-        public override PersonnageAbstrait CreerGuerriere(string nom)
+        public override PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position)
         {
-            return new Guerriere(nom, new Coordonnees(10, 10));
+            return new Guerriere(nom, position);
         }
 
-        public override PersonnageAbstrait CreerTermite(string nom)
+        public override PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position)
         {
-            return new Termite(nom, new Coordonnees(0, 10));
+            return new Termite(nom, position);
         }
 
 

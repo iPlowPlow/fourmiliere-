@@ -17,12 +17,14 @@ namespace LibMetier.GestionEnvironnements
         {
             this.Nom = nom;
             this.Position = position;
+            this.PersonnageList = new List<PersonnageAbstrait>();
+            this.ObjetList = new List<ObjetAbstrait>();
         }
 
-        public override void AjouteAcces(AccesAbstrait acces)
-        {
-            AccesList.Add(acces);
-        }
+        //public override void AjouteAcces(AccesAbstrait acces)
+        //{
+        //    AccesList.Add(acces);
+        //}
 
         public override void AjouteGuerriere(PersonnageAbstrait personnage)
         {
@@ -38,6 +40,7 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+
 
         public override void AjouteOuvriere(PersonnageAbstrait personnage)
         {

@@ -36,6 +36,7 @@ namespace LibMetier.GestionPersonnages
         }
         public MorceauNourriture DeposeMorceau()
         {
+            Morceau.Position = Position;
             MorceauNourriture morceauRendu = Morceau;
             Morceau = null;
             return morceauRendu;
@@ -47,7 +48,7 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

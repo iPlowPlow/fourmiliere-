@@ -20,7 +20,7 @@ namespace LibMetier.GestionObjets
         {
             this.Nom = nom;
             this.Position = position;
-            this.Morceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom)), MORCEAU_NOURRITURE).ToList();
+            this.Morceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
         }
         public MorceauNourriture RecolterMorceau()
         {

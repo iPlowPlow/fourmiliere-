@@ -139,7 +139,7 @@
     <Resource Include="Images\fourmi_ouvriere_chargee.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\herbe.jpg" />
+    <Resource Include="Images\rain.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -38,7 +38,8 @@ namespace LibAbstraite.GestionPersonnage
         public abstract void AnalyseSituation();
 
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
-        { 
+        {
+            AnalyseSituation();
             AvanceAuHazard(dimX, dimY);
             ListEtape.Add(new Etape(tourActuel, "position X : " + Position.X +" Position Y : " + Position.Y));
             //AnalyseSituation();
@@ -48,10 +49,10 @@ namespace LibAbstraite.GestionPersonnage
 
         public void AvanceAuHazard(int dimX, int dimY)
         {
-            int newX = Position.X + Hazard.Next(3) - 1;
-            int newY = Position.Y + Hazard.Next(3) - 1;
-            if ((newX >= 0) && (newX < dimX)) Position.X = newX;
-            if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
+            //int newX = Position.X + Hazard.Next(3) - 1;
+            //int newY = Position.Y + Hazard.Next(3) - 1;
+            //if ((newX >= 0) && (newX < dimX)) Position.X = newX;
+            //if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
         }
     }
 }
