@@ -18,12 +18,7 @@ namespace LibMetier.GestionStrategie
 
         public override void Deplacement(int dimX, int dimY, PersonnageAbstrait unPerso)
         {
-            Console.WriteLine(unPerso.Position.Y);
-            Console.WriteLine(unPerso.Maison.Y);
-            Console.WriteLine(unPerso.Position.X);
-            Console.WriteLine(unPerso.Maison.X);
-
-
+            
             if (unPerso.Position.Y != unPerso.Maison.Y) {
                 if (unPerso.Position.Y < unPerso.Maison.Y)
                 {

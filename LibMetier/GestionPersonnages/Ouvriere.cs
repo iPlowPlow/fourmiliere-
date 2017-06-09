@@ -30,7 +30,9 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 100;
             this.Position = position;
-            this.Maison = position;
+            this.Maison = new Coordonnees();
+            this.Maison.X = position.X;
+            this.Maison.Y = position.Y;
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Normal("Normal");
@@ -53,15 +55,23 @@ namespace LibMetier.GestionPersonnages
         public override void AnalyseSituation()
         {
 
+            
+
             if (zone.ObjetList.Count > 0)
             {
-             
-                foreach (Nourriture unObjet in zone.ObjetList.Where(x => GetType().Equals(typeof(Nourriture))))
+
+                /*On ne prend pas la nourriture de la maison*/
+                if (zone.Position.X != this.Maison.X && zone.Position.Y != this.Maison.Y)
                 {
-                        this.Morceau = unObjet.Recolter();
-                        ListEtape.Add(new Etape("Je récolte un morceau de nourriture ! "));
-                        this.StategieCourante = new Retour("Retour");
-                        this.TransporteNourriture = true;
+                    foreach (Nourriture unObjet in zone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))))
+                    {
+                        if (unObjet.ListMorceaux.Count > 0) {
+                            this.Morceau = unObjet.Recolter();
+                            ListEtape.Add(new Etape("Je récolte un morceau de nourriture ! "));
+                            this.StategieCourante = new Retour("Retour");
+                            this.TransporteNourriture = true;
+                        }   
+                    }
                 }
             }
 
@@ -78,9 +88,14 @@ namespace LibMetier.GestionPersonnages
                     {
                         ListEtape.Add(new Etape("Une termite m'attaque ! "));
                     }
-                    else if (unPerso.GetType().Equals(typeof(Reine)))
+                    else if (this.TransporteNourriture == true && unPerso.GetType().Equals(typeof(Reine)))
                     {
-                        //this.StategieCourante = new Normal("Normal");
+                        Console.WriteLine("Je donne ma bouffe a la reine");
+                        zone.ObjetList.Add(this.Morceau);
+                        this.TransporteNourriture = false;
+                        this.Morceau = null;
+                        this.StategieCourante = new Normal("Normal");
+                        
                     }
 
                 }

@@ -19,6 +19,7 @@ namespace LibMetier.GestionEnvironnements
 
     public class Fourmiliere : EnvironnementAbstrait
     {
+
         public Fourmiliere()
         {
 
@@ -36,13 +37,16 @@ namespace LibMetier.GestionEnvironnements
             Fabrique = new FabriqueFourmiliere();
             PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Alain"));
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
-            PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
-           
+            //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0"));
+            //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
+            PersonnagesList.Add(Fabrique.CreerReine("Reine"));
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();
+
             InitZones();
+
+         
 
         }
         
@@ -123,15 +127,19 @@ namespace LibMetier.GestionEnvironnements
 
         public override void FournirAcces()
         {
-            AccesAbstrait nouvelaccès;
-            List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
-            foreach(var unInsecte in PersonnagesList)
+
+            
+            foreach (var unInsecte in PersonnagesList)
             {
-                zoneAdjacentes.Clear();
-                zoneAdjacentes.AddRange(ZoneList.Where(x => x.Position.X > (unInsecte.Position.X - 2) && x.Position.X < (unInsecte.Position.X - 2) && x.Position.Y > (unInsecte.Position.Y - 2) && x.Position.Y < (unInsecte.Position.Y - 2)));
-                nouvelaccès = Fabrique.CreerAcces(zoneAdjacentes);
-                unInsecte.ChoixZoneSuivante = nouvelaccès;
+                List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
+                zoneAdjacentes.AddRange(ZoneList.Where(x => x.Position.X > (unInsecte.Position.X - 2) && x.Position.X < (unInsecte.Position.X + 2) 
+                && x.Position.Y > (unInsecte.Position.Y - 2) && x.Position.Y < (unInsecte.Position.Y + 2)
+                ));
+                
+                unInsecte.ChoixZoneSuivante = Fabrique.CreerAcces(zoneAdjacentes);
+                
             }
+
         }
 
         public override string Simuler()
@@ -156,12 +164,22 @@ namespace LibMetier.GestionEnvironnements
 
         public override void TourSuivant()
         {
+
             Repositioner();
+            FournirAcces();
+
             foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
             {
                 if (unePheromone.Dureevie < 1)
                 {
                     ObjetList.Remove(unePheromone);
+                }
+            }
+            foreach (Nourriture nourriture in ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).ToList())
+            {
+                if (nourriture.ListMorceaux.Count < 1)
+                {
+                    ObjetList.Remove(nourriture);
                 }
             }
             foreach (ObjetAbstrait unObjet in ObjetList)
@@ -176,7 +194,9 @@ namespace LibMetier.GestionEnvironnements
                     Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
                     ObjetList.Add(unPheromone);
                 }
+
                 unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
+          
                 if (unInsecte.PV <= 0)
                 {
                     PersonnagesMortList.Add(unInsecte);
@@ -190,7 +210,9 @@ namespace LibMetier.GestionEnvironnements
                 AjouteNourriture();
             }
 
-            
+
+
+           
             tourActuel++;
         }
 

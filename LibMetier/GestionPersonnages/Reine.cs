@@ -24,10 +24,12 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 500;
             this.Position = position;
-            this.Maison = position;
+            this.Maison = new Coordonnees();
+            this.Maison.X = position.X;
+            this.Maison.Y = position.Y;
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
-            StategieCourante = new Normal("Strategie normal");
+            StategieCourante = new Immobile("Immobile");
         }
 
 

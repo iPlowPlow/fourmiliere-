@@ -22,6 +22,8 @@ namespace LibAbstraite.GestionObjets
             get; set;
         }
         public abstract void TourPasse();
+
+
         
     }
 }

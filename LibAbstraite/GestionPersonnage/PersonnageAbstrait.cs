@@ -43,7 +43,7 @@ namespace LibAbstraite.GestionPersonnage
         {
             AnalyseSituation();
             this.StategieCourante.Deplacement(dimX, dimY, this);
-            ListEtape.Add(new Etape(tourActuel, "Déplacement à la position X : " + Position.X +", Y : " + Position.Y));
+            ListEtape.Add(new Etape(tourActuel, "Position X : " + Position.X +", Y : " + Position.Y));
  
             if (PV > 0) { PV--; }
             

@@ -22,10 +22,7 @@ namespace LibMetier.GestionEnvironnements
 
         }
 
-        public override void AjouteAcces(AccesAbstrait acces)
-        {
-            AccesList.Add(acces);
-        }
+
 
         public override void AjouteGuerriere(PersonnageAbstrait personnage)
         {
