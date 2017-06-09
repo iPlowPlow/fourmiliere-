@@ -39,7 +39,7 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Add(Fabrique.CreerGuerriere("Alain"));
             PersonnagesList.Add(Fabrique.CreerOuvriere("Cecile"));
             PersonnagesList.Add(Fabrique.CreerTermite("Pierre"));
-
+            meteo = new Meteo();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
 
         }

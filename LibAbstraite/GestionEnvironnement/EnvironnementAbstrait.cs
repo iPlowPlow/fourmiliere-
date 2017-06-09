@@ -16,6 +16,7 @@ namespace LibAbstraite.GestionEnvironnement
     {
         public static Random Hazard = new Random();
         public Boolean encours;
+        public SujetAbstrait meteo;
         private string titre;
         public int tourActuel = 0;
         public int vitesse;
