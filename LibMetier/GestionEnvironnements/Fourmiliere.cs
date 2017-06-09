@@ -13,11 +13,11 @@ using System.Xml.Serialization;
 using System.Threading;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
-
+using LibAbstraite;
 namespace LibMetier.GestionEnvironnements
 {
 
-    public class Fourmiliere : EnvironnementAbstrait
+    public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public Fourmiliere()
         {
@@ -198,6 +198,24 @@ namespace LibMetier.GestionEnvironnements
         public override void AjouteNourriture(ObjetAbstrait unObject)
         {
             throw new NotImplementedException();
+        }
+
+        public  void Attach(PersonnageAbstrait observer)
+        {
+            ListObservateur.Add(observer);
+        }
+
+        public  void Detach(PersonnageAbstrait observer)
+        {
+            ListObservateur.Remove(observer);
+        }
+
+        public  void Notify()
+        {
+            foreach (PersonnageAbstrait unInsecte in ListObservateur)
+            {
+                unInsecte.maj();
+            }
         }
     }
 }

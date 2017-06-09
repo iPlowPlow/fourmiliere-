@@ -120,7 +120,9 @@
             </ListBox>
         </Grid>
         <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="true">
-
+            <Grid.Background>
+                <ImageBrush ImageSource="Images/sol.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">
             <Grid.ColumnDefinitions>

@@ -9,8 +9,10 @@ using System.Xml.Serialization;
 
 namespace LibAbstraite.GestionPersonnage
 {
-    public abstract class PersonnageAbstrait : ViewModelBase
+    public abstract class PersonnageAbstrait : ViewModelBase,Observable
     {
+        public string EtatMeteoObserver { get; set; }
+        public string EtatFourmiliereObserver { get; set; }
         public bool TransporteNourriture = false;
         public static Random Hazard = new Random();
         public AccesAbstrait ChoixZoneSuivante { get; set; }
@@ -50,6 +52,11 @@ namespace LibAbstraite.GestionPersonnage
             int newY = Position.Y + Hazard.Next(3) - 1;
             if ((newX >= 0) && (newX < dimX)) Position.X = newX;
             if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
+        }
+
+        public void maj()
+        {
+            throw new NotImplementedException();
         }
     }
 }

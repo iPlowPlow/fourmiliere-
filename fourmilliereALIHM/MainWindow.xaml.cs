@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,10 +93,13 @@ namespace fourmilliereALIHM
             foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.PersonnagesList)
             {
                 Image img = new Image();
+              
+              
                 if (unInsecte.GetType().Equals(typeof(Guerriere)))
                 {
                     Uri uri = new Uri("Images/fourmi_combattante.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
+                  
                 }
                 if (unInsecte.GetType().Equals(typeof(Ouvriere)))
                 {
@@ -107,20 +110,34 @@ namespace fourmilliereALIHM
                     }
                     Uri uri = new Uri(source, UriKind.Relative);
                     img.Source = new BitmapImage(uri);
+                   
                 }
                 if (unInsecte.GetType().Equals(typeof(Reine)))
                 {
-                    Uri uri = new Uri("Images/reine.png", UriKind.Relative);
-                    img.Source = new BitmapImage(uri);
+                 
+                  
+                  Uri  uri = new Uri("Images/reine.png", UriKind.Relative);
+                  img.Source = new BitmapImage(uri);
+
+                    Uri uri1 = new Uri("Images/Home.jpg", UriKind.Relative);
+
+                    Plateau.Background = new ImageBrush(new BitmapImage(uri));
+
+
                 }
                 if (unInsecte.GetType().Equals(typeof(Termite)))
                 {
                     Uri uri = new Uri("Images/termite.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
+               
                 }
+           
                 Plateau.Children.Add(img);
                 Grid.SetColumn(img, unInsecte.Position.X);
                 Grid.SetRow(img, unInsecte.Position.Y);
+                
+               
+
             }
         }
 
@@ -180,6 +197,28 @@ namespace fourmilliereALIHM
             }
             Dessine();
         }
+        public void initPlateau()
+        {
+          
+            
+            Plateau.ColumnDefinitions.Clear();
+            Plateau.RowDefinitions.Clear();
+            Plateau.Children.Clear();
+            for (int i = 0; i < App.fourmilliereVM.DimensionX; i++)
+            {
+                Plateau.RowDefinitions.Add(new RowDefinition());
+               
+
+            }
+            for (int i = 0; i < App.fourmilliereVM.DimensionY; i++)
+            {
+
+                Plateau.ColumnDefinitions.Add(new ColumnDefinition());
+               
+            }
+            
+           
+        }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<PersonnageAbstrait> listp=App.fourmilliereVM.PersonnagesList;
@@ -191,7 +230,7 @@ namespace fourmilliereALIHM
                         new XAttribute("x", App.fourmilliereVM.DimensionX),
                         new XAttribute("y", App.fourmilliereVM.DimensionY)
                          )
-                     ),
+                     ), ((listo.Where(x => (x.GetType().Equals(typeof(Nourriture)))).Count() > 0) ?
                      new XElement("nourritures",
                         from n in listo
                         where n.GetType().Equals(typeof(Nourriture))
@@ -204,10 +243,10 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     ),
+                     ):null), ((listo.Where(x => (x.GetType().Equals(typeof(Oeuf)))).Count() > 0) ?
                       new XElement("oeufs",
                         from n in listo
-                        where n.Nom.Contains("oeuf")
+                        where n.GetType().Equals(typeof(Oeuf))
                         select new XElement("oeuf",
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
@@ -217,23 +256,25 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     ),
-                      /* new XElement("pheromones",
+                      ):null),
+                       new XElement("pheromones",
                         from n in listo
-                        where n.Nom.Contains("pheromone")
+                        where n.GetType().Equals(typeof(Pheromone))
                         select new XElement("pheromone",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("duree", n.Dureevie),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.position.X),
-                                    new XAttribute("y", n.position.Y)
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                  
                                 )
                              )
                         )
-                     ),*/
+                     ), ((listp.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).Count() > 0) ?
                         new XElement("Ouvrieres",
                         from n in listp
-                        where n.Nom.Contains("ouvriere")
+                        where n.GetType().Equals(typeof(Ouvriere))
                         select new XElement("Ouvriere",
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
@@ -243,7 +284,7 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     ),
+                     ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Guerriere)))).Count() > 0) ?
                         new XElement("Guerrieres",
                         from n in listp
                         where n.GetType().Equals(typeof(Guerriere))
@@ -256,10 +297,10 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     ),
+                     ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Reine)))).Count() > 0) ?
                         new XElement("reines",
                         from n in listp
-                        where n.Nom.Contains("reine")
+                        where n.GetType().Equals(typeof(Reine))
                         select new XElement("reine",
                             new XAttribute("nom", n.Nom),
                             new XElement("coordonneess",
@@ -269,11 +310,25 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     )
+                     ) : null), ((listp.Where(x => (x.GetType().Equals(typeof(Termite)))).Count() > 0) ?
+                        new XElement("termites",
+                        from n in listp
+                        where n.GetType().Equals(typeof(Termite))
+                        select new XElement("termites",
+                            new XAttribute("nom", n.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             )
+                        )
+                     ) : null)
 
 
                 )
             );
+            
             doc.Save("save.xml");
       
 
@@ -314,6 +369,7 @@ namespace fourmilliereALIHM
                 List<Pheromone> listp = new List<Pheromone>();
                 List<Guerriere> listg = new List<Guerriere>();
                 List<Ouvriere> listo = new List<Ouvriere>();
+                List<Termite> listte = new List<Termite>();
                 Reine reine;
                 XElement x = XElement.Load(new StringReader(xmlString));
                 Fourmiliere fo;
@@ -357,6 +413,18 @@ namespace fourmilliereALIHM
                      })
                      .ToList();
                 }
+                if (x != null && x.Element("termites") != null)
+                {
+                    listte = x.Element("termites")
+                     .Elements("termite")
+                     .Select(t => new Termite()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         Position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                }
                 if (x != null && x.Element("reines") != null)
                 {
                      reine = x.Element("reines")
@@ -393,17 +461,19 @@ namespace fourmilliereALIHM
                      })
                      .ToList();
                 }
-                if (x != null && x.Element("Pheromones") != null)
+                if (x != null && x.Element("pheromones") != null)
                 {
-                    listp = x.Element("Pheromones")
-                     .Elements("Pheromone")
+                    listp = x.Element("pheromones")
+                     .Elements("pheromone")
                      .Select(t => new Pheromone()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         Dureevie = (int)t.Attribute("duree"),
                          Position = t.Elements("coordonneess").Elements("coordonnees").Select(c => new Coordonnees()
                          {
                              X = (int)c.Attribute("x"),
-                             Y = (int)c.Attribute("y")
+                             Y = (int)c.Attribute("y"),
+                            
                          }).First()
                      })
                      .ToList();
@@ -414,7 +484,7 @@ namespace fourmilliereALIHM
                 
                 listo.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listg.ForEach(App.fourmilliereVM.PersonnagesList.Add);
-
+                listte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listoe.ForEach(App.fourmilliereVM.ObjetList.Add);
                 listp.ForEach(App.fourmilliereVM.ObjetList.Add);
                 listn.ForEach(App.fourmilliereVM.ObjetList.Add);
@@ -425,21 +495,6 @@ namespace fourmilliereALIHM
        
             }
         }
-        public void initPlateau()
-        {
-            Plateau.ColumnDefinitions.Clear();
-            Plateau.RowDefinitions.Clear();
-            Plateau.Children.Clear();
-            for (int i = 0; i < App.fourmilliereVM.DimensionX; i++)
-            {
-                Plateau.RowDefinitions.Add(new RowDefinition());
 
-            }
-            for (int i = 0; i < App.fourmilliereVM.DimensionY; i++)
-            {
-
-                Plateau.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-        }
     }
 }

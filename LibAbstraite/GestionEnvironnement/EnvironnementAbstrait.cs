@@ -45,6 +45,7 @@ namespace LibAbstraite.GestionEnvironnement
         public List<AccesAbstrait> AccesList { get; set; }
         public ObservableCollection<ObjetAbstrait> ObjetList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
+        public List<PersonnageAbstrait> ListObservateur { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
         public List<ZoneAbstrait> ZoneList { get; set; }
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
