@@ -20,7 +20,7 @@ namespace LibMetier.GestionEnvironnements
         }
         public override String toString()
         {
-            return X.ToString() + "," + Y.ToString(); 
+            return X + "," + Y; 
         }
     }
 }

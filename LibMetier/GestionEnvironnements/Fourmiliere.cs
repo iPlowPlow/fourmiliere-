@@ -14,6 +14,7 @@ using System.Threading;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
 using System.Windows.Threading;
+using LibMetier.GestionObjets;
 using LibAbstraite;
 
 namespace LibMetier.GestionEnvironnements
@@ -41,9 +42,9 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
 
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0"));
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
-            PersonnagesList.Add(Fabrique.CreerReine("Reine"));
+            AjouterReine();
 
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();
@@ -57,15 +58,11 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouterGuerriere()
         {
-            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
-        }
-        public override void AjouterReine()
-        {
-            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerGuerriere(String.Format("Guerriere {0}",PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
         }
         public override void AjouterOuvriere()
         {
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
+            PersonnagesList.Add(Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
         }
         public override void AjouterTermite()
         {
@@ -74,14 +71,19 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY)));
                  }
              );
             
         }
         public void AjouteNourriture()
         {
-            ObjetList.Add(Fabrique.CreerNourriture("Nourriture N "+ ObjetList.Count, new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
+            CoordonneesAbstrait position = new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY));
+            while(position.X.Equals(reine.Position.X)||position.Y.Equals(reine.Position.Y))
+            {
+                position = new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY));
+            }
+            ObjetList.Add(Fabrique.CreerNourriture("Nourriture N "+ ObjetList.Count, position));
         }
 
         public override void AjouteOeuf(ObjetAbstrait unOeuf)
@@ -189,7 +191,16 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
-
+        public void AjouterFourmi(PersonnageAbstrait fourmi)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     PersonnagesList.Add(fourmi);
+                 }
+             );
+        }
         public override void TourSuivant()
         {
             Repositioner();
@@ -207,7 +218,7 @@ namespace LibMetier.GestionEnvironnements
                 {
                     PersonnageAbstrait fourmi = unOeuf.fourmiARetourner;
                     fourmi.Nom += PersonnagesList.Count;
-                    PersonnagesList.Add(fourmi);
+                    AjouterFourmi(fourmi);
                     ObjetList.Remove(unOeuf);
                 }
             }
@@ -222,6 +233,8 @@ namespace LibMetier.GestionEnvironnements
             {
                 unObjet.TourPasse();
             }
+            Repositioner();
+            FournirAcces();
             foreach (PersonnageAbstrait unInsecte in PersonnagesList.ToList())
             {
                 if (unInsecte.GetType().Equals(typeof(Reine)))
@@ -229,25 +242,28 @@ namespace LibMetier.GestionEnvironnements
                     Reine reine = (Reine)unInsecte;
                     if (reine.OeufPondu != null)
                     {
+                        List<ObjetAbstrait> morceaux = ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
+                        ObjetList.Remove(morceaux[0]);
                         ObjetList.Add(reine.OeufPondu);
+                        Repositioner();
+                        FournirAcces();
                     }
                     reine.OeufPondu = null;
                 }
+                unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
                 if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
                 {
-                    if (unInsecte.Position.ToString().Equals(reine.Position.ToString()))
+                    if (unInsecte.Position.toString().Equals(reine.Position.toString()))
                     {
                         Ouvriere ouvriere = (Ouvriere)unInsecte;
-                        ObjetList.Add(ouvriere.DeposeMorceau());
+                        MorceauNourriture morceau = ouvriere.DeposeMorceau();
+                        ObjetList.Add(morceau);
                     }
                     Coordonnees coordonnees = new Coordonnees(unInsecte.Position.X, unInsecte.Position.Y);
                     Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
                     ObjetList.Add(unPheromone);
 
                 }
-
-                unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
-          
                 if (unInsecte.PV <= 0)
                 {
                     Mourrir(unInsecte);

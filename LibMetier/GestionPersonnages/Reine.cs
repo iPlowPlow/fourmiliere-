@@ -76,7 +76,6 @@ namespace LibMetier.GestionPersonnages
             List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
             if (morceaux.Count > 0)
             {
-                zone.ObjetList.Remove(morceaux[0]);
                 PondreOeuf();
             }
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
@@ -100,7 +99,10 @@ namespace LibMetier.GestionPersonnages
         public void PondreOeuf()
         {
             FabriqueFourmiliere fabrique = new FabriqueFourmiliere();
-            oeufPondu=(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), Position);
+            CoordonneesAbstrait pos = new Coordonnees();
+            pos.X = Position.X + Fourmiliere.Hazard.Next(-1, 2);
+            pos.Y = Position.Y + Fourmiliere.Hazard.Next(-1, 2);
+            oeufPondu =(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), pos);
         }
     }
 }

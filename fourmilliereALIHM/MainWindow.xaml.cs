@@ -64,11 +64,11 @@ namespace fourmilliereALIHM
             //Uri backuri = new Uri("Images/nourriture.png", UriKind.Relative);
             //background.ImageSource = new BitmapImage(backuri);
             //Plateau.Background = background;
-            foreach (ZoneAbstrait zone in App.fourmilliereVM.ZoneList)
+            foreach (ZoneAbstrait zone in App.fourmilliereVM.ZoneList.ToList())
             {
                 
             }
-            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.ObjetList.Where(x=> !x.GetType().Equals(typeof(MorceauNourriture))))
+            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.ObjetList.Where(x=> !x.GetType().Equals(typeof(MorceauNourriture))).ToList())
             {
                 Image img = new Image();
                 if (unObjet.GetType().Equals(typeof(Oeuf)))
@@ -99,7 +99,7 @@ namespace fourmilliereALIHM
                     Grid.SetRow(img, unObjet.Position.X);
                 }
             }
-            foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.PersonnagesList)
+            foreach (PersonnageAbstrait unInsecte in App.fourmilliereVM.PersonnagesList.ToList())
             {
                 Image img = new Image();
                 if (unInsecte.GetType().Equals(typeof(Guerriere)))

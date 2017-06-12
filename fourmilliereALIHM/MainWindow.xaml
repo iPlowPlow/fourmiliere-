@@ -123,8 +123,10 @@
 
         <Image x:Name="rain" Panel.ZIndex="2000" Stretch="Fill" gif:AnimationBehavior.SourceUri="Images/rain.gif" Grid.Row="1" Grid.Column="1"/>
 
-        <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="true">
-
+        <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="false">
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Images/ground.jpg"/>
+            </Grid.Background>
         </Grid>
 
         <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">

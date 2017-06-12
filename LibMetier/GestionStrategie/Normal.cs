@@ -31,18 +31,24 @@ namespace LibMetier.GestionStrategie
                 if (uneZone.PersonnageList.Where(x => x.GetType().Equals(typeof(Termite))).Count() == 0)
                 {
                     /*si on trouve de la nourriture on go*/
-                    if (uneZone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).Count() > 0)
+                    try
                     {
-                        zoneNourriture = uneZone;
-                        break;
-                    }
-                    else if (uneZone.ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).Count() > 0)
+                        if (uneZone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).Count() > 0)
+                        {
+                            zoneNourriture = uneZone;
+                            break;
+                        }
+                        else if (uneZone.ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).Count() > 0)
+                        {
+                            zonePheromone.Add(uneZone);
+                        }
+                        else
+                        {
+                            zoneAccessible.Add(uneZone);
+                        }
+                    }catch(Exception e)
                     {
-                        zonePheromone.Add(uneZone);
-                    }
-                    else
-                    {
-                        zoneAccessible.Add(uneZone);
+                        e.ToString();
                     }
                 }
                 
