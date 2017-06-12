@@ -43,11 +43,16 @@ namespace LibAbstraite.GestionPersonnage
 
         public void AjouterEtape(int tourActuel, string description)
         {
-            
+            Console.WriteLine(description);
             System.Windows.Application.Current.Dispatcher.Invoke(
                    DispatcherPriority.Normal,
                    (Action)delegate ()
                    {
+                       
+                       if(tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
                        ListEtape.Add(new Etape(tourActuel, description));
                    }
                );

@@ -19,7 +19,7 @@ namespace LibAbstraite.GestionEnvironnement
         public static Random Hazard = new Random();
         public Boolean encours;
         private string titre;
-        public int tourActuel = 0;
+        public int tourActuel = 1;
         public int vitesse;
         private PersonnageAbstrait unPerso;
         public PersonnageAbstrait PersoSelect
