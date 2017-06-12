@@ -212,7 +212,10 @@ namespace LibMetier.GestionEnvironnements
 
 
 
-           
+           if(tourActuel>50 && Hazard.Next(1, 11) == 1)
+            {
+                AjouterTermite();
+            }
             tourActuel++;
         }
 

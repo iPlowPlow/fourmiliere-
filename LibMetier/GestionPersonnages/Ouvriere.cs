@@ -93,8 +93,7 @@ namespace LibMetier.GestionPersonnages
                         zone.ObjetList.Add(this.Morceau);
                         this.TransporteNourriture = false;
                         this.Morceau = null;
-                        this.StategieCourante = new Normal("Normal");
-                        
+                        this.StategieCourante = new Normal("Normal");   
                     }
 
                 }
