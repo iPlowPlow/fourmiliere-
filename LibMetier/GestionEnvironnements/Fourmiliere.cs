@@ -13,6 +13,8 @@ using System.Xml.Serialization;
 using System.Threading;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
+using System.Windows.Threading;
+using LibAbstraite;
 
 namespace LibMetier.GestionEnvironnements
 {
@@ -37,17 +39,49 @@ namespace LibMetier.GestionEnvironnements
             Fabrique = new FabriqueFourmiliere();
             PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
-            
+
+            //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0"));
+            //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
+            PersonnagesList.Add(Fabrique.CreerReine("Reine"));
 
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();
+
             InitZones();
+
+         
+
         }
+        
 
+        public override void AjouterGuerriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere " + PersonnagesList.Count));
+        }
+        public override void AjouterReine()
+        {
+            PersonnagesList.Add(Fabrique.CreerReine("Reine " + PersonnagesList.Count));
+        }
+        public override void AjouterOuvriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere " + PersonnagesList.Count));
+        }
+        public override void AjouterTermite()
+        {
 
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+                 }
+             );
+            
+        }
         public void AjouteNourriture()
         {
-            ObjetList.Add(new Nourriture(String.Format("Nourriture N {0}", ObjetList.Count), new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
+            ObjetList.Add(Fabrique.CreerNourriture("Nourriture N "+ ObjetList.Count, new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY))));
         }
 
         public override void AjouteOeuf(ObjetAbstrait unOeuf)
@@ -94,7 +128,7 @@ namespace LibMetier.GestionEnvironnements
 
         public override void Repositioner()
         {
-            foreach (var boutDeTerrain in ZoneList)
+            foreach(var boutDeTerrain in ZoneList)
             {
                 boutDeTerrain.PersonnageList.Clear();
                 boutDeTerrain.ObjetList.Clear();
@@ -109,15 +143,18 @@ namespace LibMetier.GestionEnvironnements
 
         public override void FournirAcces()
         {
-            AccesAbstrait nouvelaccès;
-            List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
-            foreach(var unInsecte in PersonnagesList)
+
+            
+            foreach (var unInsecte in PersonnagesList)
             {
-                zoneAdjacentes.Clear();
-                zoneAdjacentes.AddRange(ZoneList.Where(x => x.Position.X > (unInsecte.Position.X - 2) && x.Position.X < (unInsecte.Position.X + 2) && x.Position.Y > (unInsecte.Position.Y - 2) && x.Position.Y < (unInsecte.Position.Y + 2)));
-                nouvelaccès = Fabrique.CreerAcces(zoneAdjacentes);
-                unInsecte.ChoixZoneSuivante = nouvelaccès;
+                List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
+                zoneAdjacentes.AddRange(ZoneList.Where(x => x.Position.X > (unInsecte.Position.X - 2) && x.Position.X < (unInsecte.Position.X + 2) 
+                && x.Position.Y > (unInsecte.Position.Y - 2) && x.Position.Y < (unInsecte.Position.Y + 2)
+                ));
+                
+                unInsecte.ChoixZoneSuivante = Fabrique.CreerAcces(zoneAdjacentes);
             }
+
         }
 
         public override string Simuler()
@@ -133,6 +170,19 @@ namespace LibMetier.GestionEnvironnements
         public void SupprimerPersonnage()
         {
             PersonnagesList.Remove(PersoSelect);
+        }
+
+        public void Mourrir(PersonnageAbstrait unPerso)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     unPerso.ListEtape.Add(new Etape(0, "Je meurs......."));
+                     PersonnagesMortList.Add(unPerso);
+                     PersonnagesList.Remove(unPerso);  
+                 }
+             );
         }
 
         public void AjouterReine(Reine reine)
@@ -159,6 +209,13 @@ namespace LibMetier.GestionEnvironnements
                     fourmi.Nom += PersonnagesList.Count;
                     PersonnagesList.Add(fourmi);
                     ObjetList.Remove(unOeuf);
+                }
+            }
+            foreach (Nourriture nourriture in ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).ToList())
+            {
+                if (nourriture.ListMorceaux.Count < 1)
+                {
+                    ObjetList.Remove(nourriture);
                 }
             }
             foreach (ObjetAbstrait unObjet in ObjetList)
@@ -188,18 +245,24 @@ namespace LibMetier.GestionEnvironnements
                     ObjetList.Add(unPheromone);
 
                 }
+
                 unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
+          
                 if (unInsecte.PV <= 0)
                 {
-                    PersonnagesMortList.Add(unInsecte);
-                    PersonnagesList.Remove(unInsecte);
-                }
-                //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
-                unInsecte.TransporteNourriture = true;
+                    Mourrir(unInsecte);
+                } 
             }
             if (Hazard.Next(1, 11) == 1)
             {
                 AjouteNourriture();
+            }
+
+
+            
+           if(tourActuel>50 && Hazard.Next(1, 11) == 1)
+            {
+                AjouterTermite();
             }
             tourActuel++;
         }

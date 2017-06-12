@@ -11,7 +11,7 @@ namespace LibMetier.GestionObjets
     public class Nourriture : ObjetAbstrait
     {
         public const int MORCEAU_NOURRITURE = 20;
-        public List<MorceauNourriture> Morceaux { get; set; }
+        public List<MorceauNourriture> ListMorceaux { get; set; }
         public Nourriture()
         {
          
@@ -22,10 +22,10 @@ namespace LibMetier.GestionObjets
             this.Position = position;
             this.Morceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
         }
-        public MorceauNourriture RecolterMorceau()
+        public MorceauNourriture Recolter()
         {
-            var morceau = Morceaux.First();
-            Morceaux.Remove(morceau);
+            var morceau = ListMorceaux.First();
+            ListMorceaux.Remove(morceau);
             return morceau;
         }
         public override void TourPasse()

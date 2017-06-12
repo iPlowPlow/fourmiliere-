@@ -10,6 +10,7 @@ using LibAbstraite;
 using LibAbstraite.GestionObjets;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionObjets;
+using LibMetier.GestionStrategie;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -29,7 +30,6 @@ namespace LibMetier.GestionPersonnages
             {
                 instance = new Reine();
             }
-
             return instance;
         }
         public static Reine Instance(string nom, CoordonneesAbstrait position)
@@ -41,8 +41,12 @@ namespace LibMetier.GestionPersonnages
             instance.Nom = nom;
             instance.PV = 500;
             instance.Position = position;
+            instance.Maison = new Coordonnees();
+            instance.Maison.X = position.X;
+            instance.Maison.Y = position.Y;
             instance.ListEtape = new ObservableCollection<Etape>();
-
+            instance.zone = new BoutDeTerrain("default", position);
+            instance.StategieCourante = new Immobile("Immobile");
             return instance;
         }
         public Oeuf OeufPondu { 
@@ -74,6 +78,18 @@ namespace LibMetier.GestionPersonnages
             {
                 zone.ObjetList.Remove(morceaux[0]);
                 PondreOeuf();
+            }
+            foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+            {
+
+                if (unPerso.GetType().Equals(typeof(Guerriere)))
+                {
+                    /*Indiquer chemin nourriture*/
+                }
+                else if (unPerso.GetType().Equals(typeof(Termite)))
+                {
+                    AjouterEtape(0, "Une termite m'attaque ! ");
+                }
             }
         }
 

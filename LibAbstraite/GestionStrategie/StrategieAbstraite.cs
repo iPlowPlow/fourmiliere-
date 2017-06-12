@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionPersonnage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ namespace LibAbstraite.GestionStrategie
     public abstract class StrategieAbstraite
     {
         public string Nom { get; set; }
-        public abstract void Operation();
+        public static Random Hazard = new Random();
+        public abstract void Deplacement(int dimX, int dimY, PersonnageAbstrait unPerso);
     }
 }

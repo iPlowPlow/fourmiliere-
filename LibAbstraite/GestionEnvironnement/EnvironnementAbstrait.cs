@@ -14,11 +14,13 @@ namespace LibAbstraite.GestionEnvironnement
     public abstract class EnvironnementAbstrait : ViewModelBase
 
     {
+
+        
         public static Random Hazard = new Random();
         public static FabriqueAbstraite Fabrique;
         public Boolean encours;
         private string titre;
-        public int tourActuel = 0;
+        public int tourActuel = 1;
         public int vitesse;
         private PersonnageAbstrait unPerso;
         public PersonnageAbstrait PersoSelect

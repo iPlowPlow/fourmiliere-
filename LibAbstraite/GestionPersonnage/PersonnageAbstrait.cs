@@ -7,14 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using LibAbstraite.GestionStrategie;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace LibAbstraite.GestionPersonnage
 {
+
     public abstract class PersonnageAbstrait : ViewModelBase
     {
-        private StrategieAbstraite StategieCourante { get; set; }
+        public StrategieAbstraite StategieCourante { get; set; }
         public bool TransporteNourriture = false;
-        public static Random Hazard = new Random();
+        
         public AccesAbstrait ChoixZoneSuivante { get; set; }
         public string Nom { get; set; }
         public int pv {get; set;}
@@ -30,29 +33,40 @@ namespace LibAbstraite.GestionPersonnage
         public ZoneAbstrait zone;
 
         public CoordonneesAbstrait Position { get; set; }
-        
+        public CoordonneesAbstrait Maison { get; set; }
+
         public abstract ZoneAbstrait ChoisirZoneSuivante();
         
         public  ObservableCollection<Etape> ListEtape { get; set; }
 
         public abstract void AnalyseSituation();
 
-        public void Avance1Tour(int dimX, int dimY, int tourActuel)
+
+        public void AjouterEtape(int tourActuel, string description)
         {
-            AnalyseSituation();
-            AvanceAuHazard(dimX, dimY);
-            ListEtape.Add(new Etape(tourActuel, "position X : " + Position.X +" Position Y : " + Position.Y));
-            //AnalyseSituation();
-            if (PV > 0) { PV--; }
-            
+            Console.WriteLine(description);
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+                       
+                       if(tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+                       ListEtape.Add(new Etape(tourActuel, description));
+                   }
+               );
         }
 
-        public void AvanceAuHazard(int dimX, int dimY)
+        public void Avance1Tour(int dimX, int dimY, int tourActuel)
         {
-            //int newX = Position.X + Hazard.Next(3) - 1;
-            //int newY = Position.Y + Hazard.Next(3) - 1;
-            //if ((newX >= 0) && (newX < dimX)) Position.X = newX;
-            //if ((newY >= 0) && (newY < dimX)) Position.Y = newY;
+            AjouterEtape(tourActuel, "Position X : " + Position.X + ", Y : " + Position.Y);
+            AnalyseSituation();
+            this.StategieCourante.Deplacement(dimX, dimY, this); 
+            if (PV > 0) { PV--; } 
         }
+
+       
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionStrategie;
+using LibAbstraite.GestionEnvironnement;
+using LibAbstraite.GestionPersonnage;
 
 namespace LibMetier.GestionStrategie
 {
@@ -14,9 +16,14 @@ namespace LibMetier.GestionStrategie
             this.Nom = nom;
         }
 
-        public override void Operation()
+        public override void Deplacement(int dimX, int dimY, PersonnageAbstrait unPerso)
         {
-            Console.WriteLine("on voit quedal pt1");
+            int maCase = Hazard.Next(unPerso.ChoixZoneSuivante.Zonesaccessibles.Count);
+
+            unPerso.Position.X = unPerso.ChoixZoneSuivante.Zonesaccessibles[maCase].Position.X;
+            unPerso.Position.Y = unPerso.ChoixZoneSuivante.Zonesaccessibles[maCase].Position.Y;
+
+
         }
     }
 }

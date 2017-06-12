@@ -16,15 +16,12 @@ namespace LibMetier.GestionEnvironnements
         public BoutDeTerrain(string nom, CoordonneesAbstrait position)
         {
             this.Nom = nom;
+            PersonnageList = new List<PersonnageAbstrait>();
+            ObjetList = new List<ObjetAbstrait>();
             this.Position = position;
-            this.PersonnageList = new List<PersonnageAbstrait>();
-            this.ObjetList = new List<ObjetAbstrait>();
         }
 
-        //public override void AjouteAcces(AccesAbstrait acces)
-        //{
-        //    AccesList.Add(acces);
-        //}
+
 
         public override void AjouteGuerriere(PersonnageAbstrait personnage)
         {
@@ -33,7 +30,7 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouteNourriture(ObjetAbstrait nourriture)
         {
-            throw new NotImplementedException();
+            ObjetList.Add(nourriture);
         }
 
         public override void AjouteOeuf(ObjetAbstrait oeuf)
