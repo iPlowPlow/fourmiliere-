@@ -18,10 +18,10 @@ namespace LibMetier.GestionStrategie
 
         public override void Deplacement(int dimX, int dimY, PersonnageAbstrait unPerso)
         {
-            int newX = unPerso.Position.X + Hazard.Next(3) - 1;
-            int newY = unPerso.Position.Y + Hazard.Next(3) - 1;
-            if ((newX >= 0) && (newX < dimX)) unPerso.Position.X = newX;
-            if ((newY >= 0) && (newY < dimX)) unPerso.Position.Y = newY;
+            int maCase = Hazard.Next(unPerso.ChoixZoneSuivante.Zonesaccessibles.Count);
+
+            unPerso.Position.X = unPerso.ChoixZoneSuivante.Zonesaccessibles[maCase].Position.X;
+            unPerso.Position.Y = unPerso.ChoixZoneSuivante.Zonesaccessibles[maCase].Position.Y;
 
 
         }

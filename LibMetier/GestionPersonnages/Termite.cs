@@ -23,7 +23,7 @@ namespace LibMetier.GestionPersonnages
             
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
-            StategieCourante = new Normal("Strategie normal");
+            StategieCourante = new Attaque("Attaque");
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -39,15 +39,16 @@ namespace LibMetier.GestionPersonnages
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
             {
 
-                if (unPerso.GetType().Equals(typeof(Guerriere)))
+                if (unPerso.GetType().Equals(typeof(Reine)))
+                {
+                    unPerso.PV -= 20;
+                    ListEtape.Add(new Etape("J'attaque la Reine! "));
+                }
+
+                else if (unPerso.GetType().Equals(typeof(Guerriere)))
                 {
                     unPerso.PV -= 20;
                     ListEtape.Add(new Etape("J'attaque la Guerriere! "));
-                }
-                else if (unPerso.GetType().Equals(typeof(Reine)))
-                {
-                    unPerso.PV -= 20;
-                    ListEtape.Add(new Etape("J'attaque laReine! "));
                 }
                 else if (unPerso.GetType().Equals(typeof(Ouvriere)))
                 {

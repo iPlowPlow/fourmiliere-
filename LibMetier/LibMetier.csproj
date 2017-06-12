@@ -53,6 +53,7 @@
     <Compile Include="GestionPersonnages\Ouvriere.cs" />
     <Compile Include="GestionPersonnages\Reine.cs" />
     <Compile Include="GestionPersonnages\Termite.cs" />
+    <Compile Include="GestionStrategie\Attaque.cs" />
     <Compile Include="GestionStrategie\Immobile.cs" />
     <Compile Include="GestionStrategie\Retour.cs" />
     <Compile Include="GestionStrategie\Defense.cs" />

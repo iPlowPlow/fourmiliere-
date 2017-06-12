@@ -90,7 +90,6 @@ namespace LibMetier.GestionPersonnages
                     }
                     else if (this.TransporteNourriture == true && unPerso.GetType().Equals(typeof(Reine)))
                     {
-                        Console.WriteLine("Je donne ma bouffe a la reine");
                         zone.ObjetList.Add(this.Morceau);
                         this.TransporteNourriture = false;
                         this.Morceau = null;

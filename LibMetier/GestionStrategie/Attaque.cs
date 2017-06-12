@@ -11,9 +11,9 @@ using LibMetier.GestionPersonnages;
 
 namespace LibMetier.GestionStrategie
 {
-    public class Defense : StrategieAbstraite
+    public class Attaque : StrategieAbstraite
     {
-        public Defense(string nom)
+        public Attaque(string nom)
         {
             this.Nom = nom;
         }
@@ -22,30 +22,39 @@ namespace LibMetier.GestionStrategie
         {
 
             ObservableCollection<ZoneAbstrait> zoneAccessible = new ObservableCollection<ZoneAbstrait>();
-            ZoneAbstrait zoneTermite = null;
+            ZoneAbstrait zoneFourmille = null;
 
             foreach (ZoneAbstrait uneZone in unPerso.ChoixZoneSuivante.Zonesaccessibles)
             {
-                if (uneZone.Position.Y>=unPerso.Maison.Y - 5 && uneZone.Position.Y <= unPerso.Maison.Y +5 && uneZone.Position.X >= unPerso.Maison.X - 5 && uneZone.Position.X <= unPerso.Maison.X+5)
+                
+                /*si on trouve une Fourmille on l'attaque*/
+                if (uneZone.PersonnageList.Where(x => x.GetType().Equals(typeof(Reine))).Count() > 0)
                 {
-                    /*si on un termite on l'attaque*/
-                    if (uneZone.PersonnageList.Where(x => x.GetType().Equals(typeof(Termite))).Count() > 0)
-                    {
-                        zoneTermite = uneZone;
-                        break;
-                    }
-                    else
-                    {
-                        zoneAccessible.Add(uneZone);
-                    }
+                    zoneFourmille = uneZone;
+                    break;
                 }
+                else if (uneZone.PersonnageList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count() > 0)
+                {
+                    zoneFourmille = uneZone;
+                    break;
+                }
+                else if (uneZone.PersonnageList.Where(x => x.GetType().Equals(typeof(Guerriere))).Count() > 0)
+                {
+                    zoneFourmille = uneZone;
+                    break;
+                }
+                else
+                {
+                    zoneAccessible.Add(uneZone);
+                }
+                
 
             }
 
-            if (zoneTermite != null)
+            if (zoneFourmille != null)
             {
-                unPerso.Position.X = zoneTermite.Position.X;
-                unPerso.Position.Y = zoneTermite.Position.Y;
+                unPerso.Position.X = zoneFourmille.Position.X;
+                unPerso.Position.Y = zoneFourmille.Position.Y;
 
             }else
             {
