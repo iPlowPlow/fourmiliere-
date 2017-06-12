@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using LibAbstraite.GestionStrategie;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace LibAbstraite.GestionPersonnage
 {
@@ -39,14 +41,25 @@ namespace LibAbstraite.GestionPersonnage
 
         public abstract void AnalyseSituation();
 
+        public void AjouterEtape(int tourActuel, string description)
+        {
+            
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+                       ListEtape.Add(new Etape(tourActuel, description));
+                   }
+               );
+        }
+
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
         {
+
+            AjouterEtape(tourActuel, "Position X : " + Position.X + ", Y : " + Position.Y);
             AnalyseSituation();
-            this.StategieCourante.Deplacement(dimX, dimY, this);
-            ListEtape.Add(new Etape(tourActuel, "Position X : " + Position.X +", Y : " + Position.Y));
- 
-            if (PV > 0) { PV--; }
-            
+            this.StategieCourante.Deplacement(dimX, dimY, this); 
+            if (PV > 0) { PV--; } 
         }
 
        

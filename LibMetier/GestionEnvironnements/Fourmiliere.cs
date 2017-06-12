@@ -13,6 +13,8 @@ using System.Xml.Serialization;
 using System.Threading;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
+using System.Windows.Threading;
+using LibAbstraite;
 
 namespace LibMetier.GestionEnvironnements
 {
@@ -65,7 +67,15 @@ namespace LibMetier.GestionEnvironnements
         }
         public override void AjouterTermite()
         {
-            PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     PersonnagesList.Add(Fabrique.CreerTermite("Termite " + PersonnagesList.Count));
+                 }
+             );
+            
         }
         public void AjouteNourriture()
         {
@@ -157,6 +167,19 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesList.Remove(PersoSelect);
         }
 
+        public void Mourrir(PersonnageAbstrait unPerso)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     unPerso.ListEtape.Add(new Etape(0, "Je meurs......."));
+                     PersonnagesMortList.Add(unPerso);
+                     PersonnagesList.Remove(unPerso);  
+                 }
+             );
+        }
+
         public void AjouterReine(Reine reine)
         {
             throw new NotImplementedException();
@@ -199,11 +222,8 @@ namespace LibMetier.GestionEnvironnements
           
                 if (unInsecte.PV <= 0)
                 {
-                    PersonnagesMortList.Add(unInsecte);
-                    PersonnagesList.Remove(unInsecte);
-                }
-                //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
-                //unInsecte.TransporteNourriture = true;
+                    Mourrir(unInsecte);
+                } 
             }
             if (Hazard.Next(1, 11) == 1)
             {
@@ -211,7 +231,7 @@ namespace LibMetier.GestionEnvironnements
             }
 
 
-
+            
            if(tourActuel>50 && Hazard.Next(1, 11) == 1)
             {
                 AjouterTermite();

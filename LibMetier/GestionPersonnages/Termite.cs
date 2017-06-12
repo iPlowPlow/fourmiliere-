@@ -42,18 +42,19 @@ namespace LibMetier.GestionPersonnages
                 if (unPerso.GetType().Equals(typeof(Reine)))
                 {
                     unPerso.PV -= 20;
-                    ListEtape.Add(new Etape("J'attaque la Reine! "));
+                    AjouterEtape(0, "J'attaque la Reine !");
                 }
 
                 else if (unPerso.GetType().Equals(typeof(Guerriere)))
                 {
                     unPerso.PV -= 20;
-                    ListEtape.Add(new Etape("J'attaque la Guerriere! "));
+                    AjouterEtape(0, "J'attaque la Guerriere !");
+                    
                 }
                 else if (unPerso.GetType().Equals(typeof(Ouvriere)))
                 {
                     unPerso.PV -= 20;
-                    ListEtape.Add(new Etape("J'attaque l'Ouvriere! "));
+                    AjouterEtape(0, "J'attaque l'Ouvriere !"); 
                 }
                 
 

@@ -67,7 +67,7 @@ namespace LibMetier.GestionPersonnages
                     {
                         if (unObjet.ListMorceaux.Count > 0) {
                             this.Morceau = unObjet.Recolter();
-                            ListEtape.Add(new Etape("Je récolte un morceau de nourriture ! "));
+                            AjouterEtape(0, "Je récolte un morceau de nourriture ! ");
                             this.StategieCourante = new Retour("Retour");
                             this.TransporteNourriture = true;
                         }   
@@ -86,10 +86,11 @@ namespace LibMetier.GestionPersonnages
                     }
                     else if (unPerso.GetType().Equals(typeof(Termite)))
                     {
-                        ListEtape.Add(new Etape("Une termite m'attaque ! "));
+                        AjouterEtape(0, "Une termite m'attaque ! ");
                     }
                     else if (this.TransporteNourriture == true && unPerso.GetType().Equals(typeof(Reine)))
                     {
+                        AjouterEtape(0, "Je dépose de la nourriture à la reine.");
                         zone.ObjetList.Add(this.Morceau);
                         this.TransporteNourriture = false;
                         this.Morceau = null;

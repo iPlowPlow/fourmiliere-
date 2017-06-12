@@ -14,6 +14,8 @@ namespace LibAbstraite.GestionEnvironnement
     public abstract class EnvironnementAbstrait : ViewModelBase
 
     {
+
+        
         public static Random Hazard = new Random();
         public Boolean encours;
         private string titre;

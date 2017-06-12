@@ -53,7 +53,7 @@ namespace LibMetier.GestionPersonnages
                     if (unPerso.GetType().Equals(typeof(Termite)))
                     {
                         unPerso.PV -= 10;
-                        ListEtape.Add(new Etape("J'attaque une termite ! "));
+                        AjouterEtape(0, "J'attaque une termite ! ");
                     }
                     else if (unPerso.GetType().Equals(typeof(Reine)))
                     {

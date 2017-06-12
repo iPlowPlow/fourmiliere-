@@ -51,7 +51,7 @@ namespace LibMetier.GestionPersonnages
                 }
                 else if (unPerso.GetType().Equals(typeof(Termite)))
                 {
-                    ListEtape.Add(new Etape("Une termite m'attaque ! "));
+                    AjouterEtape(0, "Une termite m'attaque ! ");
                 }
 
             }

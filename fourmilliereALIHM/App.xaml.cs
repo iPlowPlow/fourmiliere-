@@ -18,8 +18,9 @@ namespace fourmilliereALIHM
     {
         public static Fourmiliere fourmilliereVM { get; set; }
         public App()
-        {
+        {   
             fourmilliereVM = new Fourmiliere(30, 30);
+            
         }
       
     }
