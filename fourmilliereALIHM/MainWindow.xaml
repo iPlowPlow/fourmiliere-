@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:fourmilliereALIHM"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
         Title="{Binding TitreApplication}" Height="350" Width="525">
     <Grid ShowGridLines="True">
@@ -18,7 +19,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-<!--
+        <!--
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding fourmilliere.PersonnageAbstraitList}" SelectedItem="{Binding FourmisSelect}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -76,7 +77,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        
+
         <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding PersonnagesList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
@@ -87,13 +88,13 @@
             </Button.Content>
         </Button>
 
-     
+
         <Button Grid.Row="3" Grid.Column="0"  Click="Button_Click" >
             <Button.Content>
                 <TextBlock Text="{Binding PersoSelect, StringFormat='Supprimer{0}'}"/>
             </Button.Content>
         </Button>
-        
+
         <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="true">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"></RowDefinition>
@@ -120,9 +121,12 @@
             </ListBox>
         </Grid>
 
+        <Image x:Name="rain" Panel.ZIndex="2000" Stretch="Fill" gif:AnimationBehavior.SourceUri="Images/rain.gif" Grid.Row="1" Grid.Column="1"/>
+
         <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="true">
 
         </Grid>
+
         <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>

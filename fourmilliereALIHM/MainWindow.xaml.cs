@@ -46,7 +46,7 @@ namespace fourmilliereALIHM
             dt.Tick += Redessine_Tick;
             dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
             initPlateau();
-            //Dessine();
+            Dessine();
 
         }
         private void Redessine_Tick(object sender, EventArgs e)
@@ -446,7 +446,6 @@ namespace fourmilliereALIHM
             }
             for (int j = 0; j < App.fourmilliereVM.DimensionY; j++)
             {
-
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
             }
         }

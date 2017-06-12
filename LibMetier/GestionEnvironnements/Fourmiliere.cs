@@ -195,7 +195,7 @@ namespace LibMetier.GestionEnvironnements
                     PersonnagesList.Remove(unInsecte);
                 }
                 //décommentes si tu veux que tes fourmis souillent la map avec leurs feromones
-                //unInsecte.TransporteNourriture = true;
+                unInsecte.TransporteNourriture = true;
             }
             if (Hazard.Next(1, 11) == 1)
             {
