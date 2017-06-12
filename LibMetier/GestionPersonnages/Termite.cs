@@ -56,8 +56,6 @@ namespace LibMetier.GestionPersonnages
                     unPerso.PV -= 20;
                     AjouterEtape(0, "J'attaque l'Ouvriere !"); 
                 }
-                
-
             }
         }
     }

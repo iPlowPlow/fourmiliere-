@@ -11,6 +11,7 @@ namespace LibAbstraite.GestionObjets
 {
    public abstract class ObjetAbstrait
     {
+        public ZoneAbstrait zone;
         public string Nom
         {
             get;

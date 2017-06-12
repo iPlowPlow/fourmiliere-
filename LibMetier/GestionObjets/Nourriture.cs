@@ -10,7 +10,7 @@ namespace LibMetier.GestionObjets
 {
     public class Nourriture : ObjetAbstrait
     {
-        public int morceauNourriture = 20;
+        public const int MORCEAU_NOURRITURE = 20;
         public List<MorceauNourriture> ListMorceaux { get; set; }
         public Nourriture()
         {
@@ -20,7 +20,7 @@ namespace LibMetier.GestionObjets
         {
             this.Nom = nom;
             this.Position = position;
-            this.ListMorceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom)), morceauNourriture).ToList();
+            this.Morceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
         }
         public MorceauNourriture Recolter()
         {

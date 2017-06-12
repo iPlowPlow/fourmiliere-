@@ -46,6 +46,7 @@ namespace fourmilliereALIHM
             dt.Tick += Redessine_Tick;
             dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
             initPlateau();
+            Dessine();
 
         }
         private void Redessine_Tick(object sender, EventArgs e)
@@ -59,17 +60,15 @@ namespace fourmilliereALIHM
         public void Dessine()
         {
             initPlateau();
-            foreach(ZoneAbstrait zone in App.fourmilliereVM.ZoneList)
+            //ImageBrush background = new ImageBrush();
+            //Uri backuri = new Uri("Images/nourriture.png", UriKind.Relative);
+            //background.ImageSource = new BitmapImage(backuri);
+            //Plateau.Background = background;
+            foreach (ZoneAbstrait zone in App.fourmilliereVM.ZoneList)
             {
-                Image img = new Image();
-                Uri uri = new Uri("Images/herbe.jpg", UriKind.Relative);
-                img.Source = new BitmapImage(uri);
-                img.Stretch = Stretch.Fill;
-                Plateau.Children.Add(img);
-                Grid.SetColumn(img, zone.Position.Y);
-                Grid.SetRow(img, zone.Position.X);
+                
             }
-            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.ObjetList)
+            foreach (ObjetAbstrait unObjet in App.fourmilliereVM.ObjetList.Where(x=> !x.GetType().Equals(typeof(MorceauNourriture))))
             {
                 Image img = new Image();
                 if (unObjet.GetType().Equals(typeof(Oeuf)))
@@ -445,9 +444,8 @@ namespace fourmilliereALIHM
                 Plateau.RowDefinitions.Add(new RowDefinition());
 
             }
-            for (int i = 0; i < App.fourmilliereVM.DimensionY; i++)
+            for (int j = 0; j < App.fourmilliereVM.DimensionY; j++)
             {
-
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
             }
         }

@@ -7,34 +7,65 @@ using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
 using System.Collections.ObjectModel;
 using LibAbstraite;
+using LibAbstraite.GestionObjets;
 using LibMetier.GestionEnvironnements;
+using LibMetier.GestionObjets;
 using LibMetier.GestionStrategie;
 
 namespace LibMetier.GestionPersonnages
 {
-  public  class Reine : PersonnageAbstrait 
+    public class Reine : PersonnageAbstrait 
     {
+        private static Reine instance;
+        private Oeuf oeufPondu;
+
         public Reine()
         {
            
         }
 
-        public Reine(string nom, CoordonneesAbstrait position)
+        public static Reine Instance()
         {
-            this.Nom = nom;
-            this.PV = 500;
-            this.Position = position;
-            this.Maison = new Coordonnees();
-            this.Maison.X = position.X;
-            this.Maison.Y = position.Y;
-            ListEtape = new ObservableCollection<Etape>();
-            zone = new BoutDeTerrain("default", position);
-            StategieCourante = new Immobile("Immobile");
+            if (instance == null)
+            {
+                instance = new Reine();
+            }
+            return instance;
         }
-
-
-
-
+        public static Reine Instance(string nom, CoordonneesAbstrait position)
+        {
+            if (instance == null)
+            {
+                instance = new Reine();
+            }
+            instance.Nom = nom;
+            instance.PV = 500;
+            instance.Position = position;
+            instance.Maison = new Coordonnees();
+            instance.Maison.X = position.X;
+            instance.Maison.Y = position.Y;
+            instance.ListEtape = new ObservableCollection<Etape>();
+            instance.zone = new BoutDeTerrain("default", position);
+            instance.StategieCourante = new Immobile("Immobile");
+            return instance;
+        }
+        public Oeuf OeufPondu { 
+            get
+            {
+                if (instance == null)
+                {
+                    return null;
+                }
+                return instance.oeufPondu;
+            }
+            set
+            {
+                if (instance != null)
+                {
+                    instance.oeufPondu = value;
+                }
+            }
+        }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
@@ -42,6 +73,12 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
+            List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
+            if (morceaux.Count > 0)
+            {
+                zone.ObjetList.Remove(morceaux[0]);
+                PondreOeuf();
+            }
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
             {
 
@@ -53,14 +90,17 @@ namespace LibMetier.GestionPersonnages
                 {
                     AjouterEtape(0, "Une termite m'attaque ! ");
                 }
-
             }
         }
 
-
         public override string ToString()
         {
-            return "Ma Reine" + this.Nom;
+            return "Ma Reine" + instance.Nom;
+        }
+        public void PondreOeuf()
+        {
+            FabriqueFourmiliere fabrique = new FabriqueFourmiliere();
+            oeufPondu=(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), Position);
         }
     }
 }

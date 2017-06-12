@@ -19,7 +19,6 @@ namespace LibMetier.GestionEnvironnements
             PersonnageList = new List<PersonnageAbstrait>();
             ObjetList = new List<ObjetAbstrait>();
             this.Position = position;
-
         }
 
 
@@ -38,6 +37,7 @@ namespace LibMetier.GestionEnvironnements
         {
             throw new NotImplementedException();
         }
+
 
         public override void AjouteOuvriere(PersonnageAbstrait personnage)
         {

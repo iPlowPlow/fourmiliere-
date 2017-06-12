@@ -44,7 +44,6 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-
             /*Si termite sur sa case l'attaquer*/
             if (zone.PersonnageList.Count > 0)
             {

@@ -17,6 +17,7 @@ namespace LibAbstraite.GestionEnvironnement
 
         
         public static Random Hazard = new Random();
+        public static FabriqueAbstraite Fabrique;
         public Boolean encours;
         private string titre;
         public int tourActuel = 1;
@@ -40,7 +41,6 @@ namespace LibAbstraite.GestionEnvironnement
                 OnPropertyChanged("TitreApplication");
             }
         }
-        public FabriqueAbstraite Fabrique;
 
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
@@ -52,10 +52,19 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void AjouteOeuf(ObjetAbstrait unObject);
         public abstract void AjoutePheromone(ObjetAbstrait unObject);
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
-        public abstract void AjouterGuerriere();
         public abstract void AjouterReine();
-        public abstract void AjouterOuvriere();
-        public abstract void AjouterTermite();
+        public void AjouterGuerriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerGuerriere(String.Format("Guerriere N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(10,10)));
+        }
+        public void AjouterOuvriere()
+        {
+            PersonnagesList.Add(Fabrique.CreerOuvriere(String.Format("Ouvrière N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
+        }
+        public void AjouterTermite()
+        {
+            PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite N°{0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY)));
+        }
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);
         public abstract void ChargerEnv(FabriqueAbstraite fab);
         public abstract void ChargerPersonnage(FabriqueAbstraite fab);

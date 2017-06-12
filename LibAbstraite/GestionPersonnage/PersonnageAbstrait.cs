@@ -41,6 +41,7 @@ namespace LibAbstraite.GestionPersonnage
 
         public abstract void AnalyseSituation();
 
+
         public void AjouterEtape(int tourActuel, string description)
         {
             Console.WriteLine(description);
@@ -60,7 +61,6 @@ namespace LibAbstraite.GestionPersonnage
 
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
         {
-
             AjouterEtape(tourActuel, "Position X : " + Position.X + ", Y : " + Position.Y);
             AnalyseSituation();
             this.StategieCourante.Deplacement(dimX, dimY, this); 
