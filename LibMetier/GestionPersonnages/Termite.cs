@@ -62,5 +62,10 @@ namespace LibMetier.GestionPersonnages
                 }
             }
         }
+
+        public override void maj()
+        {
+           
+        }
     }
 }

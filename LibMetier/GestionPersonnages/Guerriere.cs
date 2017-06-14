@@ -68,6 +68,17 @@ namespace LibMetier.GestionPersonnages
             }
             
         }
+        public override void maj()
+        {
+            if (EtatMeteoObserver == "pluie")
+            {
+                this.StategieCourante = new Retour("fuite");
+            }
+            else
+            {
+                AnalyseSituation();
+            }
+        }
 
     }
 }

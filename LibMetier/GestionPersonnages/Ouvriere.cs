@@ -99,5 +99,20 @@ namespace LibMetier.GestionPersonnages
 
             }
         }
+        public override void maj()
+        {
+            if (EtatFourmiliereObserver == "attaque")
+            {
+                this.StategieCourante = new Retour("fuite");
+            }
+           else if (EtatMeteoObserver == "pluie")
+            {
+                this.StategieCourante = new Retour("fuite");
+            }
+            else
+            {
+                AnalyseSituation();
+            }
+        }
     }
 }

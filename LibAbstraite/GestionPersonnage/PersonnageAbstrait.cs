@@ -72,10 +72,8 @@ namespace LibAbstraite.GestionPersonnage
         }
 
 
-        public void maj()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void maj();
+        
 
     }
 }

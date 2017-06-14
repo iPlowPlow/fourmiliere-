@@ -108,5 +108,10 @@ namespace LibMetier.GestionPersonnages
             pos.Y = Position.Y + Fourmiliere.Hazard.Next(-1, 2);
             oeufPondu =(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), pos);
         }
+
+        public override void maj()
+        {
+         
+        }
     }
 }
