@@ -16,6 +16,10 @@ namespace LibAbstraite.GestionPersonnage
     public abstract class PersonnageAbstrait : ViewModelBase
     {
         public StrategieAbstraite StategieCourante { get; set; }
+
+
+        public string EtatMeteoObserver { get; set; }
+        public string EtatFourmiliereObserver { get; set; }
         public bool TransporteNourriture = false;
         
         public AccesAbstrait ChoixZoneSuivante { get; set; }
@@ -67,6 +71,11 @@ namespace LibAbstraite.GestionPersonnage
             if (PV > 0) { PV--; } 
         }
 
-       
+
+        public void maj()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -19,6 +19,7 @@ namespace LibAbstraite.GestionEnvironnement
         public static Random Hazard = new Random();
         public static FabriqueAbstraite Fabrique;
         public Boolean encours;
+        public SujetAbstrait meteo;
         private string titre;
         public int tourActuel = 1;
         public int vitesse;
@@ -47,6 +48,7 @@ namespace LibAbstraite.GestionEnvironnement
         public List<AccesAbstrait> AccesList { get; set; }
         public ObservableCollection<ObjetAbstrait> ObjetList { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesList { get; set; }
+        public List<PersonnageAbstrait> ListObservateur { get; set; }
         public ObservableCollection<PersonnageAbstrait> PersonnagesMortList { get; set; }
         public ObservableCollection<ZoneAbstrait> ZoneList { get; set; }
         public abstract void AjouteOeuf(ObjetAbstrait unObject);

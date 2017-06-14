@@ -48,11 +48,16 @@
     <Compile Include="GestionEnvironnement\AccesAbstrait.cs" />
     <Compile Include="GestionEnvironnement\CoordonneesAbstrait.cs" />
     <Compile Include="GestionEnvironnement\EnvironnementAbstrait.cs" />
-    <Compile Include="GestionEnvironnement\ZoneAbstrait.cs" />
+    <Compile Include="ZoneAbstrait.cs" />
     <Compile Include="GestionObjets\ObjetAbstrait.cs" />
     <Compile Include="GestionPersonnage\PersonnageAbstrait.cs" />
+
     <Compile Include="GestionStrategie\StrategieAbstraite.cs" />
+
+    <Compile Include="GestionEnvironnement\Observable.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SujetAbstrait.cs" />
     <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

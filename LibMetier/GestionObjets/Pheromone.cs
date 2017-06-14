@@ -12,7 +12,7 @@ namespace LibMetier.GestionObjets
     {
         public const int DUREE_VIE_ORIGINALE = 25;
         //décrémenté à chaque tour
-        public int Dureevie { get; set;}
+       
         public Pheromone()
         {
         
@@ -21,7 +21,7 @@ namespace LibMetier.GestionObjets
         {
             this.Nom = nom;
             this.Position = position;
-            Dureevie = DUREE_VIE_ORIGINALE;
+            this.Dureevie = DUREE_VIE_ORIGINALE;
         }
 
         public override void TourPasse()

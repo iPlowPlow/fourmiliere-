@@ -126,6 +126,7 @@
         <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="false">
             <Grid.Background>
                 <ImageBrush Stretch="Fill" ImageSource="Images/ground.jpg"/>
+
             </Grid.Background>
         </Grid>
 

@@ -48,6 +48,7 @@
     <Compile Include="GestionEnvironnements\Acces.cs" />
     <Compile Include="GestionEnvironnements\Coordonnees.cs" />
     <Compile Include="GestionEnvironnements\Fourmiliere.cs" />
+    <Compile Include="GestionEnvironnements\Meteo.cs" />
     <Compile Include="GestionObjets\MorceauNourriture.cs" />
     <Compile Include="GestionObjets\Nourriture.cs" />
     <Compile Include="GestionObjets\Oeuf.cs" />

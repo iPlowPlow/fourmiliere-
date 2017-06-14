@@ -14,6 +14,10 @@ namespace LibMetier.GestionPersonnages
 {
     public class Termite : PersonnageAbstrait
     {
+        public Termite()
+        {
+            
+        }
 
         public Termite(string nom, CoordonneesAbstrait position)
         {

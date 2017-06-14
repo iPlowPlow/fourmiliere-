@@ -26,6 +26,7 @@ namespace LibMetier.GestionPersonnages
 
         public static Reine Instance()
         {
+
             if (instance == null)
             {
                 instance = new Reine();
@@ -65,6 +66,7 @@ namespace LibMetier.GestionPersonnages
                     instance.oeufPondu = value;
                 }
             }
+
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
@@ -73,6 +75,7 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
+
             List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
             if (morceaux.Count > 0)
             {
@@ -80,6 +83,7 @@ namespace LibMetier.GestionPersonnages
             }
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
             {
+
 
                 if (unPerso.GetType().Equals(typeof(Guerriere)))
                 {

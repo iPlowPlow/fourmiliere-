@@ -22,6 +22,7 @@ namespace LibAbstraite.GestionObjets
         public CoordonneesAbstrait Position {
             get; set;
         }
+        public int Dureevie { get; set; }
         public abstract void TourPasse();
 
 
