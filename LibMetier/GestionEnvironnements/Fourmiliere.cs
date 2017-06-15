@@ -24,6 +24,9 @@ namespace LibMetier.GestionEnvironnements
     public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public static Reine reine;
+
+        
+
         public Fourmiliere()
         {
 
@@ -43,13 +46,14 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
 
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
-            PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
+            //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
-            AjouterReine();
-
+            //AjouterReine();
+            ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();
-
+            meteo = new Meteo();
+            meteo.ListObservateur = new List<PersonnageAbstrait>();
             InitZones();
 
          
@@ -59,11 +63,18 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouterGuerriere()
         {
-            PersonnagesList.Add(Fabrique.CreerGuerriere(String.Format("Guerriere {0}",PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
+            PersonnageAbstrait g = Fabrique.CreerGuerriere(String.Format("Guerriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnagesList.Add(g);
+            ListObservateur.Add(g);
+            meteo.ListObservateur.Add(g);
         }
         public override void AjouterOuvriere()
         {
-            PersonnagesList.Add(Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10)));
+            PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnagesList.Add(g);
+            ListObservateur.Add(g);
+            meteo.ListObservateur.Add(g);
+            
         }
         public override void AjouterTermite()
         {
@@ -183,7 +194,9 @@ namespace LibMetier.GestionEnvironnements
                  {
                      unPerso.ListEtape.Add(new Etape(0, "Je meurs......."));
                      PersonnagesMortList.Add(unPerso);
-                     PersonnagesList.Remove(unPerso);  
+                     PersonnagesList.Remove(unPerso);
+                     meteo.ListObservateur.Remove(unPerso);
+                     ListObservateur.Remove(unPerso);
                  }
              );
         }
@@ -199,11 +212,15 @@ namespace LibMetier.GestionEnvironnements
                  (Action)delegate ()
                  {
                      PersonnagesList.Add(fourmi);
+                     meteo.ListObservateur.Add(fourmi);
+                     ListObservateur.Add(fourmi);
                  }
              );
         }
+     
         public override void TourSuivant()
         {
+            meteoChange();
             Repositioner();
             FournirAcces();
             foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
@@ -330,7 +347,25 @@ namespace LibMetier.GestionEnvironnements
         {
             foreach (PersonnageAbstrait unInsecte in ListObservateur)
             {
-                unInsecte.maj();
+                unInsecte.maj(this.Etat);
+            }
+        }
+        public void meteoChange()
+        {
+            int rand = Hazard.Next(1, 100);
+            if ( rand >70 && rand<90)
+            {
+                meteo.Etat = "pluie";
+                meteo.Notify();
+            }else if (rand > 90)
+            {
+                meteo.Etat = "brouillard";
+                meteo.Notify();
+            }
+            else
+            {
+                meteo.Etat = "soleil";
+                meteo.Notify();
             }
         }
     }

@@ -63,7 +63,7 @@ namespace LibMetier.GestionPersonnages
             }
         }
 
-        public override void maj()
+        public override void maj(string etat)
         {
            
         }

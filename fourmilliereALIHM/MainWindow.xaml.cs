@@ -28,6 +28,8 @@ using LibMetier.GestionObjets;
 using LibMetier.GestionPersonnages;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
+using LibAbstraite.GestionStrategie;
+using LibMetier.GestionStrategie;
 
 namespace fourmilliereALIHM
 {
@@ -128,10 +130,6 @@ namespace fourmilliereALIHM
                   Uri  uri = new Uri("Images/reine.png", UriKind.Relative);
                   img.Source = new BitmapImage(uri);
 
-                    Uri uri1 = new Uri("Images/Home.jpg", UriKind.Relative);
-
-                    Plateau.Background = new ImageBrush(new BitmapImage(uri));
-
 
                 }
                 if (unInsecte.GetType().Equals(typeof(Termite)))
@@ -224,6 +222,7 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Nourriture))
                         select new XElement("nourriture",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("duree", n.Dureevie),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
@@ -237,6 +236,7 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Oeuf))
                         select new XElement("oeuf",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("duree", n.Dureevie),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
@@ -265,12 +265,25 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Ouvriere))
                         select new XElement("Ouvriere",
                             new XAttribute("nom", n.Nom),
+                             new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
                                     new XAttribute("y", n.Position.Y)
                                 )
-                             )
+                             ),
+                            new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour",et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+
+
                         )
                      ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Guerriere)))).Count() > 0) ?
                         new XElement("Guerrieres",
@@ -278,12 +291,23 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Guerriere))
                         select new XElement("Guerriere",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
                                     new XAttribute("y", n.Position.Y)
                                 )
-                             )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
                         )
                      ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Reine)))).Count() > 0) ?
                         new XElement("reines",
@@ -291,12 +315,23 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Reine))
                         select new XElement("reine",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
                                     new XAttribute("y", n.Position.Y)
                                 )
-                             )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
                         )
                      ) : null), ((listp.Where(x => (x.GetType().Equals(typeof(Termite)))).Count() > 0) ?
                         new XElement("termites",
@@ -304,12 +339,23 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Termite))
                         select new XElement("termites",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
                                     new XAttribute("y", n.Position.Y)
                                 )
-                             )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
                         )
                      ) : null)
 
@@ -384,6 +430,8 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         Dureevie=(int)t.Attribute("duree"),
+                         ListMorceaux = new List<MorceauNourriture>(),
                          Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -396,6 +444,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Oeuf()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         Dureevie = (int)t.Attribute("duree"),
                          Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -408,6 +457,9 @@ namespace fourmilliereALIHM
                      .Select(t => new Termite()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
                          Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -420,6 +472,9 @@ namespace fourmilliereALIHM
                       .Select(t => new Reine()
                       {
                           Nom = (string)t.Attribute("nom"),
+                          pv=(int)t.Attribute("pv"),
+                          StategieCourante = new Normal((string)t.Attribute("strat")),
+                          ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
                           Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
@@ -432,7 +487,10 @@ namespace fourmilliereALIHM
                      .Select(t => new Guerriere()
                      {
                          Nom = (string)t.Attribute("nom"),
-                          Position = t.Elements("coordonneess").Elements("coordonnees")
+                         pv = (int)t.Attribute("pv"),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -444,6 +502,9 @@ namespace fourmilliereALIHM
                      .Select(t => new Ouvriere()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape =new ObservableCollection<LibAbstraite.Etape>( t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"),(string)et.Attribute("lieu"))).ToList()),
                           Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -476,8 +537,7 @@ namespace fourmilliereALIHM
                 listoe.ForEach(App.fourmilliereVM.ObjetList.Add);
                 listp.ForEach(App.fourmilliereVM.ObjetList.Add);
                 listn.ForEach(App.fourmilliereVM.ObjetList.Add);
-
-              
+                
                 
                 Dessine();
        

@@ -9,7 +9,8 @@ namespace LibAbstraite
 {
     public interface SujetAbstrait
     {
-
+         List<PersonnageAbstrait> ListObservateur { get; set; }
+         string Etat { get; set; }
         void Attach(PersonnageAbstrait observer);
         void Detach(PersonnageAbstrait observer);
         void Notify();

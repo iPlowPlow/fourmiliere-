@@ -21,7 +21,7 @@ namespace LibMetier.GestionPersonnages
 
         public Reine()
         {
-           
+          
         }
 
         public static Reine Instance()
@@ -109,7 +109,7 @@ namespace LibMetier.GestionPersonnages
             oeufPondu =(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), pos);
         }
 
-        public override void maj()
+        public override void maj(string etat)
         {
          
         }
