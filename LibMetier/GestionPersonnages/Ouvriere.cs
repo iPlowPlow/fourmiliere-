@@ -101,6 +101,7 @@ namespace LibMetier.GestionPersonnages
         }
         public override void maj(string etat)
         {
+
             if (TransporteNourriture == true)
             {
                 //AnalyseSituation();
@@ -123,6 +124,7 @@ namespace LibMetier.GestionPersonnages
             }
            else if (etat == "pluie")
             {
+
                 this.EtatMeteoObserver = etat;
                 if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
                 {
@@ -145,14 +147,17 @@ namespace LibMetier.GestionPersonnages
                 {
                     this.StategieCourante = new Immobile("Immobile");
                 }
+
             }
-            else
+            else if(etat =="soleil" ) 
             {
-                AnalyseSituation();
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Normal)))
+                {
+                    this.StategieCourante = new Normal("Normal");
+                }
+               
             }
-
-          
-
 
 
         }

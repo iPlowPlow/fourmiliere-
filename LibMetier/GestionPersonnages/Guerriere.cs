@@ -70,6 +70,7 @@ namespace LibMetier.GestionPersonnages
         }
         public override void maj(string etat)
         {
+
             if (etat == "attaque")
             {
                 this.EtatFourmiliereObserver = etat;
@@ -78,6 +79,7 @@ namespace LibMetier.GestionPersonnages
                     this.StategieCourante = new Defense("Defense");
 
                 }
+
 
             }
             else if (etat == "pluie")
