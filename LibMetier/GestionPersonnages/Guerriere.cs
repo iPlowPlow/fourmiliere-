@@ -68,16 +68,46 @@ namespace LibMetier.GestionPersonnages
             }
             
         }
-        public override void maj()
+        public override void maj(string etat)
         {
-            if (EtatMeteoObserver == "pluie")
+            if (etat == "attaque")
             {
-                this.StategieCourante = new Retour("fuite");
+                this.EtatFourmiliereObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Defense("Defense");
+
+                }
+
             }
-            else
+            else if (etat == "pluie")
             {
-                AnalyseSituation();
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Retour("fuite");
+                }
+
             }
+            else if (etat == "soleil")
+            {
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Normal)))
+                {
+                    this.StategieCourante = new Normal("Normal");
+                }
+
+            }
+            else if (etat == "brouillard")
+            {
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Immobile)))
+                {
+                    this.StategieCourante = new Immobile("Immobile");
+                }
+            }
+
+           
         }
 
     }

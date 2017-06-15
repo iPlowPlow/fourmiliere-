@@ -72,7 +72,7 @@ namespace LibAbstraite.GestionPersonnage
         }
 
 
-        public abstract void maj();
+        public abstract void maj(string etat);
         
 
     }

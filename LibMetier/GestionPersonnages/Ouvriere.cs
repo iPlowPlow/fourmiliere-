@@ -99,20 +99,62 @@ namespace LibMetier.GestionPersonnages
 
             }
         }
-        public override void maj()
+        public override void maj(string etat)
         {
-            if (EtatFourmiliereObserver == "attaque")
+            if (TransporteNourriture == true)
             {
-                this.StategieCourante = new Retour("fuite");
+                //AnalyseSituation();
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Retour("Retour");
+                }
+
             }
-           else if (EtatMeteoObserver == "pluie")
+            else if (etat == "attaque")
             {
-                this.StategieCourante = new Retour("fuite");
+                this.EtatFourmiliereObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Retour("fuite");
+                  
+                }
+              
+            }
+           else if (etat == "pluie")
+            {
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Retour("fuite");
+                }
+               
+            }
+            else if(etat =="soleil" ) 
+            {
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Normal)))
+                {
+                    this.StategieCourante = new Normal("Normal");
+                }
+
+            }else if (etat == "brouillard")
+            {
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Immobile)))
+                {
+                    this.StategieCourante = new Immobile("Immobile");
+                }
             }
             else
             {
                 AnalyseSituation();
             }
+
+          
+
+
+
         }
     }
 }
