@@ -48,7 +48,9 @@ namespace LibMetier.GestionEnvironnements
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
+
             //AjouterReine();
+
             ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();

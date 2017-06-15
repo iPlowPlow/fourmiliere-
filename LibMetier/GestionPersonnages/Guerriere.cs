@@ -70,6 +70,7 @@ namespace LibMetier.GestionPersonnages
         }
         public override void maj(string etat)
         {
+
             if (etat == "attaque")
             {
                 this.EtatFourmiliereObserver = etat;
