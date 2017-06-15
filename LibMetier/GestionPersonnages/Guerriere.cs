@@ -68,10 +68,11 @@ namespace LibMetier.GestionPersonnages
             }
             
         }
-        public override void maj()
+        public override void maj(string etat)
         {
-            if (EtatMeteoObserver == "pluie")
+            if (etat == "pluie")
             {
+                this.EtatMeteoObserver = etat;
                 this.StategieCourante = new Retour("fuite");
             }
             else

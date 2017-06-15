@@ -128,10 +128,6 @@ namespace fourmilliereALIHM
                   Uri  uri = new Uri("Images/reine.png", UriKind.Relative);
                   img.Source = new BitmapImage(uri);
 
-                    Uri uri1 = new Uri("Images/Home.jpg", UriKind.Relative);
-
-                    Plateau.Background = new ImageBrush(new BitmapImage(uri));
-
 
                 }
                 if (unInsecte.GetType().Equals(typeof(Termite)))

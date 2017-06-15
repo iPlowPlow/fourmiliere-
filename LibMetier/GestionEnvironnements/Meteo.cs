@@ -26,7 +26,7 @@ namespace LibMetier.GestionEnvironnements
         {
             foreach(PersonnageAbstrait unInsecte in ListObservateur)
             {
-                unInsecte.maj();
+                unInsecte.maj(this.Etat);
             }
         }
     }
