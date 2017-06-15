@@ -95,7 +95,7 @@ namespace LibMetier.GestionPersonnages
                 this.EtatMeteoObserver = etat;
                 if (!this.StategieCourante.GetType().Equals(typeof(Normal)))
                 {
-                    this.StategieCourante = new Normal("Normal");
+                    this.StategieCourante = new Defense("defense");
                 }
 
             }
