@@ -44,16 +44,16 @@ namespace LibMetier.GestionPersonnages
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
             {
 
-                if (unPerso.GetType().Equals(typeof(Reine)))
-                {
-                    unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque la Reine !", this.Position.X, this.Position.Y);
-                }
-
-                else if (unPerso.GetType().Equals(typeof(Guerriere)))
+                if (unPerso.GetType().Equals(typeof(Guerriere)))
                 {
                     unPerso.PV -= 20;
                     AjouterEtape(0, "J'attaque la Guerriere !", this.Position.X, this.Position.Y);
+                }
+
+                else if (unPerso.GetType().Equals(typeof(Reine)))
+                {
+                    unPerso.PV -= 20;
+                    AjouterEtape(0, "J'attaque la Reine !", this.Position.X, this.Position.Y);
                     
                 }
                 else if (unPerso.GetType().Equals(typeof(Ouvriere)))

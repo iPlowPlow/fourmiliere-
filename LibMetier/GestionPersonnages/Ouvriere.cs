@@ -65,7 +65,7 @@ namespace LibMetier.GestionPersonnages
                 {
                     if (zone.ObjetList.Count > 0)
                     {
-                        foreach (Nourriture unObjet in zone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))))
+                        foreach (Nourriture unObjet in zone.ObjetList.Where(x => x!=null && x.GetType().Equals(typeof(Nourriture))))
                         {
                             if (unObjet.ListMorceaux.Count > 0)
                             {
