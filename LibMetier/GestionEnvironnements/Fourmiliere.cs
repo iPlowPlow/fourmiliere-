@@ -15,7 +15,6 @@ using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
 
 using System.Windows.Threading;
-using LibMetier.GestionObjets;
 using LibAbstraite;
 
 namespace LibMetier.GestionEnvironnements
@@ -24,8 +23,10 @@ namespace LibMetier.GestionEnvironnements
     public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public static Reine reine;
+        public int positionX = 10;
+        public int positionY = 10;
 
-        
+
 
         public Fourmiliere()
         {
@@ -40,16 +41,17 @@ namespace LibMetier.GestionEnvironnements
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
 
-            
             Fabrique = new FabriqueFourmiliere();
             PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
 
+            AjouterReine();
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
-
-            //AjouterReine();
+            //PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(3, 3), Fabrique.CreerPosition(positionX, positionY)));
+       
+       
 
             ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
@@ -65,14 +67,14 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouterGuerriere()
         {
-            PersonnageAbstrait g = Fabrique.CreerGuerriere(String.Format("Guerriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnageAbstrait g = Fabrique.CreerGuerriere(String.Format("Guerriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(positionX, positionY));
             PersonnagesList.Add(g);
             ListObservateur.Add(g);
             meteo.ListObservateur.Add(g);
         }
         public override void AjouterOuvriere()
         {
-            PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(positionX, positionY));
             PersonnagesList.Add(g);
             ListObservateur.Add(g);
             meteo.ListObservateur.Add(g);
@@ -85,7 +87,7 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY)));
+                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY), Fabrique.CreerPosition(positionX, positionY)));
                  }
              );
             

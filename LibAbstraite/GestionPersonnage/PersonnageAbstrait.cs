@@ -48,7 +48,6 @@ namespace LibAbstraite.GestionPersonnage
 
         public void AjouterEtape(int tourActuel, string description)
         {
-            Console.WriteLine(description);
             System.Windows.Application.Current.Dispatcher.Invoke(
                    DispatcherPriority.Normal,
                    (Action)delegate ()

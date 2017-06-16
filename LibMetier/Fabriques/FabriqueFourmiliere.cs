@@ -55,9 +55,9 @@ namespace LibMetier
             return new Guerriere(nom, position);
         }
 
-        public override PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position)
+        public override PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionFourmilliere)
         {
-            return new Termite(nom, position);
+            return new Termite(nom, position, positionFourmilliere);
         }
 
 

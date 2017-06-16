@@ -19,12 +19,12 @@ namespace LibMetier.GestionPersonnages
             
         }
 
-        public Termite(string nom, CoordonneesAbstrait position)
+        public Termite(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionFourmilliere)
         {
             this.Nom = nom;
             this.PV = 75;
             this.Position = position;
-            
+            this.Maison = positionFourmilliere;
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Attaque("Attaque");

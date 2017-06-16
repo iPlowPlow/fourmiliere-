@@ -19,7 +19,7 @@ namespace LibAbstraite.Fabrique
         public abstract PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position);
         public abstract PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position);
         public abstract PersonnageAbstrait CreerReine(string nom, CoordonneesAbstrait position);
-        public abstract PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position);
+        public abstract PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionFourmilliere);
         public abstract ObjetAbstrait CreerOeuf(string nom, CoordonneesAbstrait position);
         public abstract ObjetAbstrait CreerPheromone(string nom, CoordonneesAbstrait position);
         public abstract ObjetAbstrait CreerNourriture(string nom, CoordonneesAbstrait position);
