@@ -13,7 +13,7 @@ using System.Windows.Threading;
 namespace LibAbstraite.GestionPersonnage
 {
 
-    public abstract class PersonnageAbstrait : ViewModelBase
+    public abstract class PersonnageAbstrait : ViewModelBase,Observable
     {
         public StrategieAbstraite StategieCourante { get; set; }
 
@@ -73,7 +73,6 @@ namespace LibAbstraite.GestionPersonnage
 
 
         public abstract void maj(string etat);
-        
-
+      
     }
 }

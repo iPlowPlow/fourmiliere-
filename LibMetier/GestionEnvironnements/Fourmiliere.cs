@@ -54,8 +54,7 @@ namespace LibMetier.GestionEnvironnements
             ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
             ZoneList = new ObservableCollection<ZoneAbstrait>();
-            meteo = new Meteo();
-            meteo.ListObservateur = new List<PersonnageAbstrait>();
+
             InitZones();
 
          
@@ -121,7 +120,14 @@ namespace LibMetier.GestionEnvironnements
         {
             
         }
-
+        public void ChargerReine(Reine reinec)
+        {
+            if (PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() == 0)
+            {
+                reine = reinec;
+                PersonnagesList.Add(reine);
+            }
+        }
         public override void ChargerEnv(FabriqueAbstraite fab)
         {
             throw new NotImplementedException();
@@ -130,6 +136,7 @@ namespace LibMetier.GestionEnvironnements
         public override void ChargerObjet(FabriqueAbstraite fab)
         {
             throw new NotImplementedException();
+            
         }
 
         public override void ChargerPersonnage(FabriqueAbstraite fab)
@@ -222,7 +229,12 @@ namespace LibMetier.GestionEnvironnements
      
         public override void TourSuivant()
         {
-            meteoChange();
+            int rand = Hazard.Next(1, 100);
+            if (rand > 50)
+            {
+                meteoChange();
+            }
+           
             Repositioner();
             FournirAcces();
             foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())

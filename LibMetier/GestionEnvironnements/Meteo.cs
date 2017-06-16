@@ -11,6 +11,7 @@ namespace LibMetier.GestionEnvironnements
     public class Meteo : SujetAbstrait
     {
         public List<PersonnageAbstrait> ListObservateur { get; set; }
+        
         public string Etat { get; set; }
         public  void Attach(PersonnageAbstrait observer)
         {

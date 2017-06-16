@@ -8,6 +8,6 @@ namespace LibAbstraite
 {
     public interface Observable
     {
-          void maj();
+          void maj(string etat);
     }
 }

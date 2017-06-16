@@ -145,6 +145,18 @@ namespace fourmilliereALIHM
                 Grid.SetRow(img, unInsecte.Position.X);
 
             }
+            if (App.fourmilliereVM.meteo.Etat == "pluie")
+            {
+                //changer le gif
+            }
+            if (App.fourmilliereVM.meteo.Etat == "soleil")
+            {
+                //changer le gif
+            }
+            if (App.fourmilliereVM.meteo.Etat == "brouillard")
+            {
+                //changer le gif
+            }
         }
 
 
@@ -208,7 +220,15 @@ namespace fourmilliereALIHM
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<PersonnageAbstrait> listp=App.fourmilliereVM.PersonnagesList;
+            ObservableCollection<PersonnageAbstrait> listpmort = App.fourmilliereVM.PersonnagesMortList;
             ObservableCollection<ObjetAbstrait> listo = App.fourmilliereVM.ObjetList;
+            List<Nourriture> listn = new List<Nourriture>();
+            List<Ouvriere> listouvmort = new List<Ouvriere>();
+        
+            List<Ouvriere> listouv = new List<Ouvriere>();
+            listouvmort = listpmort.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).ToList().ConvertAll(o => (Ouvriere)o);
+            listouv = listp.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).ToList().ConvertAll(o => (Ouvriere)o);
+            listn = listo.Where(x => (x.GetType().Equals(typeof(Nourriture)))).ToList().ConvertAll(o => (Nourriture)o);
             var doc = new XDocument(
                 new XElement("Simulation",
                     new XElement("fourmilieres",
@@ -218,11 +238,19 @@ namespace fourmilliereALIHM
                          )
                      ), ((listo.Where(x => (x.GetType().Equals(typeof(Nourriture)))).Count() > 0) ?
                      new XElement("nourritures",
-                        from n in listo
+                        from n in listn
                         where n.GetType().Equals(typeof(Nourriture))
                         select new XElement("nourriture",
                             new XAttribute("nom", n.Nom),
-                            new XAttribute("duree", n.Dureevie),
+                             new XElement("listeNourriture",
+                                   from et in n.ListMorceaux
+                                   select new XElement("morceau",
+                                       new XAttribute("nom", et.Nom),
+                                       new XElement("coordonnees",
+                                            new XAttribute("x", et.Position.X),
+                                            new XAttribute("y", et.Position.Y)
+                                        )
+                                    ),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
@@ -230,7 +258,8 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                     ):null), ((listo.Where(x => (x.GetType().Equals(typeof(Oeuf)))).Count() > 0) ?
+                        )
+                     ) : null), ((listo.Where(x => (x.GetType().Equals(typeof(Oeuf)))).Count() > 0) ?
                       new XElement("oeufs",
                         from n in listo
                         where n.GetType().Equals(typeof(Oeuf))
@@ -244,7 +273,7 @@ namespace fourmilliereALIHM
                                 )
                              )
                         )
-                      ):null),
+                      ) : null),
                        new XElement("pheromones",
                         from n in listo
                         where n.GetType().Equals(typeof(Pheromone))
@@ -255,18 +284,28 @@ namespace fourmilliereALIHM
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
                                     new XAttribute("y", n.Position.Y)
-                                  
+
                                 )
                              )
                         )
                      ), ((listp.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).Count() > 0) ?
                         new XElement("Ouvrieres",
-                        from n in listp
-                        where n.GetType().Equals(typeof(Ouvriere))
+                        from n in listouv
+                        where n.Morceau != null
                         select new XElement("Ouvriere",
                             new XAttribute("nom", n.Nom),
-                             new XAttribute("pv", n.pv),
+                            new XAttribute("pv", n.pv),
                             new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
+                            new XAttribute("transport", n.TransporteNourriture),
+                            new XElement("morceau",
+                                  new XAttribute("nom", n.Morceau.Nom),
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Morceau.Position.X),
+                                    new XAttribute("y", n.Morceau.Position.Y)
+                                )
+                             ),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
@@ -276,7 +315,36 @@ namespace fourmilliereALIHM
                             new XElement("listeetapes",
                                    from et in n.ListEtape
                                    select new XElement("Etape",
-                                   new XAttribute("tour",et.tour),
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+
+
+                        ),
+                        
+                        from n in listouv
+                        where n.Morceau == null
+                        select new XElement("Ouvriere",
+                            new XAttribute("nom", n.Nom),
+                             new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
+                            new XAttribute("transport", n.TransporteNourriture),
+
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                            new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
                                    new XAttribute("lieu", et.lieu)
 
                                    )
@@ -285,7 +353,11 @@ namespace fourmilliereALIHM
 
 
                         )
-                     ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Guerriere)))).Count() > 0) ?
+                     
+                     )
+                    
+                     
+                     :null), ((listp.Where(x => (x.GetType().Equals(typeof(Guerriere)))).Count() > 0) ?
                         new XElement("Guerrieres",
                         from n in listp
                         where n.GetType().Equals(typeof(Guerriere))
@@ -293,6 +365,8 @@ namespace fourmilliereALIHM
                             new XAttribute("nom", n.Nom),
                             new XAttribute("pv", n.pv),
                             new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
                                     new XAttribute("x", n.Position.X),
@@ -337,7 +411,150 @@ namespace fourmilliereALIHM
                         new XElement("termites",
                         from n in listp
                         where n.GetType().Equals(typeof(Termite))
-                        select new XElement("termites",
+                        select new XElement("termite",
+                            new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+                        )
+                     ) : null),((listpmort.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).Count() > 0) ?
+                        new XElement("Ouvrieresmorte",
+                        from n in listouvmort
+                        where n.Morceau != null
+                        select new XElement("Ouvriere",
+                            new XAttribute("nom", n.Nom),
+                             new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
+                            new XAttribute("transport", n.TransporteNourriture),
+                            new XElement("morceau",
+                                  new XAttribute("nom", n.Morceau.Nom),
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Morceau.Position.X),
+                                    new XAttribute("y", n.Morceau.Position.Y)
+                                )
+                             ),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                            new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+
+
+                        ),
+
+                        from n in listouvmort
+                        where n.Morceau ==null
+                        select new XElement("Ouvriere",
+                            new XAttribute("nom", n.Nom),
+                             new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
+                            new XAttribute("transport", n.TransporteNourriture),
+
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                            new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+
+
+                        )
+
+                     )
+
+
+                     : null), ((listpmort.Where(x => (x.GetType().Equals(typeof(Guerriere)))).Count() > 0) ?
+                        new XElement("Guerrieresmorte",
+                        from n in listpmort
+                        where n.GetType().Equals(typeof(Guerriere))
+                        select new XElement("Guerriere",
+                            new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XAttribute("maisonx", n.Maison.X),
+                            new XAttribute("maisony", n.Maison.Y),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+                        )
+                     ) : null), ((listpmort.Where(x => (x.GetType().Equals(typeof(Reine)))).Count() > 0) ?
+                        new XElement("reinesmorte",
+                        from n in listpmort
+                        where n.GetType().Equals(typeof(Reine))
+                        select new XElement("reine",
+                            new XAttribute("nom", n.Nom),
+                            new XAttribute("pv", n.pv),
+                            new XAttribute("strat", n.StategieCourante.Nom),
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", n.Position.X),
+                                    new XAttribute("y", n.Position.Y)
+                                )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in n.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.lieu)
+
+                                   )
+
+                            )
+                        )
+                     ) : null), ((listpmort.Where(x => (x.GetType().Equals(typeof(Termite)))).Count() > 0) ?
+                        new XElement("termitesmorte",
+                        from n in listpmort
+                        where n.GetType().Equals(typeof(Termite))
+                        select new XElement("termite",
                             new XAttribute("nom", n.Nom),
                             new XAttribute("pv", n.pv),
                             new XAttribute("strat", n.StategieCourante.Nom),
@@ -390,7 +607,7 @@ namespace fourmilliereALIHM
                     using (myStream)
                     {
                    
-                    // Insert code to read the stream here.
+                   
                         while ((line=myStream.ReadLine() )!=null)
                         {
                             xmlString += line;
@@ -403,7 +620,12 @@ namespace fourmilliereALIHM
                 List<Pheromone> listp = new List<Pheromone>();
                 List<Guerriere> listg = new List<Guerriere>();
                 List<Ouvriere> listo = new List<Ouvriere>();
+                List<Ouvriere> listot = new List<Ouvriere>();
                 List<Termite> listte = new List<Termite>();
+                List<Guerriere> listgmorte = new List<Guerriere>();
+                List<Ouvriere> listomorte = new List<Ouvriere>();
+                List<Ouvriere> listotmorte = new List<Ouvriere>();
+                List<Termite> listtemorte = new List<Termite>();
                 Reine reine;
                 XElement x = XElement.Load(new StringReader(xmlString));
                 Fourmiliere fo;
@@ -430,9 +652,13 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
-                         Dureevie=(int)t.Attribute("duree"),
-                         ListMorceaux = new List<MorceauNourriture>(),
-                         Position = t.Element("coordonneess").Elements("coordonnees")
+                         ListMorceaux = new List<MorceauNourriture>(t.Element("listeNourriture").Elements("morceau")
+                         .Select(mo => new MorceauNourriture((string)mo.Attribute("nom"),
+                             t.Element("listeNourriture").Elements("morceau").Elements("coordonnees")
+                              .Select(co=> new Coordonnees((int)co.Attribute("x"),(int)co.Attribute("y"))).First())).ToList()),
+                            //new Coordonnees(10, 10))).ToList()),
+                        
+                         Position = t.Element("listeNourriture").Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -465,6 +691,21 @@ namespace fourmilliereALIHM
                      })
                      .ToList();
                 }
+                if (x != null && x.Element("termitesmorte") != null)
+                {
+                    listte = x.Element("termitesmorte")
+                     .Elements("termite")
+                     .Select(t => new Termite()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Element("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                }
                 if (x != null && x.Element("reines") != null)
                 {
                      reine = x.Element("reines")
@@ -473,12 +714,13 @@ namespace fourmilliereALIHM
                       {
                           Nom = (string)t.Attribute("nom"),
                           pv=(int)t.Attribute("pv"),
-                          StategieCourante = new Normal((string)t.Attribute("strat")),
+                          StategieCourante = new Immobile((string)t.Attribute("strat")),
                           ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
                           Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
-                    App.fourmilliereVM.PersonnagesList.Add(reine);
+
+                    App.fourmilliereVM.ChargerReine(reine);
                 }
                 if (x != null && x.Element("Guerrieres") != null)
                 {
@@ -488,6 +730,7 @@ namespace fourmilliereALIHM
                      {
                          Nom = (string)t.Attribute("nom"),
                          pv = (int)t.Attribute("pv"),
+                         Maison= new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
                          ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
@@ -499,13 +742,112 @@ namespace fourmilliereALIHM
                 {
                     listo = x.Element("Ouvrieres")
                      .Elements("Ouvriere")
+                     .Where(tr => tr.Attribute("transport").Value == "false")
                      .Select(t => new Ouvriere()
                      {
                          Nom = (string)t.Attribute("nom"),
                          pv = (int)t.Attribute("pv"),
+                         TransporteNourriture = (bool)t.Attribute("transport"),
+                         Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape =new ObservableCollection<LibAbstraite.Etape>( t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"),(string)et.Attribute("lieu"))).ToList()),
-                          Position = t.Elements("coordonneess").Elements("coordonnees")
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                    listot = x.Element("Ouvrieres")
+                     .Elements("Ouvriere")
+                     .Where(tr => tr.Attribute("transport").Value == "true")
+                     .Select(t => new Ouvriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         TransporteNourriture = (bool)t.Attribute("transport"),
+                         Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
+                         Morceau = t.Elements("morceau").Select(m => new MorceauNourriture()
+                         {
+                             Nom = (string)m.Attribute("nom"),
+                             Position = m.Elements("coordonnees")
+                              .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                         }).First(),
+                          
+                         
+                         StategieCourante = new Retour((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                }
+                if (x != null && x.Element("reinesmorte") != null)
+                {
+                    reine = x.Element("reinesmorte")
+                     .Elements("reine")
+                     .Select(t => new Reine()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         StategieCourante = new Immobile((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
+                         .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     }).First();
+
+                    App.fourmilliereVM.ChargerReine(reine);
+                }
+                if (x != null && x.Element("Guerrieresmorte") != null)
+                {
+                    listgmorte = x.Element("Guerrieresmorte")
+                     .Elements("Guerriere")
+                     .Select(t => new Guerriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                }
+                if (x != null && x.Element("Ouvrieresmorte") != null)
+                {
+                    listomorte = x.Element("Ouvrieresmorte")
+                     .Elements("Ouvriere")
+                     .Where(tr => tr.Attribute("transport").Value == "false")
+                     .Select(t => new Ouvriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         TransporteNourriture = (bool)t.Attribute("transport"),
+                         Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
+                         StategieCourante = new Normal((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
+                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                     })
+                     .ToList();
+                    listotmorte = x.Element("Ouvrieresmorte")
+                     .Elements("Ouvriere")
+                     .Where(tr => tr.Attribute("transport").Value == "true")
+                     .Select(t => new Ouvriere()
+                     {
+                         Nom = (string)t.Attribute("nom"),
+                         pv = (int)t.Attribute("pv"),
+                         TransporteNourriture = (bool)t.Attribute("transport"),
+                         Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
+                         Morceau = t.Elements("morceau").Select(m => new MorceauNourriture()
+                         {
+                             Nom = (string)m.Attribute("nom"),
+                             Position = m.Elements("coordonnees")
+                              .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
+                         }).First(),
+
+
+                         StategieCourante = new Retour((string)t.Attribute("strat")),
+                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
                      .ToList();
@@ -530,8 +872,12 @@ namespace fourmilliereALIHM
                     
                 }
 
-                
+                listomorte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
+                listotmorte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
+                listgmorte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
+                listtemorte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listo.ForEach(App.fourmilliereVM.PersonnagesList.Add);
+                listot.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listg.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listte.ForEach(App.fourmilliereVM.PersonnagesList.Add);
                 listoe.ForEach(App.fourmilliereVM.ObjetList.Add);
