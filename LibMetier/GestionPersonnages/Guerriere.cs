@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionStrategie;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -27,7 +28,7 @@ namespace LibMetier.GestionPersonnages
             this.Maison = new Coordonnees();
             this.Maison.X = position.X;
             this.Maison.Y = position.Y;
-            ListEtape = new ObservableCollection<Etape>();
+            ListEtape = new ObservableCollection<EtapeAbstraite>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Defense("Defense");
 
@@ -52,7 +53,7 @@ namespace LibMetier.GestionPersonnages
                     if (unPerso.GetType().Equals(typeof(Termite)))
                     {
                         unPerso.PV -= 10;
-                        AjouterEtape(0, "J'attaque une termite ! ");
+                        AjouterEtape(0, "J'attaque une termite ! ", this.Position.X, this.Position.Y);
                     }
                     else if (unPerso.GetType().Equals(typeof(Reine)))
                     {
@@ -109,6 +110,24 @@ namespace LibMetier.GestionPersonnages
             }
 
            
+        }
+
+
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+                       
+                       if(tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+
+                        ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                   }
+               );
         }
 
     }

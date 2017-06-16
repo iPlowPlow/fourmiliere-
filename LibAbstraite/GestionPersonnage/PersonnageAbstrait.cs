@@ -41,30 +41,17 @@ namespace LibAbstraite.GestionPersonnage
 
         public abstract ZoneAbstrait ChoisirZoneSuivante();
         
-        public  ObservableCollection<Etape> ListEtape { get; set; }
+        public  ObservableCollection<EtapeAbstraite> ListEtape { get; set; }
 
         public abstract void AnalyseSituation();
 
 
-        public void AjouterEtape(int tourActuel, string description)
-        {
-            System.Windows.Application.Current.Dispatcher.Invoke(
-                   DispatcherPriority.Normal,
-                   (Action)delegate ()
-                   {
-                       
-                       if(tourActuel == 0)
-                       {
-                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
-                       }
-                       ListEtape.Add(new Etape(tourActuel, description));
-                   }
-               );
-        }
+        public abstract void AjouterEtape(int tourActuel, string description, int X, int Y);
+       
 
         public void Avance1Tour(int dimX, int dimY, int tourActuel)
         {
-            AjouterEtape(tourActuel, "Position X : " + Position.X + ", Y : " + Position.Y);
+            AjouterEtape(tourActuel, "Position X : " + Position.X + ", Y : " + Position.Y, Position.X, Position.Y);
             AnalyseSituation();
             this.StategieCourante.Deplacement(dimX, dimY, this); 
             if (PV > 0) { PV--; } 

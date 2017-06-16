@@ -50,8 +50,6 @@ namespace LibMetier.GestionEnvironnements
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
             //PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(3, 3), Fabrique.CreerPosition(positionX, positionY)));
-       
-       
 
             ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
@@ -59,8 +57,6 @@ namespace LibMetier.GestionEnvironnements
             meteo = new Meteo();
             meteo.ListObservateur = new List<PersonnageAbstrait>();
             InitZones();
-
-         
 
         }
         
@@ -196,7 +192,7 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     unPerso.ListEtape.Add(new Etape(0, "Je meurs......."));
+                     unPerso.ListEtape.Add(new Etape(0, "Je meurs.......", unPerso.Position.X, unPerso.Position.Y));
                      PersonnagesMortList.Add(unPerso);
                      PersonnagesList.Remove(unPerso);
                      meteo.ListObservateur.Remove(unPerso);

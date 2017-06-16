@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionStrategie;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -25,7 +26,7 @@ namespace LibMetier.GestionPersonnages
             this.PV = 75;
             this.Position = position;
             this.Maison = positionFourmilliere;
-            ListEtape = new ObservableCollection<Etape>();
+            ListEtape = new ObservableCollection<EtapeAbstraite>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Attaque("Attaque");
         }
@@ -46,19 +47,19 @@ namespace LibMetier.GestionPersonnages
                 if (unPerso.GetType().Equals(typeof(Reine)))
                 {
                     unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque la Reine !");
+                    AjouterEtape(0, "J'attaque la Reine !", this.Position.X, this.Position.Y);
                 }
 
                 else if (unPerso.GetType().Equals(typeof(Guerriere)))
                 {
                     unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque la Guerriere !");
+                    AjouterEtape(0, "J'attaque la Guerriere !", this.Position.X, this.Position.Y);
                     
                 }
                 else if (unPerso.GetType().Equals(typeof(Ouvriere)))
                 {
                     unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque l'Ouvriere !"); 
+                    AjouterEtape(0, "J'attaque l'Ouvriere !", this.Position.X, this.Position.Y); 
                 }
             }
         }
@@ -66,6 +67,23 @@ namespace LibMetier.GestionPersonnages
         public override void maj(string etat)
         {
            
+        }
+
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+
+                       if (tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+
+                       ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                   }
+               );
         }
     }
 }

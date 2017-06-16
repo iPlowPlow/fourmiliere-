@@ -11,6 +11,7 @@ using LibAbstraite.GestionObjets;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionObjets;
 using LibMetier.GestionStrategie;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -18,7 +19,7 @@ namespace LibMetier.GestionPersonnages
     {
         private static Reine instance;
         private Oeuf oeufPondu;
-
+        public List<ObjetAbstrait> morceaux;
         public Reine()
         {
           
@@ -45,9 +46,10 @@ namespace LibMetier.GestionPersonnages
             instance.Maison = new Coordonnees();
             instance.Maison.X = position.X;
             instance.Maison.Y = position.Y;
-            instance.ListEtape = new ObservableCollection<Etape>();
+            instance.ListEtape = new ObservableCollection<EtapeAbstraite>();
             instance.zone = new BoutDeTerrain("default", position);
             instance.StategieCourante = new Immobile("Immobile");
+            instance.morceaux = new List<ObjetAbstrait>();
             return instance;
         }
         public Oeuf OeufPondu { 
@@ -75,8 +77,10 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-
-            List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
+            if(zone.ObjetList != null)
+            {
+                morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
+            }
             if (morceaux.Count > 0)
             {
                 PondreOeuf();
@@ -91,7 +95,7 @@ namespace LibMetier.GestionPersonnages
                 }
                 else if (unPerso.GetType().Equals(typeof(Termite)))
                 {
-                    AjouterEtape(0, "Une termite m'attaque ! ");
+                    AjouterEtape(0, "Une termite m'attaque ! ", this.Position.X, this.Position.Y);
                 }
             }
         }
@@ -112,6 +116,23 @@ namespace LibMetier.GestionPersonnages
         public override void maj(string etat)
         {
          
+        }
+
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+
+                       if (tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+
+                       ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                   }
+               );
         }
     }
 }

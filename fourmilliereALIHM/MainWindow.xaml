@@ -115,7 +115,7 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding tour}" Grid.Column="0"></TextBlock>
-                            <TextBlock Text="{Binding lieu}" Grid.Column="1"></TextBlock>
+                            <TextBlock Text="{Binding action}" Grid.Column="1"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

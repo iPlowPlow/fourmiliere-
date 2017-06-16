@@ -86,8 +86,12 @@ namespace LibMetier.GestionStrategie
                 /*Selectionne une case vide au harzard*/
                 int maCase = Hazard.Next(zoneAccessible.Count);
 
-                unPerso.Position.X = zoneAccessible[maCase].Position.X;
-                unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+                /*Récupération de l'ancienne case pour ne pas retourner en arriere*/
+                int oldX = unPerso.ListEtape[unPerso.ListEtape.Count-1].position.X;
+                int oldY = unPerso.ListEtape[unPerso.ListEtape.Count-1].position.Y;
+
+                if (unPerso.Position.X != zoneAccessible[maCase].Position.X && zoneAccessible[maCase].Position.X != oldX ) unPerso.Position.X = zoneAccessible[maCase].Position.X;
+                if (unPerso.Position.Y != zoneAccessible[maCase].Position.Y && zoneAccessible[maCase].Position.Y != oldY) unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
                 /*int newX = unPerso.Position.X + Hazard.Next(3) - 1;
                 int newY = unPerso.Position.Y + Hazard.Next(3) - 1;
                 if ((newX >= 0) && (newX < dimX)) unPerso.Position.X = newX;

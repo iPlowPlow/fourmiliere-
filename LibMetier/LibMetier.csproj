@@ -38,11 +38,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-	    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Etape.cs" />
     <Compile Include="Fabriques\FabriqueFourmiliere.cs" />
     <Compile Include="GestionEnvironnements\BoutDeTerrain.cs" />
     <Compile Include="GestionEnvironnements\Acces.cs" />
