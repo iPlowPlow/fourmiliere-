@@ -40,7 +40,7 @@ namespace LibMetier.GestionPersonnages
                 instance = new Reine();
             }
             instance.Nom = nom;
-            instance.PV = 10;
+            instance.PV = 250;
             instance.Position = position;
             instance.Maison = new Coordonnees();
             instance.Maison.X = position.X;
@@ -56,7 +56,7 @@ namespace LibMetier.GestionPersonnages
             {
                 instance = new Reine();
             }
-            instance.PV = 500;
+            instance.PV = 250;
             instance.Position = new Coordonnees();
             instance.Position.X = princesse.Position.X;
             instance.Position.Y = princesse.Position.Y;

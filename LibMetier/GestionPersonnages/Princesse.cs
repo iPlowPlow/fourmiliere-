@@ -26,7 +26,7 @@ namespace LibMetier.GestionPersonnages
         public Princesse(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 300;
+            this.PV = 200;
             this.Position = position;
             this.Maison = positionReine;
             ListEtape = new ObservableCollection<Etape>();
