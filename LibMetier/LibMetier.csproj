@@ -38,7 +38,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-	    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
@@ -55,6 +55,7 @@
     <Compile Include="GestionObjets\Pheromone.cs" />
     <Compile Include="GestionPersonnages\Guerriere.cs" />
     <Compile Include="GestionPersonnages\Ouvriere.cs" />
+    <Compile Include="GestionPersonnages\Princesse.cs" />
     <Compile Include="GestionPersonnages\Reine.cs" />
     <Compile Include="GestionPersonnages\Termite.cs" />
     <Compile Include="GestionStrategie\Attaque.cs" />

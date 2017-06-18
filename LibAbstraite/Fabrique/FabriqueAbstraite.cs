@@ -16,8 +16,9 @@ namespace LibAbstraite.Fabrique
         public abstract ZoneAbstrait CreerZone(string nom, CoordonneesAbstrait position);
         public abstract AccesAbstrait CreerAcces(List<ZoneAbstrait> zoneaccessibles);
         public abstract CoordonneesAbstrait CreerPosition(int x, int y);
-        public abstract PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position);
-        public abstract PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position);
+        public abstract PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine);
+        public abstract PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine);
+        public abstract PersonnageAbstrait CreerPrincesse(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine);
         public abstract PersonnageAbstrait CreerReine(string nom, CoordonneesAbstrait position);
         public abstract PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position);
         public abstract ObjetAbstrait CreerOeuf(string nom, CoordonneesAbstrait position);

@@ -11,6 +11,6 @@ namespace fourmilliereALIHM
     {
         public string CopyRight { get { return "Metagenia"; } }
         public string Date { get { return System.DateTime.Now.ToString(); } }
-        public string Author { get { return "Pierre Lochouarn"; } }
+        public string Author { get { return "Pierre L, Loïc G et André M"; } }
     }
 }

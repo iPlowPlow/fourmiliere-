@@ -58,6 +58,7 @@ namespace LibAbstraite.GestionEnvironnement
         public abstract void AjouteNourriture(ObjetAbstrait unObject);
         public abstract void AjouterReine();
         public abstract void AjouterGuerriere();
+        public abstract void AjouterPrincesse();
         public abstract void AjouterOuvriere();
         public abstract void AjouterTermite();
         public abstract void AjouteZone(params ZoneAbstrait[] zoneArray);

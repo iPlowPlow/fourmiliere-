@@ -5,76 +5,61 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionPersonnage;
 using LibAbstraite.GestionEnvironnement;
+using LibMetier.GestionObjets;
+using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using LibAbstraite;
 using LibMetier.GestionEnvironnements;
+using LibAbstraite.GestionStrategie;
 using LibMetier.GestionStrategie;
+using LibAbstraite.GestionObjets;
 
 namespace LibMetier.GestionPersonnages
 {
-    public class Guerriere : PersonnageAbstrait
-    {
 
-        public Guerriere()
+    public class Princesse : PersonnageAbstrait
+    {
+        public Princesse()
         {
-         
+
         }
-        public Guerriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
+        public Princesse(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 75;
+            this.PV = 300;
             this.Position = position;
             this.Maison = positionReine;
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
-            StategieCourante = new Defense("Defense");
-
+            StategieCourante = new Normal("Normal");
         }
         public override ZoneAbstrait ChoisirZoneSuivante()
         {
             throw new NotImplementedException();
         }
-
-        public override string ToString()
-        {
-            return "Ma Guerriere" + this.Nom;
-        }
-
         public override void AnalyseSituation()
         {
-            /*Si termite sur sa case l'attaquer*/
-            if (zone.PersonnageList.Count > 0)
-            {
-                foreach(PersonnageAbstrait unPerso in zone.PersonnageList)
-                {
-                    if (unPerso.GetType().Equals(typeof(Termite)))
-                    {
-                        unPerso.PV -= 10;
-                        AjouterEtape(0, "J'attaque une termite ! ");
-                    }
-                    else if (unPerso.GetType().Equals(typeof(Reine)))
-                    {
 
-                    }
-                    else if (unPerso.GetType().Equals(typeof(Ouvriere))){
-                        /*Indiquer chemin nourriture*/
-                    }
-                    
-
-                }
-                
-            }
-            
         }
         public override void maj(string etat)
         {
 
-            if (etat == "attaque")
+            if (TransporteNourriture == true)
+            {
+                //AnalyseSituation();
+                this.EtatMeteoObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
+                {
+                    this.StategieCourante = new Retour("Retour");
+                }
+
+            }
+            else if (etat == "attaque")
             {
                 this.EtatFourmiliereObserver = etat;
                 if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
                 {
-                    this.StategieCourante = new Defense("Defense");
+                    this.StategieCourante = new Retour("fuite");
 
                 }
 
@@ -87,14 +72,18 @@ namespace LibMetier.GestionPersonnages
                     this.StategieCourante = new Retour("fuite");
                 }
 
+
+
+
             }
             else if (etat == "soleil")
             {
                 this.EtatMeteoObserver = etat;
                 if (!this.StategieCourante.GetType().Equals(typeof(Normal)))
                 {
-                    this.StategieCourante = new Defense("defense");
+                    this.StategieCourante = new Normal("Normal");
                 }
+
 
             }
             else if (etat == "brouillard")
@@ -106,8 +95,6 @@ namespace LibMetier.GestionPersonnages
                 }
             }
 
-           
         }
-
     }
 }

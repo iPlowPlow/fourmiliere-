@@ -5,7 +5,7 @@ using System.Text;
 using LibAbstraite.GestionEnvironnement;
 using System.Threading.Tasks;
 using LibAbstraite.GestionObjets;
-
+using LibAbstraite;
 
 namespace LibMetier.GestionObjets
 {
@@ -20,7 +20,7 @@ namespace LibMetier.GestionObjets
             this.Nom = nom;
             this.Position = position;
         }
-        public override void TourPasse()
+        public override void TourPasse(SujetAbstrait meteo)
         {
 
         }

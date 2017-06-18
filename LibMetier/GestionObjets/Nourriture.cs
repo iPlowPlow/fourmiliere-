@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
+using LibAbstraite;
 
 namespace LibMetier.GestionObjets
 {
     public class Nourriture : ObjetAbstrait
     {
+        public const int DUREE_VIE_ORIGINALE = 50;
         public const int MORCEAU_NOURRITURE = 20;
         public List<MorceauNourriture> ListMorceaux { get; set; }
         public Nourriture()
@@ -20,7 +22,8 @@ namespace LibMetier.GestionObjets
         {
             this.Nom = nom;
             this.Position = position;
-            this.ListMorceaux = Enumerable.Repeat(new MorceauNourriture(String.Concat("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
+            this.Dureevie = DUREE_VIE_ORIGINALE;
+            this.ListMorceaux = Enumerable.Repeat(new MorceauNourriture(String.Format("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
         }
         public MorceauNourriture Recolter()
         {
@@ -28,9 +31,9 @@ namespace LibMetier.GestionObjets
             ListMorceaux.Remove(morceau);
             return morceau;
         }
-        public override void TourPasse()
+        public override void TourPasse(SujetAbstrait meteo)
         {
-            
+            Dureevie--;
         }
     }
 }

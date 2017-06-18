@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAbstraite.GestionEnvironnement;
+using LibAbstraite;
 
 namespace LibMetier.GestionObjets
 {
@@ -24,8 +25,12 @@ namespace LibMetier.GestionObjets
             this.Dureevie = DUREE_VIE_ORIGINALE;
         }
 
-        public override void TourPasse()
+        public override void TourPasse(SujetAbstrait meteo)
         {
+            if(meteo.Etat == "pluie" && Dureevie > 5)
+            {
+                Dureevie -= 4;
+            }
             Dureevie --;
         }
 

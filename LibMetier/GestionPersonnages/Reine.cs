@@ -40,13 +40,31 @@ namespace LibMetier.GestionPersonnages
                 instance = new Reine();
             }
             instance.Nom = nom;
-            instance.PV = 500;
+            instance.PV = 10;
             instance.Position = position;
             instance.Maison = new Coordonnees();
             instance.Maison.X = position.X;
             instance.Maison.Y = position.Y;
             instance.ListEtape = new ObservableCollection<Etape>();
             instance.zone = new BoutDeTerrain("default", position);
+            instance.StategieCourante = new Immobile("Immobile");
+            return instance;
+        }
+        public static Reine RemplacerReine(Princesse princesse)
+        {
+            if (instance == null)
+            {
+                instance = new Reine();
+            }
+            instance.PV = 500;
+            instance.Position = new Coordonnees();
+            instance.Position.X = princesse.Position.X;
+            instance.Position.Y = princesse.Position.Y;
+            instance.Maison = new Coordonnees();
+            instance.Maison.X = princesse.Position.X;
+            instance.Maison.Y = princesse.Position.Y;
+            instance.ListEtape = princesse.ListEtape;
+            instance.zone = princesse.zone;
             instance.StategieCourante = new Immobile("Immobile");
             return instance;
         }
@@ -75,24 +93,30 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
-
-            List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
-            if (morceaux.Count > 0)
+            try
             {
-                PondreOeuf();
+                List<ObjetAbstrait> morceaux = zone.ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
+                if (morceaux.Count > 0)
+                {
+                    PondreOeuf();
+                }
+                foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+                {
+
+
+                    if (unPerso.GetType().Equals(typeof(Guerriere)))
+                    {
+                        /*Indiquer chemin nourriture*/
+                    }
+                    else if (unPerso.GetType().Equals(typeof(Termite)))
+                    {
+                        AjouterEtape(0, "Une termite m'attaque ! ");
+                    }
+                }
             }
-            foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
+            catch(Exception e)
             {
-
-
-                if (unPerso.GetType().Equals(typeof(Guerriere)))
-                {
-                    /*Indiquer chemin nourriture*/
-                }
-                else if (unPerso.GetType().Equals(typeof(Termite)))
-                {
-                    AjouterEtape(0, "Une termite m'attaque ! ");
-                }
+                e.ToString();
             }
         }
 
@@ -107,6 +131,7 @@ namespace LibMetier.GestionPersonnages
             pos.X = Position.X + Fourmiliere.Hazard.Next(-1, 2);
             pos.Y = Position.Y + Fourmiliere.Hazard.Next(-1, 2);
             oeufPondu =(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), pos);
+            AjouterEtape(0 ,String.Format("Je pond un oeuf en X={0}, Y={1}", pos.X, pos.Y));
         }
 
         public override void maj(string etat)
