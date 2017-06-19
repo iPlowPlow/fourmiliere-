@@ -50,7 +50,7 @@ namespace LibMetier.GestionStrategie
                 
 
             }
-
+            
             if (zoneFourmille != null)
             {
                 unPerso.Position.X = zoneFourmille.Position.X;
@@ -59,9 +59,24 @@ namespace LibMetier.GestionStrategie
             }else
             {
                 int maCase = Hazard.Next(zoneAccessible.Count);
+                zoneAccessible.OrderByDescending(x => x.Position.X);
+                if (unPerso.Position.X > unPerso.Maison.X)
+                {
+                    if (zoneAccessible[maCase].Position.X != unPerso.Position.X && (unPerso.Position.X - unPerso.Maison.X) > zoneAccessible[maCase].Position.X - unPerso.Maison.X) unPerso.Position.X = zoneAccessible[maCase].Position.X;
+                }else
+                {
+                    if (zoneAccessible[maCase].Position.X != unPerso.Position.X && (unPerso.Position.X - unPerso.Maison.X) < zoneAccessible[maCase].Position.X - unPerso.Maison.X) unPerso.Position.X = zoneAccessible[maCase].Position.X;
+                }
 
-                unPerso.Position.X = zoneAccessible[maCase].Position.X;
-                unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+                if (unPerso.Position.Y > unPerso.Maison.Y)
+                {
+                    if (zoneAccessible[maCase].Position.Y != unPerso.Position.Y && (unPerso.Position.Y - unPerso.Maison.Y) > zoneAccessible[maCase].Position.Y - unPerso.Maison.Y) unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+
+                }else
+                {
+                    if (zoneAccessible[maCase].Position.Y != unPerso.Position.Y && (unPerso.Position.Y - unPerso.Maison.Y) < zoneAccessible[maCase].Position.Y - unPerso.Maison.Y) unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+                }
+
             }
             /*
             int newX = unPerso.Position.X + Hazard.Next(3) - 1;

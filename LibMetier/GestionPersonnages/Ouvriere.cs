@@ -13,6 +13,7 @@ using LibMetier.GestionEnvironnements;
 using LibAbstraite.GestionStrategie;
 using LibMetier.GestionStrategie;
 using LibAbstraite.GestionObjets;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -30,8 +31,12 @@ namespace LibMetier.GestionPersonnages
             this.Nom = nom;
             this.PV = 100;
             this.Position = position;
-            this.Maison = positionReine;
-            ListEtape = new ObservableCollection<Etape>();
+
+            this.Maison = new Coordonnees();
+            this.Maison.X = position.X;
+            this.Maison.Y = position.Y;
+            ListEtape = new ObservableCollection<EtapeAbstraite>();
+
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Normal("Normal");
         }
@@ -41,7 +46,8 @@ namespace LibMetier.GestionPersonnages
         }
         public MorceauNourriture DeposeMorceau()
         {
-            AjouterEtape(0, "Je dépose de la nourriture à la reine.");
+
+            AjouterEtape(0, "Je dépose de la nourriture à la reine.", Position.X, Position.Y);
             Morceau.Position = new Coordonnees(Position.X, Position.Y);
             MorceauNourriture morceauRendu = Morceau;
             Morceau = null;
@@ -58,6 +64,7 @@ namespace LibMetier.GestionPersonnages
         {
             if (zone.ObjetList.Count > 0)
             {
+
                 /*On ne prend pas la nourriture de la maison*/
                 if (zone.Position.X != this.Maison.X && zone.Position.Y != this.Maison.Y)
                 {
@@ -70,7 +77,7 @@ namespace LibMetier.GestionPersonnages
                                 if (unObjet.ListMorceaux.Count > 0)
                                 {
                                     this.Morceau = unObjet.Recolter();
-                                    AjouterEtape(0, "Je récolte un morceau de nourriture ! ");
+                                    AjouterEtape(0, "Je récolte un morceau de nourriture ! ", Position.X, Position.Y);
                                     this.StategieCourante = new Retour("Retour");
                                     this.TransporteNourriture = true;
                                 }
@@ -80,6 +87,7 @@ namespace LibMetier.GestionPersonnages
                         {
                             e.ToString();
                         }
+
                     }
                 }
             }
@@ -95,8 +103,9 @@ namespace LibMetier.GestionPersonnages
                     }
                     else if (unPerso.GetType().Equals(typeof(Termite)))
                     {
-                        AjouterEtape(0, "Une termite m'attaque ! ");
+                        AjouterEtape(0, "Une termite m'attaque ! ", this.Position.X, this.Position.Y);
                     }
+
                 }
 
             }
@@ -154,7 +163,23 @@ namespace LibMetier.GestionPersonnages
                     this.StategieCourante = new Immobile("Immobile");
                 }
             }
-           
+
+        }
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+
+                       if (tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+
+                       ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                   }
+               );
         }
     }
 }

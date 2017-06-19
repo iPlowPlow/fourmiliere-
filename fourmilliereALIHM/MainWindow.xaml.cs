@@ -30,6 +30,8 @@ using System.Xml.Linq;
 using System.Collections.ObjectModel;
 using LibAbstraite.GestionStrategie;
 using LibMetier.GestionStrategie;
+using LibMetier;
+using LibAbstraite;
 
 namespace fourmilliereALIHM
 {
@@ -351,7 +353,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -379,8 +386,15 @@ namespace fourmilliereALIHM
                             new XElement("listeetapes",
                                    from et in n.ListEtape
                                    select new XElement("Etape",
-                                   new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+
+                                   new XAttribute("tour",et.tour),
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
+
 
                                    )
 
@@ -412,7 +426,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -436,7 +455,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -460,7 +484,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                   new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -486,9 +515,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
-
-                                   )
+                                   new XAttribute("lieu", et.action),
+                                   new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+                                    
+                                ))
 
                             )
                         )
@@ -512,7 +544,13 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
+
 
                                    )
 
@@ -546,7 +584,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -575,7 +618,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -607,7 +655,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -631,7 +684,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -655,7 +713,12 @@ namespace fourmilliereALIHM
                                    from et in n.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
-                                   new XAttribute("lieu", et.lieu)
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
 
                                    )
 
@@ -789,7 +852,7 @@ namespace fourmilliereALIHM
                          zone=new BoutDeTerrain("default", t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"),(int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -804,7 +867,7 @@ namespace fourmilliereALIHM
                          Nom = (string)t.Attribute("nom"),
                          pv = (int)t.Attribute("pv"),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         //ListEtape = new ObservableCollection<Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
                          Position = t.Element("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -818,8 +881,9 @@ namespace fourmilliereALIHM
                       {
                           Nom = (string)t.Attribute("nom"),
                           pv=(int)t.Attribute("pv"),
+
                           StategieCourante = new Immobile((string)t.Attribute("strat")),
-                          ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                          ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                           Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                       }).First();
@@ -838,7 +902,7 @@ namespace fourmilliereALIHM
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -854,7 +918,7 @@ namespace fourmilliereALIHM
                          pv = (int)t.Attribute("pv"),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -872,7 +936,7 @@ namespace fourmilliereALIHM
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -892,7 +956,7 @@ namespace fourmilliereALIHM
                          TransporteNourriture = (bool)t.Attribute("transport"),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -917,7 +981,7 @@ namespace fourmilliereALIHM
                           
                          
                          StategieCourante = new Retour((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -932,7 +996,7 @@ namespace fourmilliereALIHM
                          Nom = (string)t.Attribute("nom"),
                          pv = (int)t.Attribute("pv"),
                          StategieCourante = new Immobile((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                          .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      }).First();
@@ -949,7 +1013,7 @@ namespace fourmilliereALIHM
                          pv = (int)t.Attribute("pv"),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -967,7 +1031,7 @@ namespace fourmilliereALIHM
                          TransporteNourriture = (bool)t.Attribute("transport"),
                          Maison = new Coordonnees((int)t.Attribute("maisonx"), (int)t.Attribute("maisony")),
                          StategieCourante = new Normal((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })
@@ -990,7 +1054,7 @@ namespace fourmilliereALIHM
 
 
                          StategieCourante = new Retour((string)t.Attribute("strat")),
-                         ListEtape = new ObservableCollection<LibAbstraite.Etape>(t.Elements("listeetapes").Elements("Etape").Select(et => new LibAbstraite.Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"))).ToList()),
+                         ListEtape = new ObservableCollection<EtapeAbstraite>(t.Elements("listeetapes").Elements("Etape").Select(et => new Etape((int)et.Attribute("tour"), (string)et.Attribute("lieu"), (int)et.Element("coordonnees").Attribute("x"), (int)et.Element("coordonnees").Attribute("y"))).ToList()),
                          Position = t.Elements("coordonneess").Elements("coordonnees")
                           .Select(c => new Coordonnees((int)c.Attribute("x"), (int)c.Attribute("y"))).First()
                      })

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LibAbstraite.GestionStrategie;
 using LibAbstraite.GestionEnvironnement;
 using LibAbstraite.GestionPersonnage;
+using System.Collections.ObjectModel;
 
 namespace LibMetier.GestionStrategie
 {
@@ -18,8 +19,8 @@ namespace LibMetier.GestionStrategie
 
         public override void Deplacement(int dimX, int dimY, PersonnageAbstrait unPerso)
         {
-            
-            if (unPerso.Position.Y != unPerso.Maison.Y) {
+            if (unPerso.Position.Y != unPerso.Maison.Y)
+            {
                 if (unPerso.Position.Y < unPerso.Maison.Y)
                 {
                     unPerso.Position.Y++;
@@ -29,7 +30,7 @@ namespace LibMetier.GestionStrategie
                     unPerso.Position.Y--;
                 }
             }
-            else if(unPerso.Position.X != unPerso.Maison.X)
+            else if (unPerso.Position.X != unPerso.Maison.X)
             {
                 if (unPerso.Position.X < unPerso.Maison.X)
                 {
@@ -40,8 +41,6 @@ namespace LibMetier.GestionStrategie
                     unPerso.Position.X--;
                 }
             }
-                
-
 
         }
     }

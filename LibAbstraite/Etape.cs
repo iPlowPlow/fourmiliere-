@@ -1,17 +1,13 @@
-﻿namespace LibAbstraite
+﻿using LibAbstraite.GestionEnvironnement;
+
+
+namespace LibAbstraite
 {
-    public class Etape
+    public abstract class EtapeAbstraite
     {
         public int tour { get; set; }
-        public string lieu { get; set; }
-        public Etape(int tour, string lieu) {
-            this.lieu = lieu;
-            this.tour = tour;
-        }
-
-        public Etape(string lieu)
-        {
-            this.lieu = lieu;
-        }
+        public string action { get; set; }
+        public CoordonneesAbstrait position;
+        
     }
 }

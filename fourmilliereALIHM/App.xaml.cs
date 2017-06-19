@@ -22,9 +22,7 @@ namespace fourmilliereALIHM
         {   
 
             fourmilliereVM = new Fourmiliere(30, 30);
-            meteo = new Meteo();
-            fourmilliereVM.meteo = meteo;
-            fourmilliereVM.meteo.ListObservateur = new List<LibAbstraite.GestionPersonnage.PersonnageAbstrait>();
+           
 
         }
     }
