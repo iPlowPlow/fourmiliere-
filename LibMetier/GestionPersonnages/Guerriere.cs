@@ -26,9 +26,7 @@ namespace LibMetier.GestionPersonnages
             this.PV = 75;
             this.Position = position;
 
-            this.Maison = new Coordonnees();
-            this.Maison.X = position.X;
-            this.Maison.Y = position.Y;
+            this.Maison = positionReine;
             ListEtape = new ObservableCollection<EtapeAbstraite>();
 
             zone = new BoutDeTerrain("default", position);

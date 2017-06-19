@@ -53,7 +53,7 @@ namespace LibMetier.GestionPersonnages
             instance.morceaux = new List<ObjetAbstrait>();
             return instance;
         }
-        public static Reine RemplacerReine(Reine princesse)
+        public static Reine Instance(Reine reine)
         {
             if (instance == null)
             {
@@ -61,13 +61,13 @@ namespace LibMetier.GestionPersonnages
             }
             instance.PV = 250;
             instance.Position = new Coordonnees();
-            instance.Position.X = princesse.Position.X;
-            instance.Position.Y = princesse.Position.Y;
+            instance.Position.X = reine.Position.X;
+            instance.Position.Y = reine.Position.Y;
             instance.Maison = new Coordonnees();
-            instance.Maison.X = princesse.Position.X;
-            instance.Maison.Y = princesse.Position.Y;
-            instance.ListEtape = princesse.ListEtape;
-            instance.zone = princesse.zone;
+            instance.Maison.X = reine.Position.X;
+            instance.Maison.Y = reine.Position.Y;
+            instance.ListEtape = reine.ListEtape;
+            instance.zone = reine.zone;
             instance.StategieCourante = new Immobile("Immobile");
             return instance;
         }

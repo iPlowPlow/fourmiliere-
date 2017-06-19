@@ -92,10 +92,10 @@ namespace fourmilliereALIHM
             int i = 0;
             foreach (ZoneAbstrait zone in App.fourmilliereVM.ZoneList.ToList().OrderBy(x=>x.Nom))
             {
-                if ((i%4) == 0) {
+                if ((i%9) == 0) {
                     Image img = new Image();
                 
-                    Uri uri = new Uri("Images/gazon.jpg", UriKind.Relative);
+                    Uri uri = new Uri("Images/grass.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                     Plateau.Children.Add(img);
                     Grid.SetColumn(img, zone.Position.Y);

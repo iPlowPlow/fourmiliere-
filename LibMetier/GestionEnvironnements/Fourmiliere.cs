@@ -23,10 +23,9 @@ namespace LibMetier.GestionEnvironnements
     public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public static Reine reine;
-        public static CoordonneesAbstrait coordMaison;  
+        public static CoordonneesAbstrait coordMaison;
         public int positionX = 10;
         public int positionY = 10;
-
 
         public Fourmiliere()
         {
@@ -45,7 +44,6 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
             coordMaison = Fabrique.CreerPosition(10, 10);
             AjouterReine();
-            
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
@@ -57,13 +55,11 @@ namespace LibMetier.GestionEnvironnements
 
             meteo = new Meteo();
             meteo.ListObservateur = new List<PersonnageAbstrait>();
-            for (int i = 0; i < 100; i++)
+            //place des morceaux de nourriture sous la reine pour qu'elle puisse pondre dès le début...
+            //plus besoin de faire spawn de fourmis
+            for (int i = 0; i < 50; i++)
             {
-                PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
-
-                PersonnagesList.Add(g);
-                ListObservateur.Add(g);
-                meteo.ListObservateur.Add(g);
+                ObjetList.Add(new MorceauNourriture("Morceau N°" + i, Fabrique.CreerPosition(10, 10)));
             }
             InitZones();
 
@@ -101,7 +97,7 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY), Fabrique.CreerPosition(positionX, positionY)));
+                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY), coordMaison));
                  }
              );
             
@@ -139,13 +135,7 @@ namespace LibMetier.GestionEnvironnements
         }
         public void ChargerReine(Reine reinec)
         {
-
-            PersonnagesList.Remove(reine);
-            reine = reinec;
-           
-            PersonnagesList.Add(reine);
-            Reine.RemplacerReine(reine);
-
+            reine = Reine.Instance(reinec);
         }
         
         public override void ChargerEnv(FabriqueAbstraite fab)
@@ -246,13 +236,6 @@ namespace LibMetier.GestionEnvironnements
                              reine = Reine.RemplacerReine(nouvelleReine);
                              PersonnagesList.Remove(nouvelleReine);
                              PersonnagesList.Add(reine);
-
-                             foreach (PersonnageAbstrait personnage in PersonnagesList)
-                             {
-                                 personnage.Maison.X = nouvelleReine.Position.X;
-                                 personnage.Maison.Y = nouvelleReine.Position.Y;
-                             }
-
                          }
                          else
                          {
@@ -282,7 +265,6 @@ namespace LibMetier.GestionEnvironnements
      
         public override void TourSuivant()
         {
-
             if (!ReineMorte())
 
             {
@@ -336,7 +318,7 @@ namespace LibMetier.GestionEnvironnements
                     unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
                     if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
                     {
-                        if (unInsecte.Position.toString().Equals(reine.Position.toString()))
+                        if (unInsecte.Position.toString().Equals(coordMaison.toString()))
                         {
                             Ouvriere ouvriere = (Ouvriere)unInsecte;
                             MorceauNourriture morceau = ouvriere.DeposeMorceau();
@@ -347,17 +329,16 @@ namespace LibMetier.GestionEnvironnements
                         ObjetList.Add(unPheromone);
 
                     }
-                    if (unInsecte.PV <= 0)
-                    {
-                        Mourrir(unInsecte);
-                    }
+                }
+                List<PersonnageAbstrait> persosMorts = PersonnagesList.Where(x => x.PV < 1).ToList();
+                foreach (PersonnageAbstrait persomort in persosMorts)
+                {
+                    Mourrir(persomort);
                 }
                 if (Hazard.Next(1, 7) == 1)
                 {
                     AjouteNourriture();
                 }
-
-
 
                 if (tourActuel > 50 && Hazard.Next(1, 11) == 1)
                 {
