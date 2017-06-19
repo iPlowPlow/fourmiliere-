@@ -136,6 +136,8 @@ namespace LibMetier.GestionEnvironnements
         public void ChargerReine(Reine reinec)
         {
             reine = Reine.Instance(reinec);
+            coordMaison.X = reine.Position.X;
+            coordMaison.Y = reine.Position.Y;
         }
         
         public override void ChargerEnv(FabriqueAbstraite fab)
