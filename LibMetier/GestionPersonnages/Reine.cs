@@ -22,7 +22,11 @@ namespace LibMetier.GestionPersonnages
         public List<ObjetAbstrait> morceaux;
         public Reine()
         {
-          
+            if (instance == null)
+            {
+                instance = new Reine();
+            }
+            return instance;
         }
 
         public static Reine Instance()

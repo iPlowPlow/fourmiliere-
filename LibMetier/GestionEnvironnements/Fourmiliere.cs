@@ -30,7 +30,20 @@ namespace LibMetier.GestionEnvironnements
 
         public Fourmiliere()
         {
+            TitreApplication = "Application FourmilliereAL";
+            vitesse = 500;
+            Fabrique = new FabriqueFourmiliere();
+            PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
+            PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
+            
+            ListObservateur = new List<PersonnageAbstrait>();
+            ObjetList = new ObservableCollection<ObjetAbstrait>();
+            ZoneList = new ObservableCollection<ZoneAbstrait>();
 
+            meteo = new Meteo();
+            meteo.ListObservateur = new List<PersonnageAbstrait>();
+         
+            InitZones();
         }
 
         public Fourmiliere(int _dimensionX, int _dimensionY)
@@ -143,6 +156,7 @@ namespace LibMetier.GestionEnvironnements
             {
                 reine = reinec;
                 PersonnagesList.Add(reine);
+                coordMaison = reinec.Position;
             }
         }
         
