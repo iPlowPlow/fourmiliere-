@@ -16,6 +16,7 @@ namespace LibMetier.GestionEnvironnements
         public  void Attach(PersonnageAbstrait observer)
         {
             ListObservateur.Add(observer);
+            observer.maj(this.Etat);
         }
 
         public  void Detach(PersonnageAbstrait observer)

@@ -135,6 +135,7 @@ namespace LibMetier.GestionEnvironnements
                 PersonnagesList.Add(reine);
             }
         }
+        
         public override void ChargerEnv(FabriqueAbstraite fab)
         {
             throw new NotImplementedException();
@@ -242,7 +243,7 @@ namespace LibMetier.GestionEnvironnements
                  (Action)delegate ()
                  {
                      PersonnagesList.Add(fourmi);
-                     meteo.ListObservateur.Add(fourmi);
+                     meteo.Attach(fourmi);
                      ListObservateur.Add(fourmi);
                  }
              );
@@ -250,16 +251,6 @@ namespace LibMetier.GestionEnvironnements
      
         public override void TourSuivant()
         {
-
-            int rand = Hazard.Next(1, 100);
-            if (rand > 50)
-            {
-                meteoChange();
-            }
-           
-            Repositioner();
-            FournirAcces();
-            foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
 
             if (!ReineMorte())
 
