@@ -30,7 +30,7 @@ namespace LibMetier.GestionEnvironnements
 
         public Fourmiliere()
         {
-           
+
         }
 
         public Fourmiliere(int _dimensionX, int _dimensionY)
@@ -139,6 +139,7 @@ namespace LibMetier.GestionEnvironnements
         }
         public void ChargerReine(Reine reinec)
         {
+
             PersonnagesList.Remove(reine);
             reine = reinec;
            

@@ -23,6 +23,7 @@ namespace LibMetier.GestionPersonnages
         public Reine()
         {
          
+
         }
 
         public static Reine Instance()
