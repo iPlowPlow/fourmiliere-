@@ -41,6 +41,7 @@ namespace LibMetier.GestionStrategie
                     unPerso.Position.X--;
                 }
             }
+
         }
     }
 }
