@@ -45,14 +45,19 @@ namespace LibMetier
             return Reine.Instance(nom, position);
         }
 
-        public override PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position)
+        public override PersonnageAbstrait CreerOuvriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
-            return new Ouvriere(nom, position);
+            return new Ouvriere(nom, position, positionReine);
         }
 
-        public override PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position)
+        public override PersonnageAbstrait CreerPrincesse(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
-            return new Guerriere(nom, position);
+            return new Princesse(nom, position, positionReine);
+        }
+
+        public override PersonnageAbstrait CreerGuerriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
+        {
+            return new Guerriere(nom, position, positionReine);
         }
 
         public override PersonnageAbstrait CreerTermite(string nom, CoordonneesAbstrait position)

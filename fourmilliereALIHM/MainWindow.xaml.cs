@@ -55,17 +55,37 @@ namespace fourmilliereALIHM
         {
             if (stopwatch.IsRunning)
             {
+                checkReineVivante();
                 Dessine();
             }
            
         }
+        public Boolean checkReineVivante()
+        {
+            if (App.fourmilliereVM.ReineMorte())
+            {
+                System.Windows.MessageBox.Show("La partie va être relancée", "Vous n'avez pas de reine");
+                stopwatch.Stop();
+                App.fourmilliereVM = new Fourmiliere(30, 30);
+                DataContext = App.fourmilliereVM;
+                return false;
+            }
+            return true;
+        }
         public void Dessine()
         {
+            rain.Visibility = Visibility.Collapsed;
+            fog.Visibility = Visibility.Collapsed;
             initPlateau();
-            //ImageBrush background = new ImageBrush();
-            //Uri backuri = new Uri("Images/nourriture.png", UriKind.Relative);
-            //background.ImageSource = new BitmapImage(backuri);
-            //Plateau.Background = background;
+            switch (App.fourmilliereVM.meteo.Etat)
+            {
+                case "pluie":
+                    rain.Visibility = Visibility.Visible;
+                    break;
+                case "brouillard":
+                    fog.Visibility = Visibility.Visible;
+                    break;
+            }
             foreach (ZoneAbstrait zone in App.fourmilliereVM.ZoneList.ToList())
             {
                 
@@ -111,6 +131,12 @@ namespace fourmilliereALIHM
                     Uri uri = new Uri("Images/fourmi_combattante.png", UriKind.Relative);
                     img.Source = new BitmapImage(uri);
                   
+                }
+                if (unInsecte.GetType().Equals(typeof(Princesse)))
+                {
+                    Uri uri = new Uri("Images/princesse.png", UriKind.Relative);
+                    img.Source = new BitmapImage(uri);
+
                 }
                 if (unInsecte.GetType().Equals(typeof(Ouvriere)))
                 {
@@ -176,6 +202,11 @@ namespace fourmilliereALIHM
             App.fourmilliereVM.AjouterOuvriere();
         }
 
+        private void Button_Click_Add_Princesse(object sender, RoutedEventArgs e)
+        {
+            App.fourmilliereVM.AjouterPrincesse();
+        }
+
         private void Button_Click_Add_Reine(object sender, RoutedEventArgs e)
         {
             App.fourmilliereVM.AjouterReine();
@@ -193,7 +224,10 @@ namespace fourmilliereALIHM
 
         private void btnSuivant_Click(object sender, RoutedEventArgs e)
         {
-            App.fourmilliereVM.TourSuivant();
+            if (checkReineVivante())
+            {
+                App.fourmilliereVM.TourSuivant();
+            }
             Dessine();
         }
         private void btnAvance_Click(object sender, RoutedEventArgs e)

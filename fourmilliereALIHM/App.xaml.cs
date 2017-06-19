@@ -20,11 +20,12 @@ namespace fourmilliereALIHM
         public static Meteo meteo { get; set; }
         public App()
         {   
+
             fourmilliereVM = new Fourmiliere(30, 30);
             meteo = new Meteo();
             fourmilliereVM.meteo = meteo;
             fourmilliereVM.meteo.ListObservateur = new List<LibAbstraite.GestionPersonnage.PersonnageAbstrait>();
+
         }
-      
     }
 }

@@ -7,6 +7,8 @@ using LibMetier.GestionEnvironnements;
 using LibAbstraite.GestionObjets;
 using LibAbstraite.GestionEnvironnement;
 using LibAbstraite.GestionPersonnage;
+using LibAbstraite;
+
 namespace LibMetier.GestionObjets
 {
   public  class Oeuf : ObjetAbstrait
@@ -25,7 +27,7 @@ namespace LibMetier.GestionObjets
             this.Age = 0;
             this.Position = position;
         }
-        public override void TourPasse()
+        public override void TourPasse(SujetAbstrait meteo)
         {
             Age++;
             if(Age == DUREE_AVANT_ECLOSION)
@@ -35,14 +37,18 @@ namespace LibMetier.GestionObjets
         }
         public void Eclore()
         {
-            int res = Fourmiliere.Hazard.Next(1, 6);
-            if (res < 5)
+            int res = Fourmiliere.Hazard.Next(1, 21);
+            if (res > 0 && res <= 16)
             {
-                fourmiARetourner = Fourmiliere.Fabrique.CreerOuvriere("Ouvriere N°", Position);
+                fourmiARetourner = Fourmiliere.Fabrique.CreerOuvriere("Ouvriere N°", Position, Fourmiliere.reine.Position);
+            }
+            else if (res > 16 && res < 20)
+            {
+                fourmiARetourner = Fourmiliere.Fabrique.CreerGuerriere("Guerrière N°", Position, Fourmiliere.reine.Position);
             }
             else
             {
-                fourmiARetourner = Fourmiliere.Fabrique.CreerGuerriere("Guerrière N°", Position);
+                fourmiARetourner = Fourmiliere.Fabrique.CreerPrincesse("Princesse N°", Position, Fourmiliere.reine.Position);
             }
         }
     }

@@ -18,21 +18,19 @@ namespace LibMetier.GestionPersonnages
 {
     
   public class Ouvriere : PersonnageAbstrait
-   {
+  {
         
         public MorceauNourriture Morceau { get; set; }
         public Ouvriere()
         {
          
         }
-        public Ouvriere(string nom, CoordonneesAbstrait position)
+        public Ouvriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
             this.PV = 100;
             this.Position = position;
-            this.Maison = new Coordonnees();
-            this.Maison.X = position.X;
-            this.Maison.Y = position.Y;
+            this.Maison = positionReine;
             ListEtape = new ObservableCollection<Etape>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Normal("Normal");
@@ -43,9 +41,12 @@ namespace LibMetier.GestionPersonnages
         }
         public MorceauNourriture DeposeMorceau()
         {
-            Morceau.Position = Position;
+            AjouterEtape(0, "Je dépose de la nourriture à la reine.");
+            Morceau.Position = new Coordonnees(Position.X, Position.Y);
             MorceauNourriture morceauRendu = Morceau;
             Morceau = null;
+            TransporteNourriture = false;
+            this.StategieCourante = new Normal("Normal");
             return morceauRendu;
         }
         public override string ToString()
@@ -57,18 +58,28 @@ namespace LibMetier.GestionPersonnages
         {
             if (zone.ObjetList.Count > 0)
             {
-
                 /*On ne prend pas la nourriture de la maison*/
                 if (zone.Position.X != this.Maison.X && zone.Position.Y != this.Maison.Y)
                 {
-                    foreach (Nourriture unObjet in zone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))))
+                    if (this.TransporteNourriture == false)
                     {
-                        if (unObjet.ListMorceaux.Count > 0) {
-                            this.Morceau = unObjet.Recolter();
-                            AjouterEtape(0, "Je récolte un morceau de nourriture ! ");
-                            this.StategieCourante = new Retour("Retour");
-                            this.TransporteNourriture = true;
-                        }   
+                        try
+                        {
+                            foreach (Nourriture unObjet in zone.ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))))
+                            {
+                                if (unObjet.ListMorceaux.Count > 0)
+                                {
+                                    this.Morceau = unObjet.Recolter();
+                                    AjouterEtape(0, "Je récolte un morceau de nourriture ! ");
+                                    this.StategieCourante = new Retour("Retour");
+                                    this.TransporteNourriture = true;
+                                }
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            e.ToString();
+                        }
                     }
                 }
             }
@@ -86,15 +97,6 @@ namespace LibMetier.GestionPersonnages
                     {
                         AjouterEtape(0, "Une termite m'attaque ! ");
                     }
-                    else if (this.TransporteNourriture == true && unPerso.GetType().Equals(typeof(Reine)))
-                    {
-                        AjouterEtape(0, "Je dépose de la nourriture à la reine.");
-                        zone.ObjetList.Add(this.Morceau);
-                        this.TransporteNourriture = false;
-                        this.Morceau = null;
-                        this.StategieCourante = new Normal("Normal");   
-                    }
-
                 }
 
             }
@@ -153,10 +155,6 @@ namespace LibMetier.GestionPersonnages
                 }
             }
            
-          
-
-
-
         }
     }
 }

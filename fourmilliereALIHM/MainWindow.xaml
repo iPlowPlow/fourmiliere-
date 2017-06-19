@@ -7,7 +7,7 @@
         xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
         Title="{Binding TitreApplication}" Height="350" Width="525">
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
@@ -40,7 +40,7 @@
         <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding fourmilliere.PersonnageAbstraitList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -54,7 +54,7 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Image Source="aviatrix.jpg" Width="30" Grid.Column="0"></Image>
+                            <Image Source="Images/alive.png" Width="30" Grid.Column="0"></Image>
                             <TextBlock Text="{Binding Nom}" Grid.Column="1"></TextBlock>
                             <TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>
                         </Grid>
@@ -70,7 +70,7 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Image Source="aviatrix.jpg" Width="30" Grid.Column="0"></Image>
+                            <Image Source="Images/dead.png" Width="30" Grid.Column="0"></Image>
                             <TextBlock Text="{Binding Nom}" Grid.Column="1"></TextBlock>
                             <TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>
                         </Grid>
@@ -84,7 +84,7 @@
 
         <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_2"  >
             <Button.Content>
-                <Image Source="aviatrix.jpg">
+                <Image Source="Images/ants_logo.png">
                 </Image>
             </Button.Content>
         </Button>
@@ -96,16 +96,16 @@
             </Button.Content>
         </Button>
 
-        <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="true">
+        <Grid Grid.Row="1" Grid.Column="2" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{Binding PersoSelect.Nom}"/>
-            <TextBlock Grid.Row="1" Text="{Binding PersoSelect.ListEtape.Count}"/>
-            <TextBlock Grid.Row="2" Text="{Binding PersoSelect.PV}"/>
+            <TextBlock Grid.Row="0" Text="{Binding PersoSelect.Nom, StringFormat=Nom: \{0\}}"/>
+            <TextBlock Grid.Row="1" Text="{Binding PersoSelect.ListEtape.Count, StringFormat=étape: \{0\}}"/>
+            <TextBlock Grid.Row="2" Text="{Binding PersoSelect.PV, StringFormat=PV: \{0\}}"/>
             <ListBox  Grid.Row="3"  ItemsSource="{Binding PersoSelect.ListEtape}" HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -121,7 +121,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-
+        <Rectangle x:Name="fog" Panel.ZIndex="2000" Fill="White" Opacity="0.5" Grid.Row="1" Grid.Column="1"/>
         <Image x:Name="rain" Panel.ZIndex="2000" Stretch="Fill" gif:AnimationBehavior.SourceUri="Images/rain.gif" Grid.Row="1" Grid.Column="1"/>
 
         <Grid Name="Plateau" Grid.Row="1" Grid.Column="1" ShowGridLines="false">
@@ -131,7 +131,7 @@
             </Grid.Background>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="true">
+        <Grid Grid.Row="2" Grid.Column="1" ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -142,14 +142,24 @@
             <Button Name="btnSuivant"  Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
             <Button Name="btnCharge"  Grid.Column="2"  Content="Charger" Click="btnCharge_Click"></Button>
             <Button Name="btnSave"  Grid.Column="3"  Content="Sauvegarder" Click="btnSave_Click"></Button>
-            <Button Name="btnAvance"  Grid.Column="1" Content="avance Solo" Click="btnAvance_Click" Margin="0.4,0,0.2,0.4"/>
-            <Button Name="btnStop"   Grid.Column="4" Content="Stop" Click="btnStop_Click" RenderTransformOrigin="1.488,0.532">
+            <Button Name="btnAvance"  Grid.Column="1" Content="Avance Rapide" Click="btnAvance_Click"/>
+            <Button Name="btnStop"   Grid.Column="4" Content="Stop" Click="btnStop_Click"/>
 
-            </Button>
+
         </Grid>
-        <Button Grid.Row="3" Grid.Column="1" Content="Guerriere" Click="Button_Click_Add_Guerriere" Margin="0,0,234,0"></Button>
-        <Button Grid.Row="3" Grid.Column="1" Content="Ouvriere" Click="Button_Click_Add_Ouvriere" Margin="76,0,155,0"/>
-        <Button Grid.Row="3" Grid.Column="1" Content="Reine" Click="Button_Click_Add_Reine" Margin="155,0,76,0"/>
-        <Button Grid.Row="3" Grid.Column="1" Content="Termite" Click="Button_Click_Add_Termite" Margin="231,0,0,0"/>
+        <Grid Grid.Row="3" Grid.Column="1" ShowGridLines="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Guerriere" Click="Button_Click_Add_Guerriere"/>
+            <Button Grid.Column="1" Content="Ouvriere" Click="Button_Click_Add_Ouvriere" />
+            <Button Grid.Column="2" Content="Princesse" Click="Button_Click_Add_Princesse"/>
+            <Button Grid.Column="3" Content="Reine" Click="Button_Click_Add_Reine" />
+            <Button Grid.Column="4" Content="Termite" Click="Button_Click_Add_Termite" />
+        </Grid>
     </Grid>
 </Window>

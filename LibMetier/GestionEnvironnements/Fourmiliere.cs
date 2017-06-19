@@ -24,7 +24,7 @@ namespace LibMetier.GestionEnvironnements
     public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public static Reine reine;
-
+        public static CoordonneesAbstrait coordMaison;
         
 
         public Fourmiliere()
@@ -39,12 +39,12 @@ namespace LibMetier.GestionEnvironnements
 
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
-
             
             Fabrique = new FabriqueFourmiliere();
             PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
 
+            coordMaison = Fabrique.CreerPosition(10, 10);
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
@@ -64,14 +64,21 @@ namespace LibMetier.GestionEnvironnements
 
         public override void AjouterGuerriere()
         {
-            PersonnageAbstrait g = Fabrique.CreerGuerriere(String.Format("Guerriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnageAbstrait g = Fabrique.CreerGuerriere(String.Format("Guerriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
+            PersonnagesList.Add(g);
+            ListObservateur.Add(g);
+            meteo.ListObservateur.Add(g);
+        }
+        public override void AjouterPrincesse()
+        {
+            PersonnageAbstrait g = Fabrique.CreerPrincesse(String.Format("Princesse {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
             PersonnagesList.Add(g);
             ListObservateur.Add(g);
             meteo.ListObservateur.Add(g);
         }
         public override void AjouterOuvriere()
         {
-            PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(10, 10));
+            PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
             PersonnagesList.Add(g);
             ListObservateur.Add(g);
             meteo.ListObservateur.Add(g);
@@ -92,7 +99,7 @@ namespace LibMetier.GestionEnvironnements
         public void AjouteNourriture()
         {
             CoordonneesAbstrait position = new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY));
-            while(position.X.Equals(reine.Position.X)||position.Y.Equals(reine.Position.Y))
+            while(position.X.Equals(coordMaison.X)||position.Y.Equals(coordMaison.Y))
             {
                 position = new Coordonnees(Hazard.Next(1, DimensionX), Hazard.Next(1, DimensionY));
             }
@@ -112,7 +119,7 @@ namespace LibMetier.GestionEnvironnements
         {
             if (PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() == 0)
             {
-                reine = (Reine)Fabrique.CreerReine("La reine", Fabrique.CreerPosition(10, 10));
+                reine = (Reine)Fabrique.CreerReine("La reine", coordMaison);
                 PersonnagesList.Add(reine);
             }
         }
@@ -165,9 +172,7 @@ namespace LibMetier.GestionEnvironnements
         }
 
         public override void FournirAcces()
-        {
-
-            
+        {      
             foreach (var unInsecte in PersonnagesList)
             {
                 List<ZoneAbstrait> zoneAdjacentes = new List<ZoneAbstrait>();
@@ -177,7 +182,6 @@ namespace LibMetier.GestionEnvironnements
                 
                 unInsecte.ChoixZoneSuivante = Fabrique.CreerAcces(zoneAdjacentes);
             }
-
         }
 
         public override string Simuler()
@@ -206,6 +210,23 @@ namespace LibMetier.GestionEnvironnements
                      PersonnagesList.Remove(unPerso);
                      meteo.ListObservateur.Remove(unPerso);
                      ListObservateur.Remove(unPerso);
+                     if (unPerso.Equals(reine))
+                     {
+                         List<PersonnageAbstrait> princesses = PersonnagesList.Where(x => x.GetType().Equals(typeof(Princesse))).ToList();                    
+                         if (princesses.Count > 0)
+                         {
+                             Princesse nouvelleReine = (Princesse) princesses[0];
+                             coordMaison.X = nouvelleReine.Position.X;
+                             coordMaison.Y = nouvelleReine.Position.Y;
+                             reine = Reine.RemplacerReine(nouvelleReine);
+                             PersonnagesList.Remove(nouvelleReine);
+                             PersonnagesList.Add(reine);
+                         }
+                         else
+                         {
+                             reine = null;
+                         }
+                     }
                  }
              );
         }
@@ -229,6 +250,7 @@ namespace LibMetier.GestionEnvironnements
      
         public override void TourSuivant()
         {
+
             int rand = Hazard.Next(1, 100);
             if (rand > 50)
             {
@@ -238,81 +260,89 @@ namespace LibMetier.GestionEnvironnements
             Repositioner();
             FournirAcces();
             foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
+
+            if (!ReineMorte())
+
             {
-                if (unePheromone.Dureevie < 1)
+                if (tourActuel % 10 == 0)
                 {
-                    ObjetList.Remove(unePheromone);
+                    meteoChange();
                 }
-            }
-            foreach (Oeuf unOeuf in ObjetList.Where(x => x.GetType().Equals(typeof(Oeuf))).ToList())
-            {
-                if(unOeuf.Age == Oeuf.DUREE_AVANT_ECLOSION)
+                reine = (Reine)PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).FirstOrDefault();
+                if (reine.OeufPondu != null)
                 {
-                    PersonnageAbstrait fourmi = unOeuf.fourmiARetourner;
-                    fourmi.Nom += PersonnagesList.Count;
-                    AjouterFourmi(fourmi);
-                    ObjetList.Remove(unOeuf);
-                }
-            }
-            foreach (Nourriture nourriture in ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).ToList())
-            {
-                if (nourriture.ListMorceaux.Count < 1)
-                {
-                    ObjetList.Remove(nourriture);
-                }
-            }
-            foreach (ObjetAbstrait unObjet in ObjetList)
-            {
-                unObjet.TourPasse();
-            }
-            Repositioner();
-            FournirAcces();
-            foreach (PersonnageAbstrait unInsecte in PersonnagesList.ToList())
-            {
-                if (unInsecte.GetType().Equals(typeof(Reine)))
-                {
-                    Reine reine = (Reine)unInsecte;
-                    if (reine.OeufPondu != null)
+                    List<ObjetAbstrait> morceaux = ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture)) && x.Position.toString().Equals(reine.Position.toString())).ToList();
+                    if (morceaux.Count > 0)
                     {
-                        List<ObjetAbstrait> morceaux = ObjetList.Where(x => x.GetType().Equals(typeof(MorceauNourriture))).ToList();
                         ObjetList.Remove(morceaux[0]);
                         ObjetList.Add(reine.OeufPondu);
-                        Repositioner();
-                        FournirAcces();
                     }
-                    reine.OeufPondu = null;
                 }
-                unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
-                if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
+                reine.OeufPondu = null;
+                foreach (Oeuf unOeuf in ObjetList.Where(x => x.GetType().Equals(typeof(Oeuf))).ToList())
                 {
-                    if (unInsecte.Position.toString().Equals(reine.Position.toString()))
+                    if (unOeuf.Age > Oeuf.DUREE_AVANT_ECLOSION - 1)
                     {
-                        Ouvriere ouvriere = (Ouvriere)unInsecte;
-                        MorceauNourriture morceau = ouvriere.DeposeMorceau();
-                        ObjetList.Add(morceau);
+                        PersonnageAbstrait fourmi = unOeuf.fourmiARetourner;
+                        fourmi.Nom += PersonnagesList.Count;
+                        AjouterFourmi(fourmi);
+                        ObjetList.Remove(unOeuf);
                     }
-                    Coordonnees coordonnees = new Coordonnees(unInsecte.Position.X, unInsecte.Position.Y);
-                    Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
-                    ObjetList.Add(unPheromone);
-
                 }
-                if (unInsecte.PV <= 0)
+                foreach (Pheromone unePheromone in ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))).ToList())
                 {
-                    Mourrir(unInsecte);
-                } 
-            }
-            if (Hazard.Next(1, 11) == 1)
-            {
-                AjouteNourriture();
-            }
+                    if (unePheromone.Dureevie < 1)
+                    {
+                        ObjetList.Remove(unePheromone);
+                    }
+                }
+                foreach (Nourriture nourriture in ObjetList.Where(x => x.GetType().Equals(typeof(Nourriture))).ToList())
+                {
+                    if (nourriture.ListMorceaux.Count < 1 || nourriture.Dureevie < 1)
+                    {
+                        ObjetList.Remove(nourriture);
+                    }
+                }
+                foreach (ObjetAbstrait unObjet in ObjetList)
+                {
+                    unObjet.TourPasse(meteo);
+                }
+                Repositioner();
+                FournirAcces();
+                foreach (PersonnageAbstrait unInsecte in PersonnagesList.ToList())
+                {
+                    unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
+                    if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
+                    {
+                        if (unInsecte.Position.toString().Equals(reine.Position.toString()))
+                        {
+                            Ouvriere ouvriere = (Ouvriere)unInsecte;
+                            MorceauNourriture morceau = ouvriere.DeposeMorceau();
+                            ObjetList.Add(morceau);
+                        }
+                        Coordonnees coordonnees = new Coordonnees(unInsecte.Position.X, unInsecte.Position.Y);
+                        Pheromone unPheromone = new Pheromone("pheromone", coordonnees);
+                        ObjetList.Add(unPheromone);
+
+                    }
+                    if (unInsecte.PV <= 0)
+                    {
+                        Mourrir(unInsecte);
+                    }
+                }
+                if (Hazard.Next(1, 7) == 1)
+                {
+                    AjouteNourriture();
+                }
 
 
-            
-           if(tourActuel>50 && Hazard.Next(1, 11) == 1)
-            {
-                AjouterTermite();
+
+                if (tourActuel > 50 && Hazard.Next(1, 11) == 1)
+                {
+                    AjouterTermite();
+                }
+                tourActuel++;
             }
-            tourActuel++;
         }
 
         public override void InitZones()
@@ -330,7 +360,7 @@ namespace LibMetier.GestionEnvironnements
         public override void Avance()
         {
             encours = true;
-            while (encours == true)
+            while (encours == true && reine!= null)
             {
                 Thread.Sleep(vitesse);
                 TourSuivant();
@@ -381,6 +411,10 @@ namespace LibMetier.GestionEnvironnements
                 meteo.Etat = "soleil";
                 meteo.Notify();
             }
+        }
+        public Boolean ReineMorte()
+        {
+            return reine == null ? true : false;
         }
     }
 }

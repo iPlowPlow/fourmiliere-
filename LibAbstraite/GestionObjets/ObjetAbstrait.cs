@@ -23,7 +23,7 @@ namespace LibAbstraite.GestionObjets
             get; set;
         }
         public int Dureevie { get; set; }
-        public abstract void TourPasse();
+        public abstract void TourPasse(SujetAbstrait meteo);
 
 
         
