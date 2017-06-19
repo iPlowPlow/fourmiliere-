@@ -45,6 +45,7 @@ namespace LibMetier.GestionEnvironnements
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
             coordMaison = Fabrique.CreerPosition(10, 10);
             AjouterReine();
+            
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
@@ -55,6 +56,14 @@ namespace LibMetier.GestionEnvironnements
             ZoneList = new ObservableCollection<ZoneAbstrait>();
             meteo = new Meteo();
             meteo.ListObservateur = new List<PersonnageAbstrait>();
+            for (int i = 0; i < 100; i++)
+            {
+                PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
+
+                PersonnagesList.Add(g);
+                ListObservateur.Add(g);
+                meteo.ListObservateur.Add(g);
+            }
             InitZones();
 
         }
@@ -205,7 +214,7 @@ namespace LibMetier.GestionEnvironnements
                      if (unPerso.Equals(reine))
                      {
                          List<PersonnageAbstrait> princesses = PersonnagesList.Where(x => x.GetType().Equals(typeof(Princesse))).ToList();
-                         List<PersonnageAbstrait> termites = PersonnagesList.Where(x => x.GetType().Equals(typeof(Termite))).ToList();
+                         
                          if (princesses.Count > 0)
                          {
                              Princesse nouvelleReine = (Princesse) princesses[0];
@@ -215,10 +224,10 @@ namespace LibMetier.GestionEnvironnements
                              PersonnagesList.Remove(nouvelleReine);
                              PersonnagesList.Add(reine);
 
-                             foreach (PersonnageAbstrait termite in termites)
+                             foreach (PersonnageAbstrait personnage in PersonnagesList)
                              {
-                                 termite.Maison.X = nouvelleReine.Position.X;
-                                 termite.Maison.Y = nouvelleReine.Position.Y;
+                                 personnage.Maison.X = nouvelleReine.Position.X;
+                                 personnage.Maison.Y = nouvelleReine.Position.Y;
                              }
 
                          }

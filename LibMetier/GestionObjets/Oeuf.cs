@@ -40,15 +40,17 @@ namespace LibMetier.GestionObjets
             int res = Fourmiliere.Hazard.Next(1, 21);
             if (res > 0 && res <= 16)
             {
-                fourmiARetourner = Fourmiliere.Fabrique.CreerOuvriere("Ouvriere N°", Position, Fourmiliere.reine.Position);
+                fourmiARetourner = Fourmiliere.Fabrique.CreerOuvriere("Ouvriere N°", Fourmiliere.Fabrique.CreerPosition(Fourmiliere.coordMaison.X, Fourmiliere.coordMaison.Y), Fourmiliere.coordMaison); 
             }
             else if (res > 16 && res < 20)
             {
-                fourmiARetourner = Fourmiliere.Fabrique.CreerGuerriere("Guerrière N°", Position, Fourmiliere.reine.Position);
+                fourmiARetourner = Fourmiliere.Fabrique.CreerGuerriere("Guerriere N°", Fourmiliere.Fabrique.CreerPosition(Fourmiliere.coordMaison.X, Fourmiliere.coordMaison.Y), Fourmiliere.coordMaison);
+
             }
             else
             {
-                fourmiARetourner = Fourmiliere.Fabrique.CreerPrincesse("Princesse N°", Position, Fourmiliere.reine.Position);
+                fourmiARetourner = Fourmiliere.Fabrique.CreerPrincesse("Princesse N°", Fourmiliere.Fabrique.CreerPosition(Fourmiliere.coordMaison.X, Fourmiliere.coordMaison.Y), Fourmiliere.coordMaison);
+
             }
         }
     }
