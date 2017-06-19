@@ -43,6 +43,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Etape.cs" />
     <Compile Include="Fabriques\FabriqueFourmiliere.cs" />
     <Compile Include="GestionEnvironnements\BoutDeTerrain.cs" />
     <Compile Include="GestionEnvironnements\Acces.cs" />

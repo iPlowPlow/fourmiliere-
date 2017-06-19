@@ -15,7 +15,6 @@ using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
 
 using System.Windows.Threading;
-using LibMetier.GestionObjets;
 using LibAbstraite;
 
 namespace LibMetier.GestionEnvironnements
@@ -24,8 +23,10 @@ namespace LibMetier.GestionEnvironnements
     public class Fourmiliere : EnvironnementAbstrait,SujetAbstrait
     {
         public static Reine reine;
-        public static CoordonneesAbstrait coordMaison;
-        
+        public static CoordonneesAbstrait coordMaison;  
+        public int positionX = 10;
+        public int positionY = 10;
+
 
         public Fourmiliere()
         {
@@ -39,17 +40,15 @@ namespace LibMetier.GestionEnvironnements
 
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
-            
             Fabrique = new FabriqueFourmiliere();
             PersonnagesList = new ObservableCollection<PersonnageAbstrait>();
             PersonnagesMortList = new ObservableCollection<PersonnageAbstrait>();
-
             coordMaison = Fabrique.CreerPosition(10, 10);
+            AjouterReine();
             //PersonnagesList.Add(Fabrique.CreerGuerriere("Guerriere 0"));
             //PersonnagesList.Add(Fabrique.CreerOuvriere("Ouvriere 0", Fabrique.CreerPosition(10, 10)));
             //PersonnagesList.Add(Fabrique.CreerTermite("Termite 0"));
-
-            //AjouterReine();
+            //PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(3, 3), Fabrique.CreerPosition(positionX, positionY)));
 
             ListObservateur = new List<PersonnageAbstrait>();
             ObjetList = new ObservableCollection<ObjetAbstrait>();
@@ -57,8 +56,6 @@ namespace LibMetier.GestionEnvironnements
             meteo = new Meteo();
             meteo.ListObservateur = new List<PersonnageAbstrait>();
             InitZones();
-
-         
 
         }
         
@@ -79,7 +76,9 @@ namespace LibMetier.GestionEnvironnements
         }
         public override void AjouterOuvriere()
         {
+
             PersonnageAbstrait g = Fabrique.CreerOuvriere(String.Format("Ouvriere {0}", PersonnagesList.Count), Fabrique.CreerPosition(coordMaison.X, coordMaison.Y), coordMaison);
+            
             PersonnagesList.Add(g);
             ListObservateur.Add(g);
             meteo.ListObservateur.Add(g);
@@ -92,7 +91,7 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY)));
+                     PersonnagesList.Add(Fabrique.CreerTermite(String.Format("Termite {0}", PersonnagesList.Count), Fabrique.CreerPosition(DimensionX, DimensionY), Fabrique.CreerPosition(positionX, positionY)));
                  }
              );
             
@@ -198,14 +197,15 @@ namespace LibMetier.GestionEnvironnements
                  DispatcherPriority.Normal,
                  (Action)delegate ()
                  {
-                     unPerso.ListEtape.Add(new Etape(0, "Je meurs......."));
+                     unPerso.ListEtape.Add(new Etape(0, "Je meurs.......", unPerso.Position.X, unPerso.Position.Y));
                      PersonnagesMortList.Add(unPerso);
                      PersonnagesList.Remove(unPerso);
                      meteo.ListObservateur.Remove(unPerso);
                      ListObservateur.Remove(unPerso);
                      if (unPerso.Equals(reine))
                      {
-                         List<PersonnageAbstrait> princesses = PersonnagesList.Where(x => x.GetType().Equals(typeof(Princesse))).ToList();                    
+                         List<PersonnageAbstrait> princesses = PersonnagesList.Where(x => x.GetType().Equals(typeof(Princesse))).ToList();
+                         List<PersonnageAbstrait> termites = PersonnagesList.Where(x => x.GetType().Equals(typeof(Termite))).ToList();
                          if (princesses.Count > 0)
                          {
                              Princesse nouvelleReine = (Princesse) princesses[0];
@@ -214,6 +214,13 @@ namespace LibMetier.GestionEnvironnements
                              reine = Reine.RemplacerReine(nouvelleReine);
                              PersonnagesList.Remove(nouvelleReine);
                              PersonnagesList.Add(reine);
+
+                             foreach (PersonnageAbstrait termite in termites)
+                             {
+                                 termite.Maison.X = nouvelleReine.Position.X;
+                                 termite.Maison.Y = nouvelleReine.Position.Y;
+                             }
+
                          }
                          else
                          {

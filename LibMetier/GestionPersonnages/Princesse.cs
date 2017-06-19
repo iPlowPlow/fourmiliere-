@@ -13,6 +13,7 @@ using LibMetier.GestionEnvironnements;
 using LibAbstraite.GestionStrategie;
 using LibMetier.GestionStrategie;
 using LibAbstraite.GestionObjets;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -29,7 +30,7 @@ namespace LibMetier.GestionPersonnages
             this.PV = 200;
             this.Position = position;
             this.Maison = positionReine;
-            ListEtape = new ObservableCollection<Etape>();
+            ListEtape = new ObservableCollection<EtapeAbstraite>();
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Normal("Normal");
         }
@@ -95,6 +96,23 @@ namespace LibMetier.GestionPersonnages
                 }
             }
 
+        }
+
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                  DispatcherPriority.Normal,
+                  (Action)delegate ()
+                  {
+
+                      if (tourActuel == 0)
+                      {
+                          tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                      }
+
+                      ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                  }
+              );
         }
     }
 }

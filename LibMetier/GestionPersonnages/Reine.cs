@@ -11,6 +11,7 @@ using LibAbstraite.GestionObjets;
 using LibMetier.GestionEnvironnements;
 using LibMetier.GestionObjets;
 using LibMetier.GestionStrategie;
+using System.Windows.Threading;
 
 namespace LibMetier.GestionPersonnages
 {
@@ -18,7 +19,7 @@ namespace LibMetier.GestionPersonnages
     {
         private static Reine instance;
         private Oeuf oeufPondu;
-
+        public List<ObjetAbstrait> morceaux;
         public Reine()
         {
           
@@ -45,9 +46,10 @@ namespace LibMetier.GestionPersonnages
             instance.Maison = new Coordonnees();
             instance.Maison.X = position.X;
             instance.Maison.Y = position.Y;
-            instance.ListEtape = new ObservableCollection<Etape>();
+            instance.ListEtape = new ObservableCollection<EtapeAbstraite>();
             instance.zone = new BoutDeTerrain("default", position);
             instance.StategieCourante = new Immobile("Immobile");
+            instance.morceaux = new List<ObjetAbstrait>();
             return instance;
         }
         public static Reine RemplacerReine(Princesse princesse)
@@ -110,11 +112,11 @@ namespace LibMetier.GestionPersonnages
                     }
                     else if (unPerso.GetType().Equals(typeof(Termite)))
                     {
-                        AjouterEtape(0, "Une termite m'attaque ! ");
+                        AjouterEtape(0, "Une termite m'attaque ! ", Position.X, Position.Y);
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.ToString();
             }
@@ -131,12 +133,29 @@ namespace LibMetier.GestionPersonnages
             pos.X = Position.X + Fourmiliere.Hazard.Next(-1, 2);
             pos.Y = Position.Y + Fourmiliere.Hazard.Next(-1, 2);
             oeufPondu =(Oeuf)fabrique.CreerOeuf(String.Format("Oeuf N° {0}", zone.ObjetList.Where(x=>x.GetType().Equals(typeof(Oeuf))).Count()), pos);
-            AjouterEtape(0 ,String.Format("Je pond un oeuf en X={0}, Y={1}", pos.X, pos.Y));
+            AjouterEtape(0 ,String.Format("Je pond un oeuf en X={0}, Y={1}", pos.X, pos.Y), Position.X, Position.Y);
         }
 
         public override void maj(string etat)
         {
          
+        }
+
+        public override void AjouterEtape(int tourActuel, string description, int X, int Y)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                   DispatcherPriority.Normal,
+                   (Action)delegate ()
+                   {
+
+                       if (tourActuel == 0)
+                       {
+                           tourActuel = this.ListEtape[ListEtape.Count - 1].tour;
+                       }
+
+                       ListEtape.Add(new Etape(tourActuel, description, X, Y));
+                   }
+               );
         }
     }
 }
