@@ -22,7 +22,7 @@ namespace LibMetier.GestionPersonnages
         public List<ObjetAbstrait> morceaux;
         public Reine()
         {
-          
+         
         }
 
         public static Reine Instance()
@@ -50,6 +50,24 @@ namespace LibMetier.GestionPersonnages
             instance.zone = new BoutDeTerrain("default", position);
             instance.StategieCourante = new Immobile("Immobile");
             instance.morceaux = new List<ObjetAbstrait>();
+            return instance;
+        }
+        public static Reine RemplacerReine(Reine princesse)
+        {
+            if (instance == null)
+            {
+                instance = new Reine();
+            }
+            instance.PV = 250;
+            instance.Position = new Coordonnees();
+            instance.Position.X = princesse.Position.X;
+            instance.Position.Y = princesse.Position.Y;
+            instance.Maison = new Coordonnees();
+            instance.Maison.X = princesse.Position.X;
+            instance.Maison.Y = princesse.Position.Y;
+            instance.ListEtape = princesse.ListEtape;
+            instance.zone = princesse.zone;
+            instance.StategieCourante = new Immobile("Immobile");
             return instance;
         }
         public static Reine RemplacerReine(Princesse princesse)

@@ -30,7 +30,7 @@ namespace LibMetier.GestionEnvironnements
 
         public Fourmiliere()
         {
-
+           
         }
 
         public Fourmiliere(int _dimensionX, int _dimensionY)
@@ -139,11 +139,12 @@ namespace LibMetier.GestionEnvironnements
         }
         public void ChargerReine(Reine reinec)
         {
-            if (PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() == 0)
-            {
-                reine = reinec;
-                PersonnagesList.Add(reine);
-            }
+            PersonnagesList.Remove(reine);
+            reine = reinec;
+           
+            PersonnagesList.Add(reine);
+            Reine.RemplacerReine(reine);
+
         }
         
         public override void ChargerEnv(FabriqueAbstraite fab)
@@ -160,6 +161,17 @@ namespace LibMetier.GestionEnvironnements
         public override void ChargerPersonnage(FabriqueAbstraite fab)
         {
             throw new NotImplementedException();
+        }
+        public  void RemoveAll()
+        {
+            for(int i = PersonnagesList.Count - 1; i > 0; i--)
+            {
+                PersonnagesList.RemoveAt(i);
+            }
+            for (int i = PersonnagesMortList.Count - 1; i > 0; i--)
+            {
+                PersonnagesMortList.RemoveAt(i);
+            }
         }
 
         public override void DeplacerPersonnage(PersonnageAbstrait unPersonnage, ZoneAbstrait zdebut, ZoneAbstrait zfin)

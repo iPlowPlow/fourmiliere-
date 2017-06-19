@@ -266,6 +266,12 @@ namespace fourmilliereALIHM
             listouvmort = listpmort.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).ToList().ConvertAll(o => (Ouvriere)o);
             listouv = listp.Where(x => (x.GetType().Equals(typeof(Ouvriere)))).ToList().ConvertAll(o => (Ouvriere)o);
             listn = listo.Where(x => (x.GetType().Equals(typeof(Nourriture)))).ToList().ConvertAll(o => (Nourriture)o);
+            List<Reine> actuel1 = listp.Where(x => (x.GetType().Equals(typeof(Reine)))).ToList().ConvertAll(o => (Reine)o);
+            bool ponte = false;
+            if (actuel1.First().OeufPondu != null)
+            {
+                ponte = true;
+            }
             var doc = new XDocument(
                 new XElement("Simulation",
                     new XElement("fourmilieres",
@@ -279,10 +285,12 @@ namespace fourmilliereALIHM
                         where n.GetType().Equals(typeof(Nourriture))
                         select new XElement("nourriture",
                             new XAttribute("nom", n.Nom),
+                            new XAttribute("duree", n.Dureevie),
                              new XElement("listeNourriture",
                                    from et in n.ListMorceaux
                                    select new XElement("morceau",
                                        new XAttribute("nom", et.Nom),
+                                       
                                        new XElement("coordonnees",
                                             new XAttribute("x", et.Position.X),
                                             new XAttribute("y", et.Position.Y)
@@ -437,22 +445,29 @@ namespace fourmilliereALIHM
 
                             )
                         )
-                     ):null), ((listp.Where(x => (x.GetType().Equals(typeof(Reine)))).Count() > 0) ?
+                     ):null), ((ponte==true) ?
                         new XElement("reines",
-                        from n in listp
-                        where n.GetType().Equals(typeof(Reine))
-                        select new XElement("reine",
-                            new XAttribute("nom", n.Nom),
-                            new XAttribute("pv", n.pv),
-                            new XAttribute("strat", n.StategieCourante.Nom),
+                          from actuel in actuel1
+                          select new XElement("reine",
+                            new XAttribute("nom", actuel.Nom),
+                            new XAttribute("pv", actuel.pv),
+                            new XAttribute("strat", actuel.StategieCourante.Nom),
+                            new XElement("oeuf",
+                                    new XAttribute("nom", actuel.OeufPondu.Nom),
+                                    new XAttribute("age", actuel.OeufPondu.Age),
+                                     new XElement("coordonnees",
+                                        new XAttribute("x", actuel.Position.X),
+                                        new XAttribute("y", actuel.Position.Y)
+                                    )
+                                ),
                             new XElement("coordonneess",
                                 new XElement("coordonnees",
-                                    new XAttribute("x", n.Position.X),
-                                    new XAttribute("y", n.Position.Y)
+                                    new XAttribute("x", actuel.Position.X),
+                                    new XAttribute("y", actuel.Position.Y)
                                 )
                              ),
                                  new XElement("listeetapes",
-                                   from et in n.ListEtape
+                                   from et in actuel.ListEtape
                                    select new XElement("Etape",
                                    new XAttribute("tour", et.tour),
                                    new XAttribute("lieu", et.action),
@@ -465,8 +480,37 @@ namespace fourmilliereALIHM
                                    )
 
                             )
-                        )
-                     ) : null), ((listp.Where(x => (x.GetType().Equals(typeof(Termite)))).Count() > 0) ?
+                        )):
+                        new XElement("reines",
+                          from actuel in actuel1
+                          where actuel.OeufPondu == null
+                          select new XElement("reine",
+                            new XAttribute("nom", actuel.Nom),
+                            new XAttribute("pv", actuel.pv),
+                            new XAttribute("strat", actuel.StategieCourante.Nom),
+                          
+                            new XElement("coordonneess",
+                                new XElement("coordonnees",
+                                    new XAttribute("x", actuel.Position.X),
+                                    new XAttribute("y", actuel.Position.Y)
+                                )
+                             ),
+                                 new XElement("listeetapes",
+                                   from et in actuel.ListEtape
+                                   select new XElement("Etape",
+                                   new XAttribute("tour", et.tour),
+                                   new XAttribute("lieu", et.action),
+                                     new XElement("coordonnees",
+                                    new XAttribute("x", et.position.X),
+                                    new XAttribute("y", et.position.Y)
+
+                                )
+
+                                   )
+
+                            )
+                        )))
+                   , ((listp.Where(x => (x.GetType().Equals(typeof(Termite)))).Count() > 0) ?
                         new XElement("termites",
                         from n in listp
                         where n.GetType().Equals(typeof(Termite))
@@ -741,7 +785,7 @@ namespace fourmilliereALIHM
 
         private void btnCharge_Click(object sender, RoutedEventArgs e)
         {
-           
+                
             StringBuilder output = new StringBuilder();
             string xmlString = null;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -797,8 +841,13 @@ namespace fourmilliereALIHM
                          AccesList = new List<AccesAbstrait>(),
                          ZoneList= new ObservableCollection<ZoneAbstrait>()
                      }).First();
-                    App.fourmilliereVM.DimensionX = fo.DimensionX;
+                   
+                   App.fourmilliereVM.DimensionX = fo.DimensionX;
                     App.fourmilliereVM.DimensionY = fo.DimensionY;
+                    App.fourmilliereVM.RemoveAll();
+                    App.fourmilliereVM.ZoneList = fo.ZoneList;
+                    App.fourmilliereVM.InitZones();
+                   
                 }
                 if (x != null && x.Element("meteo") != null)
                 {
@@ -817,6 +866,7 @@ namespace fourmilliereALIHM
                      .Select(t => new Nourriture()
                      {
                          Nom = (string)t.Attribute("nom"),
+                         Dureevie=(int)t.Attribute("duree"),
                          ListMorceaux = new List<MorceauNourriture>(t.Element("listeNourriture").Elements("morceau")
                          .Select(mo => new MorceauNourriture((string)mo.Attribute("nom"),
                              t.Element("listeNourriture").Elements("morceau").Elements("coordonnees")
@@ -889,6 +939,8 @@ namespace fourmilliereALIHM
                       }).First();
 
                     App.fourmilliereVM.ChargerReine(reine);
+              
+
                 }
                 if (x != null && x.Element("princesses") != null)
                 {
