@@ -57,7 +57,7 @@ namespace LibMetier.GestionPersonnages
                     }
                     else if (unPerso.GetType().Equals(typeof(Reine)))
                     {
-
+                
                     }
                     else if (unPerso.GetType().Equals(typeof(Ouvriere))){
                         /*Indiquer chemin nourriture*/
@@ -77,7 +77,7 @@ namespace LibMetier.GestionPersonnages
                 this.EtatFourmiliereObserver = etat;
                 if (!this.StategieCourante.GetType().Equals(typeof(Retour)))
                 {
-                    this.StategieCourante = new Defense("Defense");
+                    this.StategieCourante = new Retour("retour");
 
                 }
 
@@ -106,6 +106,14 @@ namespace LibMetier.GestionPersonnages
                 if (!this.StategieCourante.GetType().Equals(typeof(Immobile)))
                 {
                     this.StategieCourante = new Immobile("Immobile");
+                }
+            }else if (etat == "normal")
+            {
+                this.EtatFourmiliereObserver = etat;
+                if (!this.StategieCourante.GetType().Equals(typeof(Defense)))
+                {
+                    this.StategieCourante = new Defense("defense");
+
                 }
             }
 

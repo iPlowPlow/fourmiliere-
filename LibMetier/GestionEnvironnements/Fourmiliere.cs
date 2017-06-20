@@ -270,6 +270,25 @@ namespace LibMetier.GestionEnvironnements
             if (!ReineMorte())
 
             {
+                if (reine.sousAttaque == false)
+                {
+                    if (Etat != "normal")
+                    {
+                        Etat = "normal";
+                        Notify();
+                    }
+                   
+                 
+                }
+                if (reine.sousAttaque == true)
+                {
+                    
+                        Etat = "attaque";
+                        Notify();
+                        reine.sousAttaque = false;
+                    
+                   
+                }
                 if (tourActuel % 10 == 0)
                 {
                     meteoChange();

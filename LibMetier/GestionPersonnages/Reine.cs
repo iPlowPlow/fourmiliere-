@@ -19,6 +19,7 @@ namespace LibMetier.GestionPersonnages
     {
         private static Reine instance;
         private Oeuf oeufPondu;
+        public bool sousAttaque = false;
         public List<ObjetAbstrait> morceaux;
         public Reine()
         {
@@ -132,7 +133,9 @@ namespace LibMetier.GestionPersonnages
                     else if (unPerso.GetType().Equals(typeof(Termite)))
                     {
                         AjouterEtape(0, "Une termite m'attaque ! ", Position.X, Position.Y);
+                        sousAttaque = true;
                     }
+                    
                 }
             }
             catch (Exception e)
