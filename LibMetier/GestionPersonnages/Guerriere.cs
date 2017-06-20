@@ -23,7 +23,7 @@ namespace LibMetier.GestionPersonnages
         public Guerriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 75;
+            this.PV = 175;
             this.Position = position;
 
             this.Maison = positionReine;

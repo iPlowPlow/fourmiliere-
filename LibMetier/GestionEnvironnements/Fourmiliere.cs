@@ -421,11 +421,11 @@ namespace LibMetier.GestionEnvironnements
         public void meteoChange()
         {
             int rand = Hazard.Next(1, 100);
-            if ( rand >70 && rand<90)
+            if ( rand >85 && rand<95)
             {
                 meteo.Etat = "pluie";
                 meteo.Notify();
-            }else if (rand > 90)
+            }else if (rand > 95)
             {
                 meteo.Etat = "brouillard";
                 meteo.Notify();

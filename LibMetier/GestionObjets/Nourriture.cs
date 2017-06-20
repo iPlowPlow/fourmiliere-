@@ -11,8 +11,8 @@ namespace LibMetier.GestionObjets
 {
     public class Nourriture : ObjetAbstrait
     {
-        public const int DUREE_VIE_ORIGINALE = 50;
-        public const int MORCEAU_NOURRITURE = 20;
+        public const int DUREE_VIE_ORIGINALE = 75;
+        public const int MORCEAU_NOURRITURE = 25;
         public List<MorceauNourriture> ListMorceaux { get; set; }
         public Nourriture()
         {
