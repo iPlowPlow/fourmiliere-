@@ -12,7 +12,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
-        
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -88,7 +88,20 @@
                 </Image>
             </Button.Content>
         </Button>
+        <Grid  Grid.Row="2" Grid.Column="0" ShowGridLines="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="79*"/>
+                <ColumnDefinition Width="25*"/>
 
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+            <TextBox Text="{Binding Path=Value,ElementName=slider}" Grid.Row="0" Grid.Column="0" Margin="0,-26,0,10" Grid.ColumnSpan="2" ></TextBox>
+            <Slider Grid.Column="0" x:Name="slider" Minimum="0" Maximum="500"   Value="{Binding vitesse}" ValueChanged="ChangeSpeed" Grid.ColumnSpan="2" Margin="0,5,0,-5" Grid.RowSpan="2"/>
+        </Grid>
 
         <Button Grid.Row="3" Grid.Column="0"  Click="Button_Click" >
             <Button.Content>

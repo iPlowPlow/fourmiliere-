@@ -252,8 +252,11 @@ namespace fourmilliereALIHM
             }
             Dessine();
         }
+        public void ChangeSpeed(object sender, RoutedEventArgs e) {
+            App.fourmilliereVM.vitesse = (int)slider.Value;
+               dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
+        }
 
-     
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<PersonnageAbstrait> listp=App.fourmilliereVM.PersonnagesList;

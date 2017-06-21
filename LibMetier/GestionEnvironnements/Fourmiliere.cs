@@ -35,7 +35,7 @@ namespace LibMetier.GestionEnvironnements
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
             TitreApplication = "Application FourmilliereAL";
-            vitesse = 500;
+            vitesse = 200;
 
             this.DimensionX = _dimensionX;
             this.DimensionY = _dimensionY;
@@ -440,5 +440,6 @@ namespace LibMetier.GestionEnvironnements
         {
             return reine == null ? true : false;
         }
+      
     }
 }
