@@ -20,26 +20,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <!--
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding fourmilliere.PersonnageAbstraitList}" SelectedItem="{Binding FourmisSelect}" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="aviatrix.jpg" Width="30" Grid.Column="0"></Image>
-                        <TextBlock Text="{Binding Nom}" Grid.Column="1"></TextBlock>
-                      //<TextBlock Text="{Binding ListEtape.Count}" Grid.Column="2"></TextBlock>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding fourmilliere.PersonnageAbstraitList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
--->
+        
         <Grid Grid.Row="1" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -79,8 +60,9 @@
             </ListBox>
         </Grid>
 
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="20" Text="{Binding TourActuel, StringFormat=Tour: \{0\}}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding PersonnagesList.Count}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding PersonnagesList.Count, StringFormat=Fourmies: \{0\}}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
         <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_2"  >
             <Button.Content>

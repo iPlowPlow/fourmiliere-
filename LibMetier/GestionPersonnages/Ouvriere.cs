@@ -55,7 +55,7 @@ namespace LibMetier.GestionPersonnages
         }
         public override string ToString()
         {
-            return "Mon Ouvriere" + this.Nom;
+            return " Mon " + this.Nom;
         }
 
         public override void AnalyseSituation()

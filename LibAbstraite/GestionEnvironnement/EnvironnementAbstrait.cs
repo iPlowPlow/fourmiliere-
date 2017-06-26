@@ -23,7 +23,16 @@ namespace LibAbstraite.GestionEnvironnement
      
         public string Etat { get; set; }
         private string titre;
-        public int tourActuel = 1;
+        private int tourActuel = 1;
+        public int TourActuel
+        {
+            get { return this.tourActuel; }
+            set
+            {
+                this.tourActuel = value;
+                OnPropertyChanged("TourActuel");
+            }
+        }
         public int vitesse;
         private PersonnageAbstrait unPerso;
         public PersonnageAbstrait PersoSelect

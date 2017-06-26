@@ -36,7 +36,7 @@ namespace LibMetier.GestionPersonnages
         }
         public override string ToString()
         {
-            return "Ma Termite" + this.Nom;
+            return " La " + this.Nom;
         }
 
         public override void AnalyseSituation()

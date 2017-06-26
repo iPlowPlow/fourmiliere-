@@ -146,7 +146,7 @@ namespace LibMetier.GestionPersonnages
 
         public override string ToString()
         {
-            return "Ma Reine" + instance.Nom;
+            return " "+instance.Nom;
         }
         public void PondreOeuf()
         {

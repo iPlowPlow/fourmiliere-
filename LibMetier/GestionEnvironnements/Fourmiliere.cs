@@ -34,7 +34,7 @@ namespace LibMetier.GestionEnvironnements
 
         public Fourmiliere(int _dimensionX, int _dimensionY)
         {
-            TitreApplication = "Application FourmilliereAL";
+            TitreApplication = "Simulateur fourmilière ALAP";
             vitesse = 200;
 
             this.DimensionX = _dimensionX;
@@ -212,7 +212,17 @@ namespace LibMetier.GestionEnvironnements
 
         public void SupprimerPersonnage()
         {
-            PersonnagesList.Remove(PersoSelect);
+            System.Windows.Application.Current.Dispatcher.Invoke(
+                 DispatcherPriority.Normal,
+                 (Action)delegate ()
+                 {
+                     if (PersoSelect != null)
+                     {
+                         var persoToDelete = PersoSelect;
+                         Mourrir(PersoSelect);
+                         PersonnagesMortList.Remove(persoToDelete);
+                     }
+                 });
         }
 
         public void Mourrir(PersonnageAbstrait unPerso)
@@ -289,7 +299,7 @@ namespace LibMetier.GestionEnvironnements
                     
                    
                 }
-                if (tourActuel % 10 == 0)
+                if (TourActuel % 10 == 0)
                 {
                     meteoChange();
                 }
@@ -336,7 +346,7 @@ namespace LibMetier.GestionEnvironnements
                 FournirAcces();
                 foreach (PersonnageAbstrait unInsecte in PersonnagesList.ToList())
                 {
-                    unInsecte.Avance1Tour(DimensionX, DimensionY, tourActuel);
+                    unInsecte.Avance1Tour(DimensionX, DimensionY, TourActuel);
                     if (unInsecte.GetType().Equals(typeof(Ouvriere)) && unInsecte.TransporteNourriture == true)
                     {
                         if (unInsecte.Position.toString().Equals(coordMaison.toString()))
@@ -361,11 +371,11 @@ namespace LibMetier.GestionEnvironnements
                     AjouteNourriture();
                 }
 
-                if (tourActuel > 50 && Hazard.Next(1, 11) == 1)
+                if (TourActuel > 50 && Hazard.Next(1, 11) == 1)
                 {
                     AjouterTermite();
                 }
-                tourActuel++;
+                TourActuel++;
             }
         }
 
@@ -421,11 +431,11 @@ namespace LibMetier.GestionEnvironnements
         public void meteoChange()
         {
             int rand = Hazard.Next(1, 100);
-            if ( rand >85 && rand<95)
+            if ( rand >75 && rand<95)
             {
                 meteo.Etat = "pluie";
                 meteo.Notify();
-            }else if (rand > 95)
+            }else if (rand > 90)
             {
                 meteo.Etat = "brouillard";
                 meteo.Notify();
@@ -440,6 +450,20 @@ namespace LibMetier.GestionEnvironnements
         {
             return reine == null ? true : false;
         }
-      
+        public string Stats()
+        {
+            return String.Format("Fourmies ouvrières nées : {0} \nFourmies ouvrières mortes : {1} \nFourmies guerrières nées : {2} \nFourmies guerrières mortes : {3} \nTermites nées : {4} \nTermites mortes : {5} \nPrincesses nées : {6} \nPrincesses mortes : {7} \nTransformations de princesses en reine : {8} \nReines mortes : {9}"
+                , (PersonnagesList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count())
+                , PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count()
+                , (PersonnagesList.Where(x => x.GetType().Equals(typeof(Guerriere))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Guerriere))).Count())
+                , PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Guerriere))).Count()
+                , (PersonnagesList.Where(x => x.GetType().Equals(typeof(Termite))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Termite))).Count())
+                , PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Termite))).Count()
+                , ((PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Reine))).Count())+(PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Princesse))).Count()-1))
+                , PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Princesse))).Count()
+                , ((PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Reine))).Count())-1)
+                , (PersonnagesList.Where(x => x.GetType().Equals(typeof(Reine))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Reine))).Count())
+            );
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace LibMetier.GestionPersonnages
 
         public override string ToString()
         {
-            return "Ma Guerriere" + this.Nom;
+            return " Ma " + this.Nom;
         }
 
         public override void AnalyseSituation()

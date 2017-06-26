@@ -50,9 +50,11 @@ namespace LibMetier.GestionStrategie
             }else
             {
                 int maCase = Hazard.Next(zoneAccessible.Count);
-
-                unPerso.Position.X = zoneAccessible[maCase].Position.X;
-                unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+                if (zoneAccessible.Count > 0)
+                {
+                    unPerso.Position.X = zoneAccessible[maCase].Position.X;
+                    unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
+                }
             }
             /*
             int newX = unPerso.Position.X + Hazard.Next(3) - 1;

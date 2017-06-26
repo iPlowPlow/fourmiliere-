@@ -114,5 +114,9 @@ namespace LibMetier.GestionPersonnages
                   }
               );
         }
+        public override string ToString()
+        {
+            return " Ma " + this.Nom;
+        }
     }
 }

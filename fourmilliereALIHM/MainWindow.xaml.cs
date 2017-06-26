@@ -67,6 +67,7 @@ namespace fourmilliereALIHM
             if (App.fourmilliereVM.ReineMorte())
             {
                 System.Windows.MessageBox.Show("La partie va être relancée", "Vous n'avez pas de reine");
+                System.Windows.MessageBox.Show(App.fourmilliereVM.Stats(), "Statistiques de fin de partie");
                 stopwatch.Stop();
                 App.fourmilliereVM = new Fourmiliere(30, 30);
                 DataContext = App.fourmilliereVM;
@@ -777,8 +778,8 @@ namespace fourmilliereALIHM
 
                 )
             );
-            
-            doc.Save("save.xml");
+            System.IO.Directory.CreateDirectory(@"C:\Fourmiliere");
+            doc.Save(@"C:\Fourmiliere\save.xml");
       
 
 
