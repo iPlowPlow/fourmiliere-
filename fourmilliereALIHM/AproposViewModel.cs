@@ -11,6 +11,6 @@ namespace fourmilliereALIHM
     {
         public string CopyRight { get { return "ESGI 4AL"; } }
         public string Date { get { return System.DateTime.Now.ToString(); } }
-        public string Author { get { return "Pierre L, Loïc G, Azedine N et André M"; } }
+        public string Author { get { return "Pierre L, Loïc G, \nAzedine N et André M"; } }
     }
 }

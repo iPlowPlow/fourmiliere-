@@ -134,11 +134,11 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="btnSuivant"  Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
-            <Button Name="btnCharge"  Grid.Column="2"  Content="Charger" Click="btnCharge_Click"></Button>
-            <Button Name="btnSave"  Grid.Column="3"  Content="Sauvegarder" Click="btnSave_Click"></Button>
-            <Button Name="btnAvance"  Grid.Column="1" Content="Avance Rapide" Click="btnAvance_Click"/>
-            <Button Name="btnStop"   Grid.Column="4" Content="Stop" Click="btnStop_Click"/>
+            <Button Name="btnSuivant" Grid.Column="0"  Content="Tour suivant" Click="btnSuivant_Click"></Button>
+            <Button Name="btnCharge" Grid.Column="2"  Content="Charger" Click="btnCharge_Click"></Button>
+            <Button Name="btnSave" Grid.Column="3"  Content="Sauvegarder" Click="btnSave_Click"></Button>
+            <Button Name="btnAvance" Grid.Column="1" Content="Avance Rapide" Click="btnAvance_Click"/>
+            <Button Name="btnStop" IsEnabled="False" Grid.Column="4" Content="Stop" Click="btnStop_Click"/>
 
 
         </Grid>

@@ -68,6 +68,7 @@ namespace fourmilliereALIHM
             {
                 System.Windows.MessageBox.Show("La partie va être relancée", "Vous n'avez pas de reine");
                 System.Windows.MessageBox.Show(App.fourmilliereVM.Stats(), "Statistiques de fin de partie");
+                ChangeButtonStatus(true);
                 stopwatch.Stop();
                 App.fourmilliereVM = new Fourmiliere(30, 30);
                 DataContext = App.fourmilliereVM;
@@ -201,6 +202,7 @@ namespace fourmilliereALIHM
             btnSave.IsEnabled = state;
             btnSuivant.IsEnabled = state;
             deletePerso.IsEnabled = state;
+            btnStop.IsEnabled = !state;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
