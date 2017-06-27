@@ -34,10 +34,7 @@ namespace LibMetier.GestionPersonnages
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Normal("Normal");
         }
-        public override ZoneAbstrait ChoisirZoneSuivante()
-        {
-            throw new NotImplementedException();
-        }
+
         public override void AnalyseSituation()
         {
 

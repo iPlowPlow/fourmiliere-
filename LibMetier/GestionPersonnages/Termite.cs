@@ -30,10 +30,7 @@ namespace LibMetier.GestionPersonnages
             zone = new BoutDeTerrain("default", position);
             StategieCourante = new Attaque("Attaque");
         }
-        public override ZoneAbstrait ChoisirZoneSuivante()
-        {
-            throw new NotImplementedException();
-        }
+
         public override string ToString()
         {
             return " La " + this.Nom;
@@ -41,27 +38,34 @@ namespace LibMetier.GestionPersonnages
 
         public override void AnalyseSituation()
         {
+
+            PersonnageAbstrait persoInteraction = null;
             foreach (PersonnageAbstrait unPerso in zone.PersonnageList)
             {
 
-                if (unPerso.GetType().Equals(typeof(Guerriere)))
+                if (unPerso.GetType().Equals(typeof(Reine)))
                 {
-                    unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque la Guerriere !", this.Position.X, this.Position.Y);
+                    persoInteraction = unPerso;
+                    break;
+                   /* unPerso.PV -= 20;
+                    AjouterEtape(0, "J'attaque la Guerriere !", this.Position.X, this.Position.Y);*/
                 }
 
-                else if (unPerso.GetType().Equals(typeof(Reine)))
+                else if (unPerso.GetType().Equals(typeof(Guerriere)) && persoInteraction == null)
                 {
-                    unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque la Reine !", this.Position.X, this.Position.Y);
-                    
+                    persoInteraction = unPerso;
                 }
-                else if (unPerso.GetType().Equals(typeof(Ouvriere)))
+                else if ((unPerso.GetType().Equals(typeof(Ouvriere)) || unPerso.GetType().Equals(typeof(Princesse))) && persoInteraction == null)
                 {
-                    unPerso.PV -= 20;
-                    AjouterEtape(0, "J'attaque l'Ouvriere !", this.Position.X, this.Position.Y); 
+                    persoInteraction = unPerso;
                 }
             }
+            if (persoInteraction != null) {
+                persoInteraction.PV -= 20;
+                AjouterEtape(0, "J'attaque une " + persoInteraction.GetType().Name + " !", this.Position.X, this.Position.Y);
+            }
+           
+
         }
 
         public override void maj(string etat)

@@ -55,6 +55,32 @@ namespace LibMetier.GestionStrategie
                     unPerso.Position.X = zoneAccessible[maCase].Position.X;
                     unPerso.Position.Y = zoneAccessible[maCase].Position.Y;
                 }
+                /*retour a la fourmilliere si elle a bougé a plus de 5 y et 5 x*/
+                else
+                {
+                    if (unPerso.Position.Y != unPerso.Maison.Y)
+                    {
+                        if (unPerso.Position.Y < unPerso.Maison.Y)
+                        {
+                            unPerso.Position.Y++;
+                        }
+                        else
+                        {
+                            unPerso.Position.Y--;
+                        }
+                    }
+                    else if (unPerso.Position.X != unPerso.Maison.X)
+                    {
+                        if (unPerso.Position.X < unPerso.Maison.X)
+                        {
+                            unPerso.Position.X++;
+                        }
+                        else
+                        {
+                            unPerso.Position.X--;
+                        }
+                    }
+                }
             }
             /*
             int newX = unPerso.Position.X + Hazard.Next(3) - 1;

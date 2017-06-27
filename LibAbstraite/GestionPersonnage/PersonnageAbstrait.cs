@@ -38,8 +38,6 @@ namespace LibAbstraite.GestionPersonnage
 
         public CoordonneesAbstrait Position { get; set; }
         public CoordonneesAbstrait Maison { get; set; }
-
-        public abstract ZoneAbstrait ChoisirZoneSuivante();
         
         public  ObservableCollection<EtapeAbstraite> ListEtape { get; set; }
 

@@ -108,10 +108,6 @@ namespace LibMetier.GestionPersonnages
             }
 
         }
-        public override ZoneAbstrait ChoisirZoneSuivante()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void AnalyseSituation()
         {

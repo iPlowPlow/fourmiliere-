@@ -139,17 +139,6 @@ namespace LibMetier.GestionEnvironnements
             coordMaison.X = reine.Position.X;
             coordMaison.Y = reine.Position.Y;
         }
-        
-        public override void ChargerEnv(FabriqueAbstraite fab)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public override void ChargerObjet(FabriqueAbstraite fab)
-        {
-            throw new NotImplementedException();
-            
-        }
 
         public override void ChargerPersonnage(FabriqueAbstraite fab)
         {
@@ -165,11 +154,6 @@ namespace LibMetier.GestionEnvironnements
             {
                 PersonnagesMortList.RemoveAt(i);
             }
-        }
-
-        public override void DeplacerPersonnage(PersonnageAbstrait unPersonnage, ZoneAbstrait zdebut, ZoneAbstrait zfin)
-        {
-            throw new NotImplementedException();
         }
 
         public override void Repositioner()
@@ -199,17 +183,6 @@ namespace LibMetier.GestionEnvironnements
                 unInsecte.ChoixZoneSuivante = Fabrique.CreerAcces(zoneAdjacentes);
             }
         }
-
-        public override string Simuler()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string Statistiques()
-        {
-            throw new NotImplementedException();
-        }
-
         public void SupprimerPersonnage()
         {
             System.Windows.Application.Current.Dispatcher.Invoke(
@@ -258,10 +231,6 @@ namespace LibMetier.GestionEnvironnements
              );
         }
 
-        public void AjouterReine(Reine reine)
-        {
-            throw new NotImplementedException();
-        }
         public void AjouterFourmi(PersonnageAbstrait fourmi)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(
@@ -371,9 +340,10 @@ namespace LibMetier.GestionEnvironnements
                     AjouteNourriture();
                 }
 
-                if (TourActuel > 50 && Hazard.Next(1, 11) == 1)
+                if (TourActuel % 50 == 0)
                 {
-                    AjouterTermite();
+                    for(int i =0; i<10; i++) AjouterTermite();
+
                 }
                 TourActuel++;
             }
@@ -406,10 +376,7 @@ namespace LibMetier.GestionEnvironnements
             encours = false;
         }
 
-        public override void AjouteNourriture(ObjetAbstrait unObject)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public  void Attach(PersonnageAbstrait observer)
         {
@@ -450,7 +417,7 @@ namespace LibMetier.GestionEnvironnements
         {
             return reine == null ? true : false;
         }
-        public string Stats()
+        public override string Stats()
         {
             return String.Format("Fourmies ouvrières nées : {0} \nFourmies ouvrières mortes : {1} \nFourmies guerrières nées : {2} \nFourmies guerrières mortes : {3} \nTermites nées : {4} \nTermites mortes : {5} \nPrincesses nées : {6} \nPrincesses mortes : {7} \nTransformations de princesses en reine : {8} \nReines mortes : {9}"
                 , (PersonnagesList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count() + PersonnagesMortList.Where(x => x.GetType().Equals(typeof(Ouvriere))).Count())

@@ -33,11 +33,6 @@ namespace LibMetier.GestionPersonnages
             StategieCourante = new Defense("Defense");
 
         }
-        public override ZoneAbstrait ChoisirZoneSuivante()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return " Ma " + this.Nom;

@@ -48,7 +48,7 @@
     <Compile Include="GestionEnvironnement\AccesAbstrait.cs" />
     <Compile Include="GestionEnvironnement\CoordonneesAbstrait.cs" />
     <Compile Include="GestionEnvironnement\EnvironnementAbstrait.cs" />
-    <Compile Include="ZoneAbstrait.cs" />
+    <Compile Include="GestionEnvironnement\ZoneAbstrait.cs" />
     <Compile Include="GestionObjets\ObjetAbstrait.cs" />
     <Compile Include="GestionPersonnage\PersonnageAbstrait.cs" />
     <Compile Include="GestionStrategie\StrategieAbstraite.cs" />
