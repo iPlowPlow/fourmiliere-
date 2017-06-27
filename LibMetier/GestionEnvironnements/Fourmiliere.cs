@@ -396,7 +396,7 @@ namespace LibMetier.GestionEnvironnements
             encours = true;
             while (encours == true && reine!= null)
             {
-                Thread.Sleep(vitesse);
+                Thread.Sleep(500-vitesse);
                 TourSuivant();
 
             }

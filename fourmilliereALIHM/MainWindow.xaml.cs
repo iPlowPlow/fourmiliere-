@@ -189,6 +189,19 @@ namespace fourmilliereALIHM
          
         }
 
+        private void ChangeButtonStatus(bool state)
+        {
+            AddGuerriere.IsEnabled = state;
+            AddOuvriere.IsEnabled = state;
+            AddPrincesse.IsEnabled = state;
+            AddReine.IsEnabled = state;
+            AddTermite.IsEnabled = state;
+            btnAvance.IsEnabled = state;
+            btnCharge.IsEnabled = state;
+            btnSave.IsEnabled = state;
+            btnSuivant.IsEnabled = state;
+            deletePerso.IsEnabled = state;
+        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
@@ -236,6 +249,7 @@ namespace fourmilliereALIHM
         }
         private void btnAvance_Click(object sender, RoutedEventArgs e)
         {
+            ChangeButtonStatus(false);
             dt.Start();
             stopwatch.Start();
             Thread tt = new Thread(App.fourmilliereVM.Avance);
@@ -245,7 +259,7 @@ namespace fourmilliereALIHM
         }
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-
+            ChangeButtonStatus(true);
             App.fourmilliereVM.Stop();
             if (stopwatch.IsRunning)
             {

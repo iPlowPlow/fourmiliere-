@@ -85,7 +85,7 @@
             <Slider Grid.Column="0" x:Name="slider" Minimum="0" Maximum="500"   Value="{Binding vitesse}" ValueChanged="ChangeSpeed" Grid.ColumnSpan="2" Margin="0,5,0,-5" Grid.RowSpan="2"/>
         </Grid>
 
-        <Button Grid.Row="3" Grid.Column="0"  Click="Button_Click" >
+        <Button Name="deletePerso" Grid.Row="3" Grid.Column="0"  Click="Button_Click" >
             <Button.Content>
                 <TextBlock Text="{Binding PersoSelect, StringFormat='Supprimer{0}'}"/>
             </Button.Content>
@@ -150,11 +150,11 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Guerriere" Click="Button_Click_Add_Guerriere"/>
-            <Button Grid.Column="1" Content="Ouvriere" Click="Button_Click_Add_Ouvriere" />
-            <Button Grid.Column="2" Content="Princesse" Click="Button_Click_Add_Princesse"/>
-            <Button Grid.Column="3" Content="Reine" Click="Button_Click_Add_Reine" />
-            <Button Grid.Column="4" Content="Termite" Click="Button_Click_Add_Termite" />
+            <Button Name="AddGuerriere" Grid.Column="0" Content="Guerriere" Click="Button_Click_Add_Guerriere"/>
+            <Button Name="AddOuvriere" Grid.Column="1" Content="Ouvriere" Click="Button_Click_Add_Ouvriere" />
+            <Button Name="AddPrincesse" Grid.Column="2" Content="Princesse" Click="Button_Click_Add_Princesse"/>
+            <Button Name="AddReine" Grid.Column="3" Content="Reine" Click="Button_Click_Add_Reine" />
+            <Button Name="AddTermite" Grid.Column="4" Content="Termite" Click="Button_Click_Add_Termite" />
         </Grid>
     </Grid>
 </Window>

@@ -9,8 +9,8 @@ namespace fourmilliereALIHM
 {
     public class AproposViewModel : ViewModelBase
     {
-        public string CopyRight { get { return "Metagenia"; } }
+        public string CopyRight { get { return "ESGI 4AL"; } }
         public string Date { get { return System.DateTime.Now.ToString(); } }
-        public string Author { get { return "Pierre L, Loïc G et André M"; } }
+        public string Author { get { return "Pierre L, Loïc G, Azedine N et André M"; } }
     }
 }
