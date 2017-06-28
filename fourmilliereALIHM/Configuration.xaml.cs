@@ -19,12 +19,6 @@ namespace fourmilliereALIHM
     /// </summary>
     public partial class Configuration : Window
     {
-        private int OuvriereProba;
-        private int GuerriereProba;
-        private int PrincesseProba;
-        private int PluieProba;
-        private int ClairProba;
-        private int BrouillardProba;
         public Configuration()
         {
             InitializeComponent();
@@ -35,12 +29,12 @@ namespace fourmilliereALIHM
             if (OuvriereProb != null && GuerriereProb != null && PrincesseProb != null)
             {
                 Slider current = (Slider)sender;
-                OuvriereProba = Convert.ToInt32(OuvriereProb.Value);
-                GuerriereProba = Convert.ToInt32(GuerriereProb.Value);
-                PrincesseProba = Convert.ToInt32(PrincesseProb.Value);
+                int OuvriereProba = Convert.ToInt32(OuvriereProb.Value);
+                int GuerriereProba = Convert.ToInt32(GuerriereProb.Value);
+                int PrincesseProba = Convert.ToInt32(PrincesseProb.Value);
                 int totalSpawnvalue = OuvriereProba + GuerriereProba + PrincesseProba;
 
-                if (totalSpawnvalue > 99)
+                if (totalSpawnvalue > 101)
                 {
                     switch (current.Name)
                     {
@@ -58,12 +52,12 @@ namespace fourmilliereALIHM
                             break;
                     }
                 }
-                else if (totalSpawnvalue < 101)
+                else if (totalSpawnvalue < 99)
                 {
                     switch (current.Name)
                     {
                         case "OuvriereProb":
-                            OuvriereProba += ((100 - totalSpawnvalue) / 2);
+                            GuerriereProba += ((100 - totalSpawnvalue) / 2);
                             PrincesseProba += ((100 - totalSpawnvalue) / 2);
                             break;
                         case "GuerriereProb":
@@ -78,15 +72,15 @@ namespace fourmilliereALIHM
                 }
                 if (totalSpawnvalue == 99)
                 {
-                    ClairProba++;
+                    OuvriereProba++;
                 }
                 if (totalSpawnvalue == 101)
                 {
-                    ClairProba--;
+                    OuvriereProba--;
                 }
-                OuvriereProb.Value = OuvriereProba > 0 ? OuvriereProba : 0;
-                GuerriereProb.Value = GuerriereProba > 0 ? GuerriereProba : 0;
-                PrincesseProb.Value = PrincesseProba > 0 ? PrincesseProba : 0;
+                OuvriereProb.Value = OuvriereProba>0? OuvriereProba : 0;
+                GuerriereProb.Value = GuerriereProba>0? GuerriereProba : 0;
+                PrincesseProb.Value = PrincesseProba>0? PrincesseProba : 0;
             }
         }
 
@@ -95,9 +89,9 @@ namespace fourmilliereALIHM
             if (PluieProb != null && BrouillardProb != null && ClairProb != null)
             {
                 Slider current = (Slider)sender;
-                PluieProba = Convert.ToInt32(PluieProb.Value);
-                ClairProba = Convert.ToInt32(ClairProb.Value);
-                BrouillardProba = Convert.ToInt32(BrouillardProb.Value);
+                int PluieProba = Convert.ToInt32(PluieProb.Value);
+                int ClairProba = Convert.ToInt32(ClairProb.Value);
+                int BrouillardProba = Convert.ToInt32(BrouillardProb.Value);
                 int totalvalue = PluieProba + ClairProba + BrouillardProba;
 
                 if (totalvalue > 101)
@@ -123,7 +117,7 @@ namespace fourmilliereALIHM
                     switch (current.Name)
                     {
                         case "PluieProb":
-                            PluieProba += ((100 - totalvalue) / 2);
+                            BrouillardProba += ((100 - totalvalue) / 2);
                             ClairProba += ((100 - totalvalue) / 2);
                             break;
                         case "BrouillardProb":
@@ -144,9 +138,9 @@ namespace fourmilliereALIHM
                 {
                     ClairProba--;
                 }
-                PluieProb.Value = PluieProba > 0 ? PluieProba :0;
+                PluieProb.Value = PluieProba>0? PluieProba :0;
                 BrouillardProb.Value = BrouillardProba > 0 ? BrouillardProba :0;
-                ClairProb.Value = ClairProba > 0 ? ClairProba:0;
+                ClairProb.Value = ClairProba>0? ClairProba:0;
             }
         }
     }
