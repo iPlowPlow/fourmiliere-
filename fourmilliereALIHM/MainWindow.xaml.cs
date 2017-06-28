@@ -66,15 +66,23 @@ namespace fourmilliereALIHM
         {
             if (App.fourmilliereVM.ReineMorte())
             {
-                System.Windows.MessageBox.Show("La partie va être relancée", "Vous n'avez pas de reine");
-                System.Windows.MessageBox.Show(App.fourmilliereVM.Stats(), "Statistiques de fin de partie");
-                ChangeButtonStatus(true);
-                stopwatch.Stop();
-                App.fourmilliereVM = new Fourmiliere(30, 30);
-                DataContext = App.fourmilliereVM;
-                return false;
+                Restart();
             }
             return true;
+        }
+        public void Restart()
+        {
+            System.Windows.MessageBox.Show("La partie va être relancée", "Vous n'avez pas de reine");
+            System.Windows.MessageBox.Show(App.fourmilliereVM.Stats(), "Statistiques de fin de partie");
+            ChangeButtonStatus(true);
+            stopwatch.Stop();
+            App.fourmilliereVM = new Fourmiliere(30, 30);
+            DataContext = App.fourmilliereVM;
+        }
+        public void Configure(object sender, RoutedEventArgs e)
+        {
+            Configuration config = new Configuration();
+            config.Show();
         }
         public void Dessine()
         {
@@ -122,7 +130,7 @@ namespace fourmilliereALIHM
                 if (unObjet.GetType().Equals(typeof(Pheromone)))
                 {
                     Pheromone pheromone = (Pheromone)unObjet;
-                    byte opacity = Convert.ToByte(pheromone.Dureevie * (255 / Pheromone.DUREE_VIE_ORIGINALE));
+                    byte opacity = Convert.ToByte(pheromone.Dureevie * (255 / Pheromone.DureeVieOriginale));
                     Color color = Color.FromArgb(opacity, 0, 0, 255);
                     Rectangle pheromoneBox = new Rectangle();
                     pheromoneBox.Fill = new SolidColorBrush(color);
@@ -202,6 +210,7 @@ namespace fourmilliereALIHM
             btnSave.IsEnabled = state;
             btnSuivant.IsEnabled = state;
             deletePerso.IsEnabled = state;
+            config.IsEnabled = state;
             btnStop.IsEnabled = !state;
         }
 
@@ -262,6 +271,10 @@ namespace fourmilliereALIHM
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             ChangeButtonStatus(true);
+            Stop();
+        }
+        private void Stop()
+        {
             App.fourmilliereVM.Stop();
             if (stopwatch.IsRunning)
             {
@@ -272,6 +285,12 @@ namespace fourmilliereALIHM
         public void ChangeSpeed(object sender, RoutedEventArgs e) {
             App.fourmilliereVM.vitesse = (int)slider.Value;
                dt.Interval = new TimeSpan(0, 0, 0, 0, App.fourmilliereVM.vitesse);
+        }
+        private void redemarrer(object sender, RoutedEventArgs e)
+        {
+            Stop();
+            Restart();
+            Dessine();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

@@ -15,7 +15,7 @@ namespace LibMetier.GestionPersonnages
 {
     public class Guerriere : PersonnageAbstrait
     {
-
+        public static int HPNaissance = 175;
         public Guerriere()
         {
          
@@ -23,7 +23,7 @@ namespace LibMetier.GestionPersonnages
         public Guerriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 175;
+            this.PV = HPNaissance;
             this.Position = position;
 
             this.Maison = positionReine;

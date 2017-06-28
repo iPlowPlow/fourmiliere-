@@ -20,6 +20,7 @@ namespace LibMetier.GestionPersonnages
 
     public class Princesse : PersonnageAbstrait
     {
+        public static int HPNaissance = 175;
         public Princesse()
         {
 
@@ -27,7 +28,7 @@ namespace LibMetier.GestionPersonnages
         public Princesse(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 200;
+            this.PV = HPNaissance;
             this.Position = position;
             this.Maison = positionReine;
             ListEtape = new ObservableCollection<EtapeAbstraite>();

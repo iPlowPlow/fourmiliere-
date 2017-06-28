@@ -20,7 +20,7 @@ namespace LibMetier.GestionPersonnages
     
   public class Ouvriere : PersonnageAbstrait
   {
-        
+        public static int HPNaissance = 100;
         public MorceauNourriture Morceau { get; set; }
         public Ouvriere()
         {
@@ -29,7 +29,7 @@ namespace LibMetier.GestionPersonnages
         public Ouvriere(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionReine)
         {
             this.Nom = nom;
-            this.PV = 100;
+            this.PV = HPNaissance;
             this.Position = position;
 
             this.Maison = positionReine;

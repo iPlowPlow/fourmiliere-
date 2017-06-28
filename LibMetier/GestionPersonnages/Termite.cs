@@ -15,6 +15,7 @@ namespace LibMetier.GestionPersonnages
 {
     public class Termite : PersonnageAbstrait
     {
+        public static int HPNaissance = 100;
         public Termite()
         {
             
@@ -23,7 +24,7 @@ namespace LibMetier.GestionPersonnages
         public Termite(string nom, CoordonneesAbstrait position, CoordonneesAbstrait positionFourmilliere)
         {
             this.Nom = nom;
-            this.PV = 75;
+            this.PV = HPNaissance;
             this.Position = position;
             this.Maison = positionFourmilliere;
             ListEtape = new ObservableCollection<EtapeAbstraite>();

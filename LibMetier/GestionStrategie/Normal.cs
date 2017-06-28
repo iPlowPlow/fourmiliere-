@@ -63,7 +63,7 @@ namespace LibMetier.GestionStrategie
             else if(zonePheromone.Count >0)
             {
                 ZoneAbstrait zoneMinPhero = null;
-                int dureeDeVeMin = Pheromone.DUREE_VIE_ORIGINALE;
+                int dureeDeVeMin = Pheromone.DureeVieOriginale;
                 foreach(ZoneAbstrait uneZone in zonePheromone)
                 {
                     foreach(Pheromone phermonoe in uneZone.ObjetList.Where(x => x.GetType().Equals(typeof(Pheromone))))

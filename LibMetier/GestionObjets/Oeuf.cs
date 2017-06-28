@@ -13,7 +13,7 @@ namespace LibMetier.GestionObjets
 {
   public  class Oeuf : ObjetAbstrait
     {
-        public const int DUREE_AVANT_ECLOSION = 15;
+        public static int DureeAvantEclosion = 15;
         public PersonnageAbstrait fourmiARetourner;
         //Incrémenté à chaque tour
         public int Age { get; set; }
@@ -30,19 +30,19 @@ namespace LibMetier.GestionObjets
         public override void TourPasse(SujetAbstrait meteo)
         {
             Age++;
-            if(Age == DUREE_AVANT_ECLOSION)
+            if(Age == DureeAvantEclosion)
             {
                 Eclore();
             }
         }
         public void Eclore()
         {
-            int res = Fourmiliere.Hazard.Next(1, 21);
-            if (res > 0 && res <= 16)
+            int res = Fourmiliere.Hazard.Next(1, 100);
+            if (res > 0 && res <= Config.probaOuvriere)
             {
                 fourmiARetourner = Fourmiliere.Fabrique.CreerOuvriere("Ouvriere N°", Fourmiliere.Fabrique.CreerPosition(Fourmiliere.coordMaison.X, Fourmiliere.coordMaison.Y), Fourmiliere.coordMaison); 
             }
-            else if (res > 16 && res < 20)
+            else if (res > Config.probaOuvriere && res < (Config.probaOuvriere+Config.probaGuerriere))
             {
                 fourmiARetourner = Fourmiliere.Fabrique.CreerGuerriere("Guerriere N°", Fourmiliere.Fabrique.CreerPosition(Fourmiliere.coordMaison.X, Fourmiliere.coordMaison.Y), Fourmiliere.coordMaison);
 

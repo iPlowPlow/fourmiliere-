@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 using System.Threading;
 using LibMetier.GestionPersonnages;
 using LibMetier.GestionObjets;
-
+using LibMetier;
 using System.Windows.Threading;
 using LibAbstraite;
 
@@ -285,7 +285,7 @@ namespace LibMetier.GestionEnvironnements
                 reine.OeufPondu = null;
                 foreach (Oeuf unOeuf in ObjetList.Where(x => x.GetType().Equals(typeof(Oeuf))).ToList())
                 {
-                    if (unOeuf.Age > Oeuf.DUREE_AVANT_ECLOSION - 1)
+                    if (unOeuf.Age > Oeuf.DureeAvantEclosion - 1)
                     {
                         PersonnageAbstrait fourmi = unOeuf.fourmiARetourner;
                         fourmi.Nom += PersonnagesList.Count;
@@ -342,7 +342,7 @@ namespace LibMetier.GestionEnvironnements
 
                 if (TourActuel % 50 == 0)
                 {
-                    for(int i =0; i<10; i++) AjouterTermite();
+                    for(int i =0; i<Config.nbrTermites; i++) AjouterTermite();
 
                 }
                 TourActuel++;
@@ -398,11 +398,11 @@ namespace LibMetier.GestionEnvironnements
         public void meteoChange()
         {
             int rand = Hazard.Next(1, 100);
-            if ( rand >75 && rand<95)
+            if ( rand >0 && rand<Config.probaPluie)
             {
                 meteo.Etat = "pluie";
                 meteo.Notify();
-            }else if (rand > 90)
+            }else if (rand > Config.probaPluie && rand <(Config.probaPluie+Config.probaBrouillard))
             {
                 meteo.Etat = "brouillard";
                 meteo.Notify();

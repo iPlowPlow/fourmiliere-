@@ -17,6 +17,7 @@ namespace LibMetier.GestionPersonnages
 {
     public class Reine : PersonnageAbstrait 
     {
+        public static int HPNaissance = 250;
         private static Reine instance;
         private Oeuf oeufPondu;
         public bool sousAttaque = false;
@@ -43,7 +44,7 @@ namespace LibMetier.GestionPersonnages
                 instance = new Reine();
             }
             instance.Nom = nom;
-            instance.PV = 250;
+            instance.PV = HPNaissance;
             instance.Position = position;
             instance.Maison = new Coordonnees();
             instance.Maison.X = position.X;
@@ -60,7 +61,7 @@ namespace LibMetier.GestionPersonnages
             {
                 instance = new Reine();
             }
-            instance.PV = 250;
+            instance.PV = HPNaissance;
             instance.Position = new Coordonnees();
             instance.Position.X = reine.Position.X;
             instance.Position.Y = reine.Position.Y;
@@ -78,7 +79,7 @@ namespace LibMetier.GestionPersonnages
             {
                 instance = new Reine();
             }
-            instance.PV = 250;
+            instance.PV = HPNaissance;
             instance.Position = new Coordonnees();
             instance.Position.X = princesse.Position.X;
             instance.Position.Y = princesse.Position.Y;

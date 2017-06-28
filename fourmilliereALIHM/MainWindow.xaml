@@ -20,7 +20,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="1" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -64,16 +64,28 @@
         <TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding TitreApplication}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="2" FontSize="20" Text="{Binding PersonnagesList.Count, StringFormat=Fourmies: \{0\}}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
 
-        <Button Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Click="Button_Click_2"  >
-            <Button.Content>
-                <Image Source="Images/ants_logo.png">
-                </Image>
-            </Button.Content>
-        </Button>
+        <Grid Grid.Row="2" Grid.Column="2" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="config" Grid.Column="0" Click="Configure"  >
+                <Button.Content>
+                    <Image Source="Images/settings.png">
+                    </Image>
+                </Button.Content>
+            </Button>
+            <Button Grid.Column="1" Click="Button_Click_2"  >
+                <Button.Content>
+                    <Image Source="Images/ants_logo.png">
+                    </Image>
+                </Button.Content>
+            </Button>
+        </Grid>
         <Grid  Grid.Row="2" Grid.Column="0" ShowGridLines="False">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="79*"/>
-                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="8*"/>
 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -82,7 +94,8 @@
 
             </Grid.RowDefinitions>
             <TextBox Text="{Binding Path=Value,ElementName=slider}" Grid.Row="0" Grid.Column="0" Margin="0,-26,0,10" Grid.ColumnSpan="2" ></TextBox>
-            <Slider Grid.Column="0" x:Name="slider" Minimum="0" Maximum="500"   Value="{Binding vitesse}" ValueChanged="ChangeSpeed" Grid.ColumnSpan="2" Margin="0,5,0,-5" Grid.RowSpan="2"/>
+            <Button x:Name="restart" Content="Rédémarrer" Grid.Row="0" Grid.Column="1" Margin="0,-26,0,10.2" Click="redemarrer"/>
+            <Slider Grid.Column="0" x:Name="slider" Minimum="0" Maximum="500"   Value="{Binding vitesse}" ValueChanged="ChangeSpeed" Grid.ColumnSpan="2" Margin="0,5,0,-5" Grid.RowSpan="1" IsSnapToTickEnabled="True" TickFrequency="1"/>
         </Grid>
 
         <Button Name="deletePerso" Grid.Row="3" Grid.Column="0"  Click="Button_Click" >

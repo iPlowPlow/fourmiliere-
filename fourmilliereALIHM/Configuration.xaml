@@ -1,0 +1,83 @@
+﻿<Window x:Class="fourmilliereALIHM.Configuration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:fourmilliereALIHM"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Configuration" Height="400" Width="630"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="400" Margin="0,0,0,0" VerticalAlignment="Top" Width="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Separator  RenderTransformOrigin="0.51,0.476" Grid.ColumnSpan="3" Grid.Column="1" Margin="35.8,3.2,116,1.6" Grid.Row="6" >
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90."/>
+                        <TranslateTransform X="-0.141" Y="1.329"/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+            <Label Grid.Row="0" Content="Points de vie" FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0"/>
+            <Label Grid.Row="1" Content="Reine :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="5000" Grid.Row ="1" Grid.Column="1" Name="ReineHp" Value="{Binding HPReine}" />
+            <Label Grid.Row="2" Content="Ouvrière :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="5000" Grid.Row ="2" Grid.Column="1" Name="OuvriereHp" Value="{Binding HPOuvriere}"/>
+            <Label Grid.Row="3" Content="Guerrière :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="5000" Grid.Row ="3" Grid.Column="1" Name="GuerriereHP" Value="{Binding HPGuerriere}"/>
+            <Label Grid.Row="4" Content="Princesse :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="5000" Grid.Row ="4" Grid.Column="1" Name="PrincesseHp" Value="{Binding HPPrincesse}"/>
+            <Label Grid.Row="5" Content="Termite :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="5000" Grid.Row ="5" Grid.Column="1" Name="TermiteHP" Value="{Binding HPTermite}"/>
+            <Label Grid.Row="7" Content="Probabilité Météo" FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0"/>
+            <Label Grid.Row="8" Content="Clair :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaClair}" Grid.Row ="8" Grid.Column="1" ValueChanged="Weather_ValueChanged" Name="ClairProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            <Label Grid.Row="9" Content="Pluie :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaPluie}" Grid.Row ="9" Grid.Column="1" ValueChanged="Weather_ValueChanged" Name="PluieProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            <Label Grid.Row="10" Content="Brouillard :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaBrouillard}" Grid.Row ="10" Grid.Column="1" ValueChanged="Weather_ValueChanged" Name="BrouillardProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="Durée de vie objets" FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0"/>
+            <Label Grid.Row="1" Grid.Column="2" Content="Nourriture :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="500" Grid.Row ="1" Grid.Column="3" Value="{Binding DureeVieNourriture}" Name="NourritureHP" />
+            <Label Grid.Row="2" Grid.Column="2"  Content="Oeuf :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="1" Maximum="500" Grid.Row ="2" Grid.Column="3" Value="{Binding DureeEclosionOeuf}" Name="OeufHP" />
+            <Label Grid.Row="3" Grid.Column="2" Content="Pheromone :" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="2" Maximum="100" Grid.Row ="3" Grid.Column="3" Value="{Binding DureeViePheromone}" Name="PheromoneHP" />
+            <Label Grid.Row="4" Grid.Column="2" Content="Vagues de termites" FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0"/>
+            <Label Grid.Row="5" Grid.Column="2" Content="Termites:" FontSize="12"></Label>
+            <xctk:IntegerUpDown Minimum="0" Maximum="100" Grid.Row ="5" Grid.Column="3" Value="{Binding NombreTermites}" Name="TermitesCount" />
+            <Label Grid.Row="7" Grid.Column="2" Content="Probabilité de ponte" FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0"/>
+            <Label Grid.Row="8" Grid.Column="2" Content="Ouvrière :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaOuvriere}" Grid.Row ="8" Grid.Column="3" ValueChanged="Spawn_ValueChanged"  Name="OuvriereProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            <Label Grid.Row="9" Grid.Column="2" Content="Guerrière :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaGuerriere}" Grid.Row ="9" Grid.Column="3" ValueChanged="Spawn_ValueChanged" Name="GuerriereProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+            <Label Grid.Row="10" Grid.Column="2" Content="Princesse :" FontSize="12"></Label>
+            <Slider Minimum="0" Maximum ="100" Value="{Binding ProbaPrincesse}" Grid.Row ="10" Grid.Column="3" ValueChanged="Spawn_ValueChanged" Name="PrincesseProb" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" TickFrequency="1"/>
+
+        </Grid>
+
+    </Grid>
+</Window>

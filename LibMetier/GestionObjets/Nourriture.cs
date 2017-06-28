@@ -11,7 +11,7 @@ namespace LibMetier.GestionObjets
 {
     public class Nourriture : ObjetAbstrait
     {
-        public const int DUREE_VIE_ORIGINALE = 75;
+        public static int DureeVieOriginale = 75;
         public const int MORCEAU_NOURRITURE = 25;
         public List<MorceauNourriture> ListMorceaux { get; set; }
         public Nourriture()
@@ -22,7 +22,7 @@ namespace LibMetier.GestionObjets
         {
             this.Nom = nom;
             this.Position = position;
-            this.Dureevie = DUREE_VIE_ORIGINALE;
+            this.Dureevie = DureeVieOriginale;
             this.ListMorceaux = Enumerable.Repeat(new MorceauNourriture(String.Format("Un morceau de {0}", Nom), Position), MORCEAU_NOURRITURE).ToList();
         }
         public MorceauNourriture Recolter()

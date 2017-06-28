@@ -1,5 +1,6 @@
 ﻿using fourmilliereALIHM;
 using LibMetier.GestionEnvironnements;
+using LibMetier;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,12 +18,13 @@ namespace fourmilliereALIHM
     public partial class App : Application
     {
         public static Fourmiliere fourmilliereVM { get; set; }
+        public static Config config { get; set; }
         public static Meteo meteo { get; set; }
         public App()
         {   
 
             fourmilliereVM = new Fourmiliere(30, 30);
-           
+            config = new Config();
 
         }
     }
